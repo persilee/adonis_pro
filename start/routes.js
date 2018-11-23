@@ -1,4 +1,4 @@
-'use strict'
+"use strict";
 
 /*
 |--------------------------------------------------------------------------
@@ -14,14 +14,22 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Route = use('Route')
+const Route = use("Route");
 
-Route.on('/').render('welcome')
+Route.on("/").render("welcome");
 
-Route.get('/posts', () => 'List of posts.')
+Route.get("/posts", () => "List of posts.");
 
-Route.post('/posts', () => 'Post has been created.')
+Route.post("/posts", () => "Post has been created.");
 
-Route.get('/posts/:id', ({ params }) => {
-  return `You are watching post ${ params.id }`
-})
+Route.get("/posts/:id", ({ params }) => {
+  return `You are watching post ${params.id}`;
+});
+
+Route.patch("/posts/:id", ({ params }) => {
+  return `Post ${params.id} has been updated`;
+});
+
+Route.delete("/posts/:id", ({ params }) => {
+  return `Post ${params.id} has been removed`;
+});
