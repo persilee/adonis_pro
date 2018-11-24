@@ -29,6 +29,16 @@ Route.group(() => {
 // Route.post('/articles', ({ request }) => request.all())
 // Route.post('/articles', ({ request }) => request.only(['title', 'content']))
 // Route.post('/articles', ({ request }) => request.except(['title', 'content']))
-Route.post('/articles', ({ request }) => request.input('status', 'draft'))
+// Route.post('/articles', ({ request }) => request.input('status', 'draft'))
+
+// Route.post('/articles', ({ request }) => request.only(['title', 'content']))
+// Route.post('/articles', ({ request }) => request.collect(['title', 'content']))
+
+Route.get('/articles', ({ request, response }) => {
+  // response.header('Content-type', 'text/plain')
+  response.type('text/plain')
+  return '<h1>Post of list.</h1>'
+})
 
 Route.any('*', ({ view }) => view.render('welcome'))
+
