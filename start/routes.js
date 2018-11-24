@@ -34,10 +34,25 @@ Route.group(() => {
 // Route.post('/articles', ({ request }) => request.only(['title', 'content']))
 // Route.post('/articles', ({ request }) => request.collect(['title', 'content']))
 
-Route.get('/articles', ({ request, response }) => {
-  // response.header('Content-type', 'text/plain')
-  response.type('text/plain')
-  return '<h1>Post of list.</h1>'
+// Route.get('/articles', ({ request, response }) => {
+//   // response.header('Content-type', 'text/plain')
+//   // response.type('text/plain')
+//   response.cookie('theme', 'dark')
+//   response.clearCookie('theme')
+//   return request.cookie('theme', 'light')
+// })
+
+const delay = (data, time) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(data)
+    }, time);
+  })
+}
+
+Route.get('/articles', async ({ request, response }) => {
+  const data = await delay('List of post.', 3000)
+  return data
 })
 
 Route.any('*', ({ view }) => view.render('welcome'))
