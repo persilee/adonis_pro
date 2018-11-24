@@ -46,14 +46,27 @@ const delay = (data, time) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve(data)
-    }, time);
+    }, time)
   })
 }
 
-Route.get('/articles', async ({ request, response }) => {
-  const data = await delay('List of post.', 3000)
-  return data
+// Route.get('/articles', async ({ request, response }) => {
+//   const data = await delay('List of post.', 3000)
+//   return data
+// }).as('list-of-article')
+
+Route.get('/articles/:category?', ({ params }) => {
+  return `list of ${params.category || 'default'} post.`
+}).as('list-of-article')
+
+Route.get('/list-of-article', ({ request, response }) => {
+  // response.redirect('/articles', true, 301)
+  response.route('list-of-article')
+})
+
+Route.get('/list-of-food-article', ({ request, response }) => {
+  // response.redirect('/articles', true, 301)
+  response.route('list-of-article', {category: 'food'})
 })
 
 Route.any('*', ({ view }) => view.render('welcome'))
-
