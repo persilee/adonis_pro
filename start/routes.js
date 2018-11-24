@@ -25,4 +25,10 @@ Route.group(() => {
   Route.get('posts', () => 'Manage posts')
 }).prefix('admin')
 
+// Route.post('/articles', ({ request }) => request.post())
+// Route.post('/articles', ({ request }) => request.all())
+// Route.post('/articles', ({ request }) => request.only(['title', 'content']))
+// Route.post('/articles', ({ request }) => request.except(['title', 'content']))
+Route.post('/articles', ({ request }) => request.input('status', 'draft'))
+
 Route.any('*', ({ view }) => view.render('welcome'))
