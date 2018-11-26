@@ -1,0 +1,19 @@
+@layout('layouts.main')
+
+@section('content')
+  <div class="container">
+    <h3 class="mt-5 mb-4">Edit Post</h3>
+    <form action="/posts/{{ post.id }}?_method=PUT" method="POST">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input value="{{ post.title }}" type="text" class="form-control" placeholder="Enter title here" name="title">
+      </div>
+      <div class="form-group">
+        <label for="content">Content</label>
+        <textarea name="content" id="" cols="30" rows="10" class="form-control" placeholder="Write something amazing">{{ post.content }}</textarea>
+      </div>
+      {{ csrfField() }}
+      <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+  </div>
+@endsection
