@@ -1,0 +1,9 @@
+@each(entity in entities)
+<div style="padding: 4px;
+@if(!$loop.last && border)
+  border-bottom: 1px solid {{ borderColor || '#eee' }};
+@endif
+">
+  {{ entity.title }}: {{ entity.content }}
+</div>
+@endeach

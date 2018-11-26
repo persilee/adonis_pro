@@ -6,9 +6,5 @@
 @endsection
 
 @section('content')
-@each(entity in entities)
-<div>
-  {{ entity.title }}: {{ entity.content }}
-</div>
-@endeach
+  @!component('components.list', { entities, border: true, borderColor: '#ddd' })
 @endsection
