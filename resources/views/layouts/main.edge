@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  {{ style('css/style') }}
+  {{ script('js/main') }}
   <title>{{ pageTitle || 'lishaoy' }}</title>
 </head>
-<body>
+<body style="background-image: url({{ assetsUrl('splash.png') }})">
   <div><small>URL:{{ request.url() }}</small></div> <br />
   <div><small>OriginalURL:{{ request.originalUrl() }}</small></div> <br />
   <div><small>Method:{{ request.method() }}</small></div> <br />
