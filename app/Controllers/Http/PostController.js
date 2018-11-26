@@ -49,9 +49,10 @@ class PostController {
    */
   async store({ request, response }) {
     const newPost = request.only(['title', 'content'])
-    const postId = await Database.insert(newPost).into('posts')
-    console.log(postId)
-    return response.redirect(`posts/${postId[0]}`)
+    // const postId = await Database.insert(newPost).into('posts')
+    // console.log(postId)
+    const post = await Post.create(newPost)
+    return response.redirect(`posts/${ post.id }`)
   }
 
   /**
@@ -64,9 +65,11 @@ class PostController {
    * @param {View} ctx.view
    */
   async show({ params, request, response, view }) {
-    const post = await Database.from('posts')
-      .where('id', params.id)
-      .first()
+    // const post = await Database.from('posts')
+    //   .where('id', params.id)
+    //   .first()
+
+    const post = await Post.findOrFail(params.id)
     return view.render('post.show', { post })
   }
 
@@ -80,11 +83,12 @@ class PostController {
    * @param {View} ctx.view
    */
   async edit({ params, request, response, view }) {
-    const post = await Database.from('posts')
-      .where('id', params.id)
-      .first()
+    // const post = await Database.from('posts')
+    //   .where('id', params.id)
+    //   .first()
 
-    return view.render('post.edit', { post })
+    const post  = await Post.findOrFail(params.id)
+    return view.render('post.edit', { post: post.toJSON() })
   }
 
   /**
@@ -97,9 +101,13 @@ class PostController {
    */
   async update({ params, request, response }) {
     const updatedPost = request.only(['title', 'content'])
-    await Database.table('posts')
-      .where('id', params.id)
-      .update(updatedPost)
+    // await Database.table('posts')
+    //   .where('id', params.id)
+    //   .update(updatedPost)
+
+    const post = await Post.findOrFail(params.id)
+    post.merge(updatedPost)
+    post.save()
   }
 
   /**
@@ -111,10 +119,12 @@ class PostController {
    * @param {Response} ctx.response
    */
   async destroy({ params, request, response }) {
-    await Database.table('posts')
-      .where('id', params.id)
-      .delete()
+    // await Database.table('posts')
+    //   .where('id', params.id)
+    //   .delete()
 
+    const post = await Post.find(params.id)
+    post.delete()
     return 'success'
   }
 }
