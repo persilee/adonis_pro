@@ -19,7 +19,7 @@ class PostController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view }) {}
+  async index({ request, response, view }) { }
 
   /**
    * Render a form to be used for creating a new post.
@@ -46,7 +46,7 @@ class PostController {
     const newPost = request.only(['title', 'content'])
     const postId = await Database.insert(newPost).into('posts')
     console.log(postId)
-    return response.redirect(`posts/${ postId[0] }`)
+    return response.redirect(`posts/${postId[0]}`)
   }
 
   /**
@@ -75,7 +75,7 @@ class PostController {
    * @param {View} ctx.view
    */
   async edit({ params, request, response, view }) {
-    const post =  await Database.from('posts')
+    const post = await Database.from('posts')
       .where('id', params.id)
       .first()
 
@@ -105,7 +105,13 @@ class PostController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {}
+  async destroy({ params, request, response }) {
+    await Database.table('posts')
+      .where('id', params.id)
+      .delete()
+
+    return 'success'
+  }
 }
 
 module.exports = PostController
