@@ -74,7 +74,13 @@ class PostController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit({ params, request, response, view }) {}
+  async edit({ params, request, response, view }) {
+    const post =  await Database.from('posts')
+      .where('id', params.id)
+      .first()
+
+    return view.render('post.edit', { post })
+  }
 
   /**
    * Update post details.
@@ -84,7 +90,12 @@ class PostController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response }) {
+    const updatedPost = request.only(['title', 'content'])
+    await Database.table('posts')
+      .where('id', params.id)
+      .update(updatedPost)
+  }
 
   /**
    * Delete a post with id.
