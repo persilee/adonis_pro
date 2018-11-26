@@ -1,1 +1,23 @@
-<h1>Posts</h1>
+<h1>{{{ pageTitle || 'Untitled' }}}</h1>
+
+@if(user.name)
+  {{ user.name }}
+@else
+  login / singup
+@endif
+
+
+@each(entity in entities)
+<div>
+  <small>
+    {{ $loop.index + 1 }}.
+    first: {{ $loop.first }}
+    last: {{ $loop.last }}
+    total: {{ $loop.total }}
+    odd: {{ $loop.isOdd }}
+    even: {{ $loop.isEven }}
+  </small>
+  {{ entity.title }}: {{ entity.content }}
+</div>
+@endeach
+

@@ -1,8 +1,17 @@
 'use strict'
 
 class PostController {
-  index ( { view } ) {
-    return view.render('posts.index')
+  index({ view }) {
+    const pageTitle = 'List of <i>Posts</i>'
+    const user = {
+      name: 'lishaoy'
+    }
+    const entities = [
+      { id: 0 ,title: 'Lemon', content: '🍋' },
+      { id: 1 ,title: 'Banana', content: '🍌' },
+      { id: 2 ,title: 'Watermelon', content: '🍉' }
+    ]
+    return view.render('posts.index', { pageTitle, user,  entities})
   }
 }
 
