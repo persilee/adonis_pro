@@ -1,23 +1,14 @@
-<h1>{{{ pageTitle || 'Untitled' }}}</h1>
+@layout('layouts.main')
 
-@if(user.name)
-  {{ user.name }}
-@else
-  login / singup
-@endif
+@section('header')
+{{--  @super  --}}
+  <h1>{{ pageTitle || 'Untitled' }}}</h1>
+@endsection
 
-
+@section('content')
 @each(entity in entities)
 <div>
-  <small>
-    {{ $loop.index + 1 }}.
-    first: {{ $loop.first }}
-    last: {{ $loop.last }}
-    total: {{ $loop.total }}
-    odd: {{ $loop.isOdd }}
-    even: {{ $loop.isEven }}
-  </small>
   {{ entity.title }}: {{ entity.content }}
 </div>
 @endeach
-
+@endsection
