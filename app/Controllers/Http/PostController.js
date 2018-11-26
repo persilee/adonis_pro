@@ -1,6 +1,7 @@
 'use strict'
 
 const Database = use('Database')
+const Post = use('App/Models/Post')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -19,7 +20,11 @@ class PostController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view }) { }
+  async index({ request, response, view }) {
+    const posts = await Post.all()
+    // return posts
+    return view.render('post.index', { posts: posts.toJSON() })
+  }
 
   /**
    * Render a form to be used for creating a new post.

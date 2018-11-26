@@ -1,0 +1,10 @@
+@layout('layouts.main')
+
+@section('content')
+  <div class="container">
+    @each(post in posts)
+      <h3 class="mt-5 mb-4">{{ post.title }}</h3>
+      <div>{{ post.content }}</div>
+    @endeach
+  </div>
+@endsection
