@@ -7,3 +7,7 @@
   {{ entity.title }}: {{ entity.content }}
 </div>
 @endeach
+
+@yield($slot.notes)
+  <small>put some notes here.</small>
+@endyield
