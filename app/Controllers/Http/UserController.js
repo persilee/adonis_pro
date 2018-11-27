@@ -45,6 +45,10 @@ class UserController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+    const newUser = request.only(['username', 'password', 'email'])
+    const user = await User.create(newUser)
+
+    return user
   }
 
   /**
