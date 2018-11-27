@@ -21,7 +21,12 @@ class PostController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
-    const posts = await Post.all()
+    const posts = await Post.query()
+      .with('user', (builder) => {
+        builder.select('id', 'username')
+      })
+      .with('user.profile')
+      .fetch()
     // return posts
     return view.render('post.index', { posts: posts.toJSON() })
   }

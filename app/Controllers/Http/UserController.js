@@ -57,21 +57,28 @@ class UserController {
    */
   async show ({ params, request, response, view }) {
     const user = await User.find(params.id)
-    const { username, email } = user.toJSON()
-    const profile = await user.profile()
-      .select('github')
-      .fetch()
 
-    const posts = await user.posts()
-      .select('title', 'content')
-      .fetch()
+    await user.loadMany({
+      posts: builder => builder.select('id', 'title', 'content'),
+      profile: builder => builder.select('github')
+    })
 
-    return {
-      username,
-      email,
-      profile,
-      posts
-    }
+    return view.render('user.show', { user: user.toJSON() })
+    // const { username, email } = user.toJSON()
+    // const profile = await user.profile()
+    //   .select('github')
+    //   .fetch()
+
+    // const posts = await user.posts()
+    //   .select('title', 'content')
+    //   .fetch()
+
+    // return {
+    //   username,
+    //   email,
+    //   profile,
+    //   posts
+    // }
   }
 
   /**
