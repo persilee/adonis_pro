@@ -1,0 +1,32 @@
+@layout('layouts.main')
+
+@section('content')
+  <div class="container">
+    <h1 class="my-5 display-4">Register</h1>
+    <form action="{{ route('UserController.store') }}" method="POST">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text"
+         class="form-control"
+         name="username"
+         placeholder="Pick a username">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email"
+         class="form-control"
+         name="email"
+         placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label for="password">password</label>
+        <input type="password"
+         class="form-control"
+         name="password"
+         placeholder="Create a password">
+      </div>
+      {{ csrfField() }}
+      <button class="btn btn-primary my-3" type="submit">Create an account</button>
+    </form>
+  </div>
+@endsection
