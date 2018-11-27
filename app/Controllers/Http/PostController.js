@@ -20,7 +20,7 @@ class PostController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view }) {
+  async index ({ request, response, view }) {
     const posts = await Post.all()
     // return posts
     return view.render('post.index', { posts: posts.toJSON() })
@@ -35,7 +35,7 @@ class PostController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async create({ request, response, view }) {
+  async create ({ request, response, view }) {
     return view.render('post.create')
   }
 
@@ -47,12 +47,12 @@ class PostController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response }) {
+  async store ({ request, response }) {
     const newPost = request.only(['title', 'content'])
     // const postId = await Database.insert(newPost).into('posts')
     // console.log(postId)
     const post = await Post.create(newPost)
-    return response.redirect(`posts/${ post.id }`)
+    return response.redirect(`posts/${post.id}`)
   }
 
   /**
@@ -64,13 +64,17 @@ class PostController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {
+  async show ({ params, request, response, view }) {
     // const post = await Database.from('posts')
     //   .where('id', params.id)
     //   .first()
 
     const post = await Post.findOrFail(params.id)
-    return view.render('post.show', { post })
+    const tags = await post.tags()
+      .select('id', 'title')
+      .fetch()
+
+    return view.render('post.show', { post, tags: tags.toJSON() })
   }
 
   /**
@@ -82,12 +86,12 @@ class PostController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit({ params, request, response, view }) {
+  async edit ({ params, request, response, view }) {
     // const post = await Database.from('posts')
     //   .where('id', params.id)
     //   .first()
 
-    const post  = await Post.findOrFail(params.id)
+    const post = await Post.findOrFail(params.id)
     return view.render('post.edit', { post: post.toJSON() })
   }
 
@@ -99,7 +103,7 @@ class PostController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {
+  async update ({ params, request, response }) {
     const updatedPost = request.only(['title', 'content'])
     // await Database.table('posts')
     //   .where('id', params.id)
@@ -118,7 +122,7 @@ class PostController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {
+  async destroy ({ params, request, response }) {
     // await Database.table('posts')
     //   .where('id', params.id)
     //   .delete()
