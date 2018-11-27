@@ -7,23 +7,29 @@
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text"
-         class="form-control"
-         name="username"
-         placeholder="Pick a username">
+        class="form-control {{ hasErrorFor('username') ? 'is-invalid' : '' }}"
+          name="username"
+          value="{{ old('username', '') }}"
+          placeholder="Pick a username">
+        {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('username'), hasErrorFor('username')) }}
       </div>
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email"
-         class="form-control"
-         name="email"
-         placeholder="you@example.com">
+          class="form-control {{ hasErrorFor('email') ? 'is-invalid' : '' }}"
+          name="email"
+          value="{{ old('email', '') }}"
+          placeholder="you@example.com">
+        {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('email'), hasErrorFor('email')) }}
       </div>
       <div class="form-group">
         <label for="password">password</label>
         <input type="password"
-         class="form-control"
-         name="password"
-         placeholder="Create a password">
+          class="form-control {{ hasErrorFor('password') ? 'is-invalid' : '' }}"
+          name="password"
+          value="{{ old('password', '') }}"
+          placeholder="Create a password">
+        {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('password'), hasErrorFor('password')) }}
       </div>
       {{ csrfField() }}
       <button class="btn btn-primary my-3" type="submit">Create an account</button>
