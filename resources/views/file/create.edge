@@ -3,6 +3,12 @@
 @section('content')
   <div class="container">
     <h3 class="my-5">Upload</h3>
+    @if(flashMessage('message'))
+      @!component('components.alert', {
+        type: [flashMessage('type')],
+        message: [flashMessage('message')]
+      })
+    @endif
     <form action="{{ route('files.store') }}" method="POST" enctype="multipart/form-data">
       <div class="form-group">
         <input type="file" name="file">
