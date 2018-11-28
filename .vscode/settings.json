@@ -1,4 +1,7 @@
 {
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "prettier.spaceBeforeFunctionParen": true,
   "javascript.format.insertSpaceAfterConstructor": true,
   "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
   "javascript.format.insertSpaceBeforeFunctionParenthesis": true

@@ -15,6 +15,37 @@
         label: 'Content',
         value: post.content
       })
+
+      @component('components.form.radio-horizontal',{
+        name: 'user_id',
+        items: users,
+        value: 'id',
+        label: 'username',
+        inline: true,
+        labelCol: 1
+      })
+        @slot('label')
+          <span class="px-3 text-muted">
+            <i class="fas fa-user"></i>
+          </span>
+        @endslot
+      @endcomponent
+
+      @component('components.form.radio-horizontal',{
+        name: 'tags',
+        items: tags,
+        type: 'checkbox',
+        value: 'id',
+        label: 'title',
+        inline: true,
+        labelCol: 1
+      })
+        @slot('label')
+          <span class="px-3 text-muted">
+            <i class="fas fa-tags"></i>
+          </span>
+        @endslot
+      @endcomponent
       {{ csrfField() }}
       <button class="btn btn-primary" type="submit">Submit</button>
     </form>

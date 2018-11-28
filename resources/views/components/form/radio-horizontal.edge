@@ -7,6 +7,7 @@
     @each(item in items)
       <div class="form-check {{ inline ? 'form-check-inline' : '' }}">
         <input type="{{ type || 'radio' }}"
+          {{ item.check ? 'checked' : '' }}
           name="{{ name }}"
           value="{{ item[value] }}"
           id="{{ name }}-{{ item.id }}" class="form-check-input">
