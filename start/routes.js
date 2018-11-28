@@ -5,6 +5,8 @@ const Profile = use('App/Models/Profile')
 
 Route.on('/').render('welcome')
 
+Route.post('logout', 'AuthController.logout').as('logout')
+
 Route.get('login', 'AuthController.login').as('login')
 
 Route.post('auth', 'AuthController.auth').as('auth')

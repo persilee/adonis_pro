@@ -3,6 +3,12 @@
 const { validateAll } = use('Validator')
 
 class AuthController {
+  async logout ({ auth, response }) {
+    await auth.logout()
+
+    return response.redirect('back')
+  }
+
   async login ({ view, auth, response }) {
     try {
       await auth.check()

@@ -6,7 +6,7 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="{{ PostController.index }}">Posts</a>
+        <a class="nav-link" href="{{ route('PostController.index') }}">Posts</a>
       </li>
     </ul>
     <ul class="navbar-nav">
@@ -18,7 +18,10 @@
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="{{ route('UserController.show', { id: auth.user.id }) }}">Profile</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">LogOut</a>
+            <form action="{{ route('logout') }}" method="POST">
+              {{ csrfField() }}
+              <button class="dropdown-item" type="submit">Logout</button>
+            </form>
           </div>
         </li>
         <li class="nav-item">
