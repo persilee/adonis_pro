@@ -100,7 +100,11 @@ class FileController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-	async show ({ params, request, response, view }) {}
+	async show ({ params, request, response, view }) {
+    const file = await File.find(params.id)
+
+    return view.render('file.show', { file: file.toJSON() })
+  }
 
 	/**
    * Render a form to update an existing file.

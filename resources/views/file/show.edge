@@ -1,0 +1,15 @@
+@layout('layouts.main')
+
+@section('content')
+  <div class="container my-5">
+    @if(file.type === 'image')
+      <figure class="figure">
+        <img src="/uploads/{{ file.file_name }}" alt="{{ file.client_name }}" class="figure-img img-fluid rounded">
+        <figcaption class="figure-caption text-right">{{ file.client_name }}</figcaption>
+      </figure>
+    @elseif(file.type === 'video')
+      <video src="/uploads/{{ file.file_name }}" class="w-100" controls></video>
+      <p class="text-muted text-right"><small>{{ file.client_name }}</small></p>
+    @endif
+  </div>
+@endsection
