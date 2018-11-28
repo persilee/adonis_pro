@@ -4,6 +4,7 @@ const Database = use('Database')
 const Post = use('App/Models/Post')
 const User = use('App/models/User')
 const Tag = use('App/models/Tag')
+const Route = use('Route')
 const { validateAll } = use('Validator')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
@@ -123,20 +124,20 @@ class PostController {
 		//   .first()
 
 		const _post = await Post.findOrFail(params.id)
-    const users = await User.all()
-    const _tags = await Tag.all()
-    const tags = _tags.toJSON()
-    await _post.load('tags')
-    const post = _post.toJSON()
-    const postTagIds = post.tags.map(tag => tag.id)
+		const users = await User.all()
+		const _tags = await Tag.all()
+		const tags = _tags.toJSON()
+		await _post.load('tags')
+		const post = _post.toJSON()
+		const postTagIds = post.tags.map((tag) => tag.id)
 
-    const tagItems = tags.map((tag) => {
-      if (postTagIds.includes(tag.id)) {
-        tag.check = true
-      }
+		const tagItems = tags.map((tag) => {
+			if (postTagIds.includes(tag.id)) {
+				tag.check = true
+			}
 
-      return tag
-    })
+			return tag
+		})
 
 		const userItems = users.toJSON().map((user) => {
 			if (user.id === post.user_id) {
@@ -148,8 +149,8 @@ class PostController {
 
 		return view.render('post.edit', {
 			post: post,
-      users: userItems,
-      tags: tagItems
+			users: userItems,
+			tags: tagItems
 		})
 	}
 
@@ -161,15 +162,31 @@ class PostController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-	async update ({ params, request, response }) {
-		const updatedPost = request.only([ 'title', 'content' ])
+	async update ({ params, request, response, session }) {
+		const { title, content, user_id, tags } = request.all()
+
+		// const updatedPost = request.only([ 'title', 'content' ])
 		// await Database.table('posts')
 		//   .where('id', params.id)
 		//   .update(updatedPost)
 
 		const post = await Post.findOrFail(params.id)
-		post.merge(updatedPost)
-		post.save()
+		post.merge({ title, content })
+		await post.save()
+
+		const user = await User.findOrFail(user_id)
+		await post.user().associate(user)
+
+		await post.tags().sync(tags)
+
+		session.flash({
+			type: 'primary',
+			massage: `Post updated. <a href="${Route.url('PostController.show', {
+				id: post.id
+			})}" class="alert-link">Preview Post.</a>`
+    })
+
+    return response.redirect('back')
 	}
 
 	/**
