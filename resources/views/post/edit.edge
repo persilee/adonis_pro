@@ -3,6 +3,12 @@
 @section('content')
   <div class="container">
     <h3 class="mt-5 mb-4">Edit Post</h3>
+    @if(flashMessage('message'))
+      @!component('components.alert', {
+        type: [flashMessage('type')],
+        message: [flashMessage('message')]
+      })
+    @endif
     <form action="/posts/{{ post.id }}?_method=PUT" method="POST">
       @!component('components.form.input',{
         name: 'title',

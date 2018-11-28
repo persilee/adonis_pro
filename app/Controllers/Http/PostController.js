@@ -181,7 +181,7 @@ class PostController {
 
 		session.flash({
 			type: 'primary',
-			massage: `Post updated. <a href="${Route.url('PostController.show', {
+			message: `Post updated. <a href="${Route.url('PostController.show', {
 				id: post.id
 			})}" class="alert-link">Preview Post.</a>`
     })
