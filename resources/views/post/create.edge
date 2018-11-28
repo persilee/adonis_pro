@@ -3,11 +3,16 @@
 @section('content')
   <div class="container">
     <h3 class="mt-5 mb-4">Add New Post</h3>
-    <form action="/posts" method="POST">
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" class="form-control" placeholder="Enter title here" name="title">
-      </div>
+    <form action="{{ route('PostController.store') }}" method="POST">
+      @!component('components.form.input',{
+        name: 'title',
+        label: 'Title',
+        placeholder: 'Enter title here',
+        getErrorFor,
+        hasErrorFor,
+        old
+      })
+
       <div class="form-group">
         <label for="content">Content</label>
         <textarea name="content" id="" cols="30" rows="10" class="form-control" placeholder="Write something amazing"></textarea>

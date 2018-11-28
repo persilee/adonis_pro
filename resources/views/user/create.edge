@@ -8,33 +8,34 @@
           <div class="card-body">
             <h1 class="my-5 display-4">Register</h1>
             <form action="{{ route('UserController.store') }}" method="POST">
-              <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text"
-                class="form-control {{ hasErrorFor('username') ? 'is-invalid' : '' }}"
-                  name="username"
-                  value="{{ old('username', '') }}"
-                  placeholder="Pick a username">
-                {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('username'), hasErrorFor('username')) }}
-              </div>
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email"
-                  class="form-control {{ hasErrorFor('email') ? 'is-invalid' : '' }}"
-                  name="email"
-                  value="{{ old('email', '') }}"
-                  placeholder="you@example.com">
-                {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('email'), hasErrorFor('email')) }}
-              </div>
-              <div class="form-group">
-                <label for="password">password</label>
-                <input type="password"
-                  class="form-control {{ hasErrorFor('password') ? 'is-invalid' : '' }}"
-                  name="password"
-                  value="{{ old('password', '') }}"
-                  placeholder="Create a password">
-                {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('password'), hasErrorFor('password')) }}
-              </div>
+              @!component('components.form.input', {
+                name: 'username',
+                label: 'Username',
+                placeholder: 'Pick a username',
+                getErrorFor,
+                hasErrorFor,
+                old
+              })
+
+              @!component('components.form.input', {
+                name: 'email',
+                type: 'email',
+                label: 'Email',
+                placeholder: 'you@lishaoy.net',
+                getErrorFor,
+                hasErrorFor,
+                old
+              })
+
+              @!component('components.form.input', {
+                name: 'password',
+                type: 'password',
+                label: 'Password',
+                placeholder: 'Create a password',
+                getErrorFor,
+                hasErrorFor,
+                old
+              })
               {{ csrfField() }}
               <button class="btn btn-primary btn-block my-4" type="submit">Create an account</button>
             </form>
