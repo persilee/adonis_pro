@@ -5,6 +5,11 @@ const Profile = use('App/Models/Profile')
 
 Route.on('/').render('welcome')
 
+Route.get('register', 'UserController.create')
+  .as('signUp')
+
+Route.get('users/create', ({ response }) => response.route('signUp'))
+
 Route.resource('/posts', 'PostController')
 
 Route.resource('/users', 'UserController')
