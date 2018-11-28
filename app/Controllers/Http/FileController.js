@@ -4,6 +4,8 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const Helpers = use('Helpers')
+
 /**
  * Resourceful controller for interacting with files
  */
@@ -42,6 +44,18 @@ class FileController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+    const file = request.file('file', {
+      types: ['image', 'video'],
+      size: '20mb'
+    })
+
+    const fileName = `${new Date().getTime }.${ file.subtype }`
+
+    await file.move(Helpers.publicPath('uploads'), {
+      name: fileName
+    })
+
+    return response.redirect('back')
   }
 
   /**
