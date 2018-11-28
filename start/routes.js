@@ -5,8 +5,11 @@ const Profile = use('App/Models/Profile')
 
 Route.on('/').render('welcome')
 
-Route.get('register', 'UserController.create')
-  .as('signUp')
+Route.get('login', 'AuthController.login').as('login')
+
+Route.post('auth', 'AuthController.auth').as('auth')
+
+Route.get('register', 'UserController.create').as('signUp')
 
 Route.get('users/create', ({ response }) => response.route('signUp'))
 
@@ -17,13 +20,11 @@ Route.resource('/users', 'UserController')
 Route.resource('/tags', 'TagController')
 
 Route.get('profiles/:id', async ({ params }) => {
-  const profile = await Profile.find(params.id)
-  const user = await profile.user()
-    .select('username')
-    .fetch()
+	const profile = await Profile.find(params.id)
+	const user = await profile.user().select('username').fetch()
 
-  return {
-    profile,
-    user
-  }
+	return {
+		profile,
+		user
+	}
 })
