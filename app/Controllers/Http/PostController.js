@@ -4,6 +4,7 @@ const Database = use('Database')
 const Post = use('App/Models/Post')
 const User = use('App/models/User')
 const Tag = use('App/models/Tag')
+const { validateAll } = use('Validator')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -57,7 +58,20 @@ class PostController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request, response, session }) {
+    const rules = {
+      title: 'required',
+      content: 'required'
+    }
+
+    const validation = await validateAll(request.all(), rules)
+
+    if (validation.fails()) {
+      session.withErrors(validation.messages()).flashAll()
+
+      return response.redirect('back')
+    }
+
     const newPost = request.only(['title', 'content'])
     const tags = request.input('tags')
     // const postId = await Database.insert(newPost).into('posts')
@@ -146,7 +160,12 @@ class PostController {
     //   .delete()
 
     const post = await Post.find(params.id)
-    post.delete()
+    try {
+      await post.tags().detach()
+      post.delete()
+    } catch (error) {
+      console.log(error)
+    }
     return 'success'
   }
 }

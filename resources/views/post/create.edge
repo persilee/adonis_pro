@@ -13,42 +13,45 @@
         old
       })
 
-      <div class="form-group">
-        <label for="content">Content</label>
-        <textarea name="content" id="" cols="30" rows="10" class="form-control" placeholder="Write something amazing"></textarea>
-      </div>
-      <div class="form-group">
-        <span class="px-3 text-muted">
-          <i class="fas fa-user"></i>
-        </span>
-        @each(user in users)
-          <div class="form-check form-check-inline">
-            <input type="radio"
-            name="user_id"
-            value="{{ user.id }}"
-            id="user-{{ user.id }}" class="form-check-input">
-            <label for="user-{{ user.id }}" class="form-check-label">
-              {{ user.username }}
-            </label>
-          </div>
-        @endeach
-      </div>
-      <div class="form-group">
-        <span class="px-3 text-muted">
-          <i class="fas fa-tags"></i>
-        </span>
-        @each(tag in tags)
-          <div class="form-check form-check-inline">
-            <input type="checkbox"
-            name="tags"
-            value="{{ tag.id }}"
-            id="tag-{{ tag.id }}" class="form-check-input">
-            <label for="tag-{{ tag.id }}" class="form-check-label">
-              {{ tag.title }}
-            </label>
-          </div>
-        @endeach
-      </div>
+      @!component('components.form.textarea',{
+        name: 'content',
+        label: 'Content',
+        placeholder: 'Write something amazing',
+        getErrorFor,
+        hasErrorFor,
+        old
+      })
+
+      @component('components.form.radio-horizontal',{
+        name: 'user_id',
+        items: users,
+        value: 'id',
+        label: 'username',
+        inline: true,
+        labelCol: 1
+      })
+        @slot('label')
+          <span class="px-3 text-muted">
+            <i class="fas fa-user"></i>
+          </span>
+        @endslot
+      @endcomponent
+
+      @component('components.form.radio-horizontal',{
+        name: 'tags',
+        items: tags,
+        type: 'checkbox',
+        value: 'id',
+        label: 'title',
+        inline: true,
+        labelCol: 1
+      })
+        @slot('label')
+          <span class="px-3 text-muted">
+            <i class="fas fa-tags"></i>
+          </span>
+        @endslot
+      @endcomponent
       {{ csrfField() }}
       <button class="btn btn-primary" type="submit">Submit</button>
     </form>

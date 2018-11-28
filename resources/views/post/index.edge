@@ -3,7 +3,9 @@
 @section('content')
   <div class="container">
     @each(post in posts)
-      <h3 class="mt-5 mb-4">{{ post.title }}</h3>
+      <h3 class="mt-5 mb-4">
+        <a href="{{ route('PostController.show', { id: post.id }) }}">{{ post.title }}</a>
+      </h3>
       <div>{{ post.content }}</div>
       <div class="text-muted mt-2">
         <a href="/users/{{ post.user.id }}" class="text-muted">{{ post.user.username }}</a>
