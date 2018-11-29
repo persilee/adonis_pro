@@ -25,6 +25,12 @@
       <li class="nav-item">
         <a href="{{ route('files.edit', { id: file.id }) }}" class="nav-link btn btn-link">Edit</a>
       </li>
+      <li class="nav-item">
+        <form action="{{ route('files.destroy', { id: file.id }) }}?_method=DELETE" method="POST">
+          {{ csrfField() }}
+          <button class="btn btn-link nav-link" type="submit">Delete</button>
+        </form>
+      </li>
     </ul>
   </div>
 @endsection

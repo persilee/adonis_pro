@@ -7,6 +7,7 @@
 const Helpers = use('Helpers')
 const File = use('App/Models/File')
 const Drive = use('Drive')
+const Route = use('Route')
 
 /**
  * Resourceful controller for interacting with files
@@ -170,7 +171,29 @@ class FileController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-	async destroy ({ params, request, response }) {}
+	async destroy ({ params, request, response, session }) {
+    try {
+      const fileData = await File.findOrFail(params.id)
+      const filePath = `${ Helpers.publicPath('uploads') }/${ fileData.file_name }`
+      await Drive.delete(filePath)
+      await fileData.delete()
+
+      session.flash({
+        type: 'success',
+        message: `<small>${ fileData.client_name }:</small> successfully deleted.`
+      })
+
+      return response.redirect(Route.url('files.index'))
+    } catch (error) {
+      session.flash({
+        type: 'warning',
+        message: error.message
+      })
+
+      return response.redirect('back')
+    }
+
+  }
 }
 
 module.exports = FileController

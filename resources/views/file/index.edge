@@ -1,7 +1,13 @@
 @layout('layouts.main')
 
 @section('content')
-  <div class="container">
+  <div class="container my-5">
+    @if(flashMessage('message'))
+      @!component('components.alert', {
+        type: [flashMessage('type')],
+        message: [flashMessage('message')]
+      })
+    @endif
     <table class="table my-5">
       <thead>
         <tr>
