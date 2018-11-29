@@ -6,6 +6,7 @@
 
 const Helpers = use('Helpers')
 const File = use('App/Models/File')
+const Drive = use('Drive')
 
 /**
  * Resourceful controller for interacting with files
@@ -117,7 +118,11 @@ class FileController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-	async edit ({ params, request, response, view }) {}
+	async edit ({ params, request, response, view }) {
+    const file = await File.find(params.id)
+
+    return view.render('file.edit', { file })
+  }
 
 	/**
    * Update file details.
