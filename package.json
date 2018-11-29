@@ -29,6 +29,7 @@
     "@adonisjs/shield": "^1.0.8",
     "@adonisjs/validator": "^5.0.6",
     "filesize": "^3.6.1",
+    "lodash": "^4.17.11",
     "mysql": "^2.16.0",
     "sqlite3": "^4.0.4"
   },
