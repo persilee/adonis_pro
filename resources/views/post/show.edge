@@ -14,6 +14,14 @@
         @endeach
       </div>
     @endif
+    <div class="border-top py-4">
+      <form action="{{ route('share.email', { id: post.id, type: 'post' }) }}" method="POST">
+        {{ csrfField() }}
+        <button class="btn btn-light text-muted" type="submit">
+          <i class="fas fa-envelope"></i>
+        </button>
+      </form>
+    </div>
    </div>
    <ul class="nav justify-content-end fixed-bottom pb-4">
      <li class="nav-item">

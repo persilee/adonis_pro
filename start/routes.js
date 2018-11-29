@@ -5,6 +5,8 @@ const Profile = use('App/Models/Profile')
 
 Route.on('/').render('welcome')
 
+Route.post('share/:type/:id/email', 'ShareController.email').as('share.email')
+
 Route.get('files/:id/download', 'FileController.download').as('files.download')
 
 Route.get('upload', 'FileController.create').as('upload')
