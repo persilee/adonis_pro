@@ -6,7 +6,6 @@
 
 const Helpers = use('Helpers')
 const File = use('App/Models/File')
-const filesize = use('filesize')
 
 /**
  * Resourceful controller for interacting with files
@@ -23,10 +22,7 @@ class FileController {
    */
 	async index ({ request, response, view }) {
 		const _files = await File.all()
-		const files = _files.toJSON().map((file) => {
-      file.size = filesize(file.size)
-      return file
-    })
+		const files = _files.toJSON()
 
 		return view.render('file.index', { files })
 	}
