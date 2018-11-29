@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="container">
-    @each(post in posts)
+    @each(post in data)
       <h3 class="mt-5 mb-4">
         <a href="{{ route('PostController.show', { id: post.id }) }}">{{ post.title }}</a>
       </h3>
@@ -16,5 +16,13 @@
         </span>
       </div>
     @endeach
+
+    @!component('components.pagination', {
+      total,
+      perPage,
+      page,
+      lastPage,
+
+    })
   </div>
 @endsection
