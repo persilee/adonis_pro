@@ -2,6 +2,12 @@
 
 @section('content')
   <div class="container my-5">
+    @if(flashMessage('message'))
+      @!component('components.alert', {
+        type: [flashMessage('type')],
+        message: [flashMessage('message')]
+      })
+    @endif
     <div class="row">
       <div class="col-md-8">
          @if(file.type === 'image')

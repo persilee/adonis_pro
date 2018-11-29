@@ -132,7 +132,35 @@ class FileController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-	async update ({ params, request, response }) {}
+	async update ({ params, request, response, session }) {
+    const fileData = await File.find(params.id)
+    const { client_name, file_name } = request.all()
+
+    if (file_name !== fileData.file_name) {
+      try {
+        const basePath = Helpers.publicPath('uploads')
+        const originalFilePath = `${ basePath }/${ fileData.file_name }`
+        const filePath = `${ basePath }/${ file_name }`
+        await Drive.move(originalFilePath, filePath)
+      } catch (error) {
+        session.flash({
+          type: 'warning',
+          message: error.message
+        })
+        return response.redirect('back')
+      }
+    }
+
+    fileData.merge({ client_name, file_name })
+    await fileData.save()
+
+    session.flash({
+      type: 'success',
+      message: 'Successfully updated.'
+    })
+
+    return response.redirect('back')
+  }
 
 	/**
    * Delete a file with id.
