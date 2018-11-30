@@ -1,6 +1,7 @@
 @layout('layouts.main')
 
 @section('content')
+  @set('pageTitle', 'Upload')
   <h3 class="my-5">Upload</h3>
   <form action="{{ route('files.store') }}" method="POST" enctype="multipart/form-data">
     <div class="form-group">

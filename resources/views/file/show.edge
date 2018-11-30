@@ -1,6 +1,7 @@
 @layout('layouts.main')
 
 @section('content')
+  @set('pageTitle', file.client_name)
   @if(file.type === 'image')
     <figure class="figure">
       <img src="/uploads/{{ file.file_name }}" alt="{{ file.client_name }}" class="figure-img img-fluid rounded">

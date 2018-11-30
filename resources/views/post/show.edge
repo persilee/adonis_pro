@@ -1,6 +1,7 @@
 @layout('layouts.main')
 
 @section('content')
+  @set('pageTitle', post.title)
   <h1 class="mt-5 mb-4">{{ post.title }}</h1>
   <div>{{ post.content }}</div>
   @if(tags)

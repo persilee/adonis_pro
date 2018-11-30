@@ -1,6 +1,7 @@
 @layout('layouts.main')
 
 @section('content')
+  @set('pageTitle', tag.title)
   <h1 class="mt-5 mb-4 font-weight-light">{{ tag.title }}</h1>
   @if(posts)
     @each(post in posts)

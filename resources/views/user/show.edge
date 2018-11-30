@@ -1,6 +1,7 @@
 @layout('layouts.main')
 
 @section('content')
+  @set('pageTitle', user.username)
   <h1 class="my-5 text-center display-4">{{ user.username }}</h1>
   <div class="mb-5 text-center">
     <a href="https://github.com/{{ user.profile.github }}" class="text-muted">

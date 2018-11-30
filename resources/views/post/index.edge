@@ -1,6 +1,6 @@
 @layout('layouts.main')
-
 @section('content')
+  @set('pageTitle', 'Posts')
   @each(post in data)
     <h3 class="mt-5 mb-4">
       <a href="{{ route('PostController.show', { id: post.id }) }}">{{ post.title }}</a>
