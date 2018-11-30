@@ -11,6 +11,14 @@ class Post extends Model {
   user () {
     return this.belongsTo('App/Models/User')
   }
+
+  static castDates (field, value) {
+    if (field === 'updated_at') {
+      return value.fromNow()
+    }
+
+    return super.formatDates(field, value)
+  }
 }
 
 module.exports = Post

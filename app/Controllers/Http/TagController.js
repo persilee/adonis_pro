@@ -8,6 +8,7 @@
  * Resourceful controller for interacting with tags
  */
 const Tag = use('App/Models/Tag')
+const Post = use('App/Models/Post')
 
 class TagController {
   /**
@@ -57,9 +58,11 @@ class TagController {
   async show ({ params, request, response, view }) {
     const tag = await Tag.find(params.id)
     const posts = await tag.posts()
-      .select('id', 'title', 'content')
+      .select('id', 'title', 'content', 'user_id', 'updated_at')
+      .with('user', (builder) => {
+        builder.select('id', 'username')
+      })
       .fetch()
-
     return view.render('tag.show', { tag, posts: posts.toJSON() })
   }
 
