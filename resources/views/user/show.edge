@@ -8,18 +8,14 @@
       <i class="fab fa-github"></i>
     </a>
   </div>
-  <div class="list-group">
-    @each(post in user.posts)
-      <div class="list-group-item">
-        <div class="p-2">
-          <div><a href="/posts/{{ post.id }}">
-            <h5>{{ post.title }}</h5>
-          </a></div>
-          <div>
-            {{ post.content }}
-          </div>
-        </div>
-      </div>
-    @endeach
+  @!component('components.post.list', {
+    items: data
+  })
+  @!component('components.pagination', {
+    total,
+    perPage,
+    page,
+    lastPage
+  })
   </div>
 @endsection

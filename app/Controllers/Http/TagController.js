@@ -8,7 +8,6 @@
  * Resourceful controller for interacting with tags
  */
 const Tag = use('App/Models/Tag')
-const Post = use('App/Models/Post')
 
 class TagController {
   /**
@@ -56,14 +55,16 @@ class TagController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
+    const pageNumber = request.input('page', 1)
+    const pageSize = 10
+
     const tag = await Tag.find(params.id)
     const posts = await tag.posts()
-      .select('id', 'title', 'content', 'user_id', 'updated_at')
-      .with('user', (builder) => {
-        builder.select('id', 'username')
-      })
-      .fetch()
-    return view.render('tag.show', { tag, posts: posts.toJSON() })
+      .orderBy('updated_at', 'desc')
+      .with('user')
+      .paginate(pageNumber, pageSize)
+
+    return view.render('tag.show', { tag, ...posts.toJSON() })
   }
 
   /**

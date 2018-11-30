@@ -1,0 +1,20 @@
+<div class="list-group list-group-flush">
+  @each(item in items)
+    <div class="list-group-item flex-column align-items-start py-3">
+      <div class="d-flex justify-content-between">
+        <a class="text-dark w-75" href="{{ route('PostController.show', { id: item.id }) }}">
+          <h6>
+            {{ item.title }}
+          </h6>
+        </a>
+        <small class="text-black-50 text-right">{{ item.updated_at }}</small>
+      </div>
+      <div class="font-weight-light text-truncate">{{ item.content }}</div>
+      <div class="mt-2">
+        <a href="/users/{{ item.user.id }}" class="text-muted text-black-50">
+          <small>{{ item.user.username }}</small>
+        </a>
+      </div>
+    </div>
+  @endeach
+  </div>

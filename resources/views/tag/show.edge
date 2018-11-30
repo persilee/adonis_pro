@@ -3,26 +3,13 @@
 @section('content')
   @set('pageTitle', tag.title)
   <h1 class="my-5 font-weight-light text-center">{{ tag.title }}</h1>
-  @if(posts)
-    <div class="list-group list-group-flush">
-      @each(post in posts)
-        <div class="list-group-item flex-column align-items-start py-3">
-          <div class="d-flex justify-content-between">
-            <a class="text-dark w-75" href="{{ route('PostController.show', { id: post.id }) }}">
-              <h6>
-                {{ post.title }}
-              </h6>
-            </a>
-            <small class="text-black-50 text-right">{{ post.updated_at }}</small>
-          </div>
-          <div class="font-weight-light text-truncate">{{ post.content }}</div>
-          <div class="mt-2">
-            <a href="/users/{{ post.user.id }}" class="text-muted text-black-50">
-              <small>{{ post.user.username }}</small>
-            </a>
-          </div>
-        </div>
-    @endeach
-  </div>
- @endif
+  @!component('components.post.list', {
+    items: data
+  })
+  @!component('components.pagination', {
+    total,
+    perPage,
+    page,
+    lastPage
+  })
 @endsection
