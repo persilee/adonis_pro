@@ -23,6 +23,12 @@ class ShareController {
         break;
     }
 
+    session.flash({
+      type: 'success',
+      message: 'Mail has been sent, check your inbox.'
+    })
+
+    return response.redirect('back')
   }
 }
 
