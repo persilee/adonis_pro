@@ -1,0 +1,6 @@
+@if(flashMessage('message'))
+  @!component('components.alert', {
+    type: [flashMessage('type')],
+    message: [flashMessage('message')]
+  })
+@endif

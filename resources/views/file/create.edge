@@ -1,20 +1,12 @@
 @layout('layouts.main')
 
 @section('content')
-  <div class="container">
-    <h3 class="my-5">Upload</h3>
-    @if(flashMessage('message'))
-      @!component('components.alert', {
-        type: [flashMessage('type')],
-        message: [flashMessage('message')]
-      })
-    @endif
-    <form action="{{ route('files.store') }}" method="POST" enctype="multipart/form-data">
-      <div class="form-group">
-        <input type="file" name="file">
-      </div>
-      {{ csrfField() }}
-      <button class="btn btn-primary my-3" type="submit">Submit</button>
-    </form>
-  </div>
+  <h3 class="my-5">Upload</h3>
+  <form action="{{ route('files.store') }}" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+      <input type="file" name="file">
+    </div>
+    {{ csrfField() }}
+    <button class="btn btn-primary my-3" type="submit">Submit</button>
+  </form>
 @endsection

@@ -1,45 +1,43 @@
 @layout('layouts.main')
 
 @section('content')
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-5">
-        <div class="card my-5">
-          <div class="card-body">
-            <h1 class="my-5 display-4">Register</h1>
-            <form action="{{ route('UserController.store') }}" method="POST">
-              @!component('components.form.input', {
-                name: 'username',
-                label: 'Username',
-                placeholder: 'Pick a username',
-                getErrorFor,
-                hasErrorFor,
-                old
-              })
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="card my-5">
+        <div class="card-body">
+          <h1 class="my-5 display-4">Register</h1>
+          <form action="{{ route('UserController.store') }}" method="POST">
+            @!component('components.form.input', {
+              name: 'username',
+              label: 'Username',
+              placeholder: 'Pick a username',
+              getErrorFor,
+              hasErrorFor,
+              old
+            })
 
-              @!component('components.form.input', {
-                name: 'email',
-                type: 'email',
-                label: 'Email',
-                placeholder: 'you@lishaoy.net',
-                getErrorFor,
-                hasErrorFor,
-                old
-              })
+            @!component('components.form.input', {
+              name: 'email',
+              type: 'email',
+              label: 'Email',
+              placeholder: 'you@lishaoy.net',
+              getErrorFor,
+              hasErrorFor,
+              old
+            })
 
-              @!component('components.form.input', {
-                name: 'password',
-                type: 'password',
-                label: 'Password',
-                placeholder: 'Create a password',
-                getErrorFor,
-                hasErrorFor,
-                old
-              })
-              {{ csrfField() }}
-              <button class="btn btn-primary btn-block my-4" type="submit">Create an account</button>
-            </form>
-          </div>
+            @!component('components.form.input', {
+              name: 'password',
+              type: 'password',
+              label: 'Password',
+              placeholder: 'Create a password',
+              getErrorFor,
+              hasErrorFor,
+              old
+            })
+            {{ csrfField() }}
+            <button class="btn btn-primary btn-block my-4" type="submit">Create an account</button>
+          </form>
         </div>
       </div>
     </div>

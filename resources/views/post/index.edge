@@ -1,28 +1,26 @@
 @layout('layouts.main')
 
 @section('content')
-  <div class="container">
-    @each(post in data)
-      <h3 class="mt-5 mb-4">
-        <a href="{{ route('PostController.show', { id: post.id }) }}">{{ post.title }}</a>
-      </h3>
-      <div>{{ post.content }}</div>
-      <div class="text-muted mt-2">
-        <a href="/users/{{ post.user.id }}" class="text-muted">{{ post.user.username }}</a>
-        <span class="px-2">
-          <a href="https://github.com/{{ post.user.profile.github }}" class="text-muted">
-            <i class="fab fa-github"></i>
-          </a>
-        </span>
-      </div>
-    @endeach
+  @each(post in data)
+    <h3 class="mt-5 mb-4">
+      <a href="{{ route('PostController.show', { id: post.id }) }}">{{ post.title }}</a>
+    </h3>
+    <div>{{ post.content }}</div>
+    <div class="text-muted mt-2">
+      <a href="/users/{{ post.user.id }}" class="text-muted">{{ post.user.username }}</a>
+      <span class="px-2">
+        <a href="https://github.com/{{ post.user.profile.github }}" class="text-muted">
+          <i class="fab fa-github"></i>
+        </a>
+      </span>
+    </div>
+  @endeach
 
-    @!component('components.pagination', {
-      total,
-      perPage,
-      page,
-      lastPage,
+  @!component('components.pagination', {
+    total,
+    perPage,
+    page,
+    lastPage,
 
-    })
-  </div>
+  })
 @endsection

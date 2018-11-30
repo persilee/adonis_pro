@@ -1,51 +1,43 @@
 @layout('layouts.main')
 
 @section('content')
-  <div class="container my-5">
-    @if(flashMessage('message'))
-      @!component('components.alert', {
-        type: [flashMessage('type')],
-        message: [flashMessage('message')]
-      })
-    @endif
-    @if(file.type === 'image')
-      <figure class="figure">
-        <img src="/uploads/{{ file.file_name }}" alt="{{ file.client_name }}" class="figure-img img-fluid rounded">
-        <figcaption class="figure-caption text-right">
-          {{ file.client_name }}
-          <a href="{{ route('files.download', { id: file.id }) }}" class="btn text-muted">
-            <small>({{ file.size }})</small>
-            <i class="fas fa-download"></i>
-          </a>
-        </figcaption>
-      </figure>
-    @elseif(file.type === 'video')
-      <video src="/uploads/{{ file.file_name }}" class="w-100" controls></video>
-      <p class="text-muted text-right"><small>{{ file.client_name }}</small>
-      <a href="{{ route('files.download', { id: file.id }) }}" class="btn text-muted">
-        <small>({{ file.size }})</small>
-        <i class="fas fa-download"></i>
-      </a>
-      </p>
-    @endif
-    <div class="border-top py-4">
-      <form action="{{ route('share.email', { id: file.id, type: 'file' }) }}" method="POST">
-        {{ csrfField() }}
-        <button class="btn btn-light text-muted" type="submit">
-          <i class="fas fa-envelope"></i>
-        </button>
-      </form>
-    </div>
-    <ul class="nav justify-content-end fixed-bottom pb-4">
-      <li class="nav-item">
-        <a href="{{ route('files.edit', { id: file.id }) }}" class="nav-link btn btn-link">Edit</a>
-      </li>
-      <li class="nav-item">
-        <form action="{{ route('files.destroy', { id: file.id }) }}?_method=DELETE" method="POST">
-          {{ csrfField() }}
-          <button class="btn btn-link nav-link" type="submit">Delete</button>
-        </form>
-      </li>
-    </ul>
+  @if(file.type === 'image')
+    <figure class="figure">
+      <img src="/uploads/{{ file.file_name }}" alt="{{ file.client_name }}" class="figure-img img-fluid rounded">
+      <figcaption class="figure-caption text-right">
+        {{ file.client_name }}
+        <a href="{{ route('files.download', { id: file.id }) }}" class="btn text-muted">
+          <small>({{ file.size }})</small>
+          <i class="fas fa-download"></i>
+        </a>
+      </figcaption>
+    </figure>
+  @elseif(file.type === 'video')
+    <video src="/uploads/{{ file.file_name }}" class="w-100" controls></video>
+    <p class="text-muted text-right"><small>{{ file.client_name }}</small>
+    <a href="{{ route('files.download', { id: file.id }) }}" class="btn text-muted">
+      <small>({{ file.size }})</small>
+      <i class="fas fa-download"></i>
+    </a>
+    </p>
+  @endif
+  <div class="border-top py-4">
+    <form action="{{ route('share.email', { id: file.id, type: 'file' }) }}" method="POST">
+      {{ csrfField() }}
+      <button class="btn btn-light text-muted" type="submit">
+        <i class="fas fa-envelope"></i>
+      </button>
+    </form>
   </div>
+  <ul class="nav justify-content-end fixed-bottom pb-4">
+    <li class="nav-item">
+      <a href="{{ route('files.edit', { id: file.id }) }}" class="nav-link btn btn-link">Edit</a>
+    </li>
+    <li class="nav-item">
+      <form action="{{ route('files.destroy', { id: file.id }) }}?_method=DELETE" method="POST">
+        {{ csrfField() }}
+        <button class="btn btn-link nav-link" type="submit">Delete</button>
+      </form>
+    </li>
+  </ul>
 @endsection

@@ -1,50 +1,42 @@
 @layout('layouts.main')
 
 @section('content')
-   <div class="container my-5">
-    @if(flashMessage('message'))
-      @!component('components.alert', {
-        type: [flashMessage('type')],
-        message: [flashMessage('message')]
-      })
-    @endif
-    <h1 class="mt-5 mb-4">{{ post.title }}</h1>
-    <div>{{ post.content }}</div>
-    @if(tags)
-      <div class="my-5">
-        <span class="text-muted font-weight-light">标签：</span>
-        @each( tag in tags)
-        <a href="/tags/{{ tag.id }}" class="badge badge-pill badge-secondary px-2 py-1">
-          {{ tag.title }}
-        </a>
-        @endeach
-      </div>
-    @endif
-    <div class="border-top py-4">
-      <form action="{{ route('share.email', { id: post.id, type: 'post' }) }}" method="POST">
-        {{ csrfField() }}
-        <button class="btn btn-light text-muted" type="submit">
-          <i class="fas fa-envelope"></i>
-        </button>
-      </form>
-    </div>
-   </div>
-   <ul class="nav justify-content-end fixed-bottom pb-4">
-     <li class="nav-item">
-      <a
-        href="{{ route('PostController.edit', { id: post.id }) }}"
-        class="nav-link btn btn-link">
-        Edit
+  <h1 class="mt-5 mb-4">{{ post.title }}</h1>
+  <div>{{ post.content }}</div>
+  @if(tags)
+    <div class="my-5">
+      <span class="text-muted font-weight-light">标签：</span>
+      @each( tag in tags)
+      <a href="/tags/{{ tag.id }}" class="badge badge-pill badge-secondary px-2 py-1">
+        {{ tag.title }}
       </a>
-     </li>
-     <li class="nav-item">
-       <button
-        id="delete"
-        data-csrf="{{ csrfToken }}"
-        data-id="{{ post.id }}"
-        class="nav-link btn btn-link">
-         Delete
-       </button>
-     </li>
-   </ul>
+      @endeach
+    </div>
+  @endif
+  <div class="border-top py-4">
+    <form action="{{ route('share.email', { id: post.id, type: 'post' }) }}" method="POST">
+      {{ csrfField() }}
+      <button class="btn btn-light text-muted" type="submit">
+        <i class="fas fa-envelope"></i>
+      </button>
+    </form>
+  </div>
+  <ul class="nav justify-content-end fixed-bottom pb-4">
+    <li class="nav-item">
+    <a
+      href="{{ route('PostController.edit', { id: post.id }) }}"
+      class="nav-link btn btn-link">
+      Edit
+    </a>
+    </li>
+    <li class="nav-item">
+      <button
+      id="delete"
+      data-csrf="{{ csrfToken }}"
+      data-id="{{ post.id }}"
+      class="nav-link btn btn-link">
+        Delete
+      </button>
+    </li>
+  </ul>
 @endsection

@@ -1,26 +1,24 @@
 @layout('layouts.main')
 
 @section('content')
-  <div class="container">
-    <h1 class="my-5 text-center display-4">{{ user.username }}</h1>
-    <div class="mb-5 text-center">
-      <a href="https://github.com/{{ user.profile.github }}" class="text-muted">
-        <i class="fab fa-github"></i>
-      </a>
-    </div>
-    <div class="list-group">
-      @each(post in user.posts)
-        <div class="list-group-item">
-          <div class="p-2">
-            <div><a href="/posts/{{ post.id }}">
-              <h5>{{ post.title }}</h5>
-            </a></div>
-            <div>
-              {{ post.content }}
-            </div>
+  <h1 class="my-5 text-center display-4">{{ user.username }}</h1>
+  <div class="mb-5 text-center">
+    <a href="https://github.com/{{ user.profile.github }}" class="text-muted">
+      <i class="fab fa-github"></i>
+    </a>
+  </div>
+  <div class="list-group">
+    @each(post in user.posts)
+      <div class="list-group-item">
+        <div class="p-2">
+          <div><a href="/posts/{{ post.id }}">
+            <h5>{{ post.title }}</h5>
+          </a></div>
+          <div>
+            {{ post.content }}
           </div>
         </div>
-      @endeach
-    </div>
+      </div>
+    @endeach
   </div>
 @endsection
