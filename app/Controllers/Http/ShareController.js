@@ -37,7 +37,7 @@ class ShareController {
 					(message) => {
 						message
 							.to(user.email)
-							.from('dev-demo@lishaoy.net')
+              .from(Env.get('SITE_MAIL'))
 							.subject(`《${post.title}》 - ${author.username}`)
 					}
 				)

@@ -2,6 +2,12 @@
 
 @section('content')
   <div class="container my-5">
+    @if(flashMessage('message'))
+      @!component('components.alert', {
+        type: [flashMessage('type')],
+        message: [flashMessage('message')]
+      })
+    @endif
     @if(file.type === 'image')
       <figure class="figure">
         <img src="/uploads/{{ file.file_name }}" alt="{{ file.client_name }}" class="figure-img img-fluid rounded">
