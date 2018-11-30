@@ -1,0 +1,47 @@
+<style>
+  .l-mail-container {
+    background: #f8f8f8;
+    padding: 48px;
+    padding-bottom: 56px;
+    box-sizing: border-box;
+    height: 100%;
+  }
+
+  .l-mail-box {
+    background: #fff;
+    padding: 40px;
+    padding-bottom: 56px;
+    width: 70%;
+    margin: 0 auto;
+    border-radius: 5px;
+  }
+
+  .l-mail-header {
+    font-size: 32px;
+    margin-top: 0;
+    margin-bottom: 32px;
+  }
+
+  .l-mail-content {
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+
+  a.l-mail-button {
+    display: inline-block;
+    background: #007bff;
+    padding: 6px 12px;
+    font-size: 16px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+</style>
+
+<div class="l-mail-container">
+  <div class="l-mail-box">
+    <h2 class="l-mail-header">{{ post.title }}</h2>
+    <div class="l-mail-content">{{ post.content }}</div>
+    <a class="l-mail-button" href="https://{{ host }}{{ route('post.show', { id: post.id }) }}">View post</a>
+  </div>
+</div>
