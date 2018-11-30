@@ -22,6 +22,14 @@
       </a>
       </p>
     @endif
+    <div class="border-top py-4">
+      <form action="{{ route('share.email', { id: file.id, type: 'file' }) }}" method="POST">
+        {{ csrfField() }}
+        <button class="btn btn-light text-muted" type="submit">
+          <i class="fas fa-envelope"></i>
+        </button>
+      </form>
+    </div>
     <ul class="nav justify-content-end fixed-bottom pb-4">
       <li class="nav-item">
         <a href="{{ route('files.edit', { id: file.id }) }}" class="nav-link btn btn-link">Edit</a>

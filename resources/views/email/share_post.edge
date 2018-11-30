@@ -42,6 +42,6 @@
   <div class="l-mail-box">
     <h2 class="l-mail-header">{{ post.title }}</h2>
     <div class="l-mail-content">{{ post.content }}</div>
-    <a class="l-mail-button" href="https://{{ host }}{{ route('post.show', { id: post.id }) }}">View post</a>
+    <a class="l-mail-button" href="https://{{ host }}{{ route('posts.show', { id: post.id }) }}">View post</a>
   </div>
 </div>

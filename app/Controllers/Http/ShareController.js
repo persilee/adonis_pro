@@ -1,7 +1,10 @@
 'use strict'
 
 const Post = use('App/Models/Post')
+const File = use('App/Models/File')
 const Mail = use('Mail')
+const Helpers = use('Helpers')
+const Env = use('Env')
 /**
  * 邮件分享功能
  *
@@ -39,7 +42,19 @@ class ShareController {
 					}
 				)
 				break
+      case 'file':
+        const file = await File.find(params.id)
+        const filePath = `${ Helpers.publicPath('uploads') }/${ file.file_name }`
 
+        await Mail.raw(`${ file.client_name }`, (message) => {
+          message.to(user.email)
+            .from(Env.get('SITE_MAIL'))
+            .subject(file.client_name)
+            .attach(filePath, {
+              filename: file.client_name
+            })
+        })
+        break
 			default:
 				break
 		}
