@@ -1,19 +1,22 @@
 'use strict'
 
 const Verification = use('App/Models/Verification')
+const moment = use('moment')
 
 class VerificationController {
   async verify ({ params, auth, session, response }) {
     const { token } = params
-
-    console.log(token)
     const verification = await Verification.findByOrFail('token', token)
-    console.log(verification)
-
     const user = await verification.user().fetch()
-    console.log(user)
+    if (moment() > moment(verification.create_at).add(3, 'days')) {
+      session.flash({
+        type: 'danger',
+        message: 'Verification expired, please resend email verification.'
+      })
+      await verification.delete()
 
-
+      return response.route('users.show', { id: user.id })
+    }
     user.is_verified = true
     await user.save()
 
