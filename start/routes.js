@@ -6,11 +6,13 @@ const Profile = use('App/Models/Profile')
 Route.on('/').render('welcome')
 
 Route.group(() => {
-  Route.get('profile', 'ProfileController.edit').as('profile.edit')
-  Route.post('profile', 'ProfileController.update').as('profile.update')
-  Route.get('password', 'PasswordController.edit').as('password.edit')
-  Route.post('password', 'PasswordController.update').as('password.update')
-}).prefix('settings').middleware(['auth'])
+	Route.get('profile', 'ProfileController.edit').as('profile.edit')
+	Route.post('profile', 'ProfileController.update').as('profile.update').validator('UpdateProfile')
+	Route.get('password', 'PasswordController.edit').as('password.edit')
+	Route.post('password', 'PasswordController.update').as('password.update')
+})
+	.prefix('settings')
+	.middleware([ 'auth' ])
 
 Route.post('share/:type/:id/email', 'ShareController.email').as('share.email')
 
