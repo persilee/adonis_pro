@@ -1,0 +1,10 @@
+<nav class="nav nav-pills nav-justified mb-5 flex-md-column">
+  <a href="{{ route('profile.edit') }}"
+  class="nav-item nav-link text-md-right {{ url == route('profile.edit') ? 'active' : '' }}">
+    Profile
+  </a>
+  <a href="{{ route('password.edit') }}"
+  class="nav-item nav-link text-md-right {{ url == route('password.edit') ? 'active' : '' }}">
+    Security
+  </a>
+</nav>

@@ -1,0 +1,14 @@
+@!include('layouts.partials.header')
+  @include('layouts.partials.navbar')
+  <div class="container my-5">
+    @include('layouts.partials.alert')
+    <div class="row">
+      <div class="col-md-3">
+        @!section('sidebar')
+      </div>
+      <div class="col-md-9">
+        @!section('content')
+      </div>
+    </div>
+  </div>
+@include('layouts.partials.footer')
