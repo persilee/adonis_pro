@@ -9,7 +9,6 @@
  */
 
 const User = use('App/Models/User')
-const { validate, validateAll } = use('Validator')
 
 class UserController {
   /**
@@ -46,19 +45,6 @@ class UserController {
    * @param {Response} ctx.response
    */
   async store ({ request, response, session }) {
-    const rules = {
-      username: 'required|unique:users',
-      email: 'required|email|unique:users',
-      password: 'required|min:6|max:30'
-    }
-    const validation = await validateAll(request.all(), rules)
-    if (validation.fails()) {
-      session.withErrors(validation.messages())
-        .flashAll()
-
-      return response.redirect('back')
-    }
-
     const newUser = request.only(['username', 'password', 'email'])
     const user = await User.create(newUser)
 

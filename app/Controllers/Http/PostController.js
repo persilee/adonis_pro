@@ -5,7 +5,6 @@ const Post = use('App/Models/Post')
 const User = use('App/models/User')
 const Tag = use('App/models/Tag')
 const Route = use('Route')
-const { validateAll } = use('Validator')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -73,19 +72,6 @@ class PostController {
    * @param {Response} ctx.response
    */
 	async store ({ request, response, session, auth }) {
-		const rules = {
-			title: 'required',
-			content: 'required'
-		}
-
-		const validation = await validateAll(request.all(), rules)
-
-		if (validation.fails()) {
-			session.withErrors(validation.messages()).flashAll()
-
-			return response.redirect('back')
-		}
-
 		const newPost = request.only([ 'title', 'content' ])
 		const tags = request.input('tags')
 		// const postId = await Database.insert(newPost).into('posts')
@@ -196,7 +182,7 @@ class PostController {
 		await post.save()
 
     if (auth.user.id === 2) {
-      const user = await User.findOrFail(user_id)
+      const user = await User.find(user_id)
       await post.user().associate(user)
     }
 

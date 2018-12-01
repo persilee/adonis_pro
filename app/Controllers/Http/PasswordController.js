@@ -4,7 +4,6 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const { validateAll } = use('Validator')
 const Hash = use('Hash')
 
 /**
@@ -80,23 +79,6 @@ class PasswordController {
    * @param {Response} ctx.response
    */
   async update ({ params, request, response, session, auth }) {
-    const rules = {
-      old_password: `required|hashVerified:${ auth.user.password }`,
-      new_password: 'required|min:6|max:30|confirmed'
-    }
-
-    const message = {
-      'old_password.hashVerified': 'Password is invalid'
-    }
-
-    const validation = await validateAll(request.all(), rules, message)
-
-    if (validation.fails()) {
-      session.withErrors(validation.messages()).flashAll()
-
-      return response.redirect('back')
-    }
-
     const { new_password } = request.all()
     auth.user.password = await Hash.make(new_password)
     await auth.user.save()

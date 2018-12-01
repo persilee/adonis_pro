@@ -9,7 +9,7 @@ Route.group(() => {
 	Route.get('profile', 'ProfileController.edit').as('profile.edit')
 	Route.post('profile', 'ProfileController.update').as('profile.update').validator('UpdateProfile')
 	Route.get('password', 'PasswordController.edit').as('password.edit')
-	Route.post('password', 'PasswordController.update').as('password.update')
+	Route.post('password', 'PasswordController.update').as('password.update').validator('UpdatePassword')
 })
 	.prefix('settings')
 	.middleware([ 'auth' ])
@@ -26,7 +26,7 @@ Route.post('logout', 'AuthController.logout').as('logout')
 
 Route.get('login', 'AuthController.login').as('login')
 
-Route.post('auth', 'AuthController.auth').as('auth')
+Route.post('auth', 'AuthController.auth').as('auth').validator('LoginUser')
 
 Route.get('register', 'UserController.create').as('signUp')
 
@@ -37,9 +37,13 @@ Route.resource('posts', 'PostController').middleware(
 		[ [ 'create', 'store', 'edit', 'update', 'destroy' ], [ 'auth' ] ],
 		[ [ 'update', 'destroy', 'edit' ], [ 'own:post' ] ]
 	])
-)
+).validator(new Map([
+  [['posts.update', 'posts.store'], ['StorePost']]
+]))
 
-Route.resource('users', 'UserController')
+Route.resource('users', 'UserController').validator(new Map([
+  [['users.store'], ['StoreUser']]
+]))
 
 Route.resource('tags', 'TagController')
 
