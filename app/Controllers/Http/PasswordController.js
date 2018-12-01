@@ -80,7 +80,7 @@ class PasswordController {
    */
   async update ({ params, request, response, session, auth }) {
     const { new_password } = request.all()
-    auth.user.password = await Hash.make(new_password)
+    auth.user.password = new_password
     await auth.user.save()
 
     session.flash({
