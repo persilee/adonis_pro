@@ -5,6 +5,8 @@ const Profile = use('App/Models/Profile')
 
 Route.on('/').render('welcome')
 
+Route.get('users/verification/:token', 'VerificationController.verify').as('verification.email')
+
 Route.group(() => {
 	Route.get('profile', 'ProfileController.edit').as('profile.edit')
 	Route.post('profile', 'ProfileController.update').as('profile.update').validator('UpdateProfile')

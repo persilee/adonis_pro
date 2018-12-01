@@ -1,0 +1,35 @@
+<div class="l-mail-container" style="
+background: #f8f8f8;
+padding: 48px;
+padding-bottom: 56px;
+box-sizing: border-box;
+height: 100%;
+">
+  <div class="l-mail-box" style="
+  background: #fff;
+  padding: 40px;
+  padding-bottom: 56px;
+  width: 70%;
+  margin: 0 auto;
+  border-radius: 5px;
+  ">
+    <h2 class="l-mail-header" style="
+    font-size: 32px;
+    margin-top: 0;
+    margin-bottom: 32px;
+    ">Please verify your email</h2>
+    <div class="l-mail-content" style="
+    font-size: 16px;
+    margin-bottom: 32px;
+  ">Press the button below to verify your email and activate your account <strong>{{ user.username }}</strong></div>
+    <a style="
+    display: inline-block;
+    background: #007bff;
+    padding: 6px 12px;
+    font-size: 16px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    " class="l-mail-button" href="{{ appURL }}{{ route('verification.email', { token: verification.token }) }}">Verify</a>
+  </div>
+</div>
