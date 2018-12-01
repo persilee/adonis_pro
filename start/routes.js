@@ -7,6 +7,8 @@ Route.on('/').render('welcome')
 
 Route.get('users/verification/:token', 'VerificationController.verify').as('verification.email')
 
+Route.post('users/verification/resend', 'VerificationController.resend').as('verification.resend')
+
 Route.group(() => {
 	Route.get('profile', 'ProfileController.edit').as('profile.edit')
 	Route.post('profile', 'ProfileController.update').as('profile.update').validator('UpdateProfile')
