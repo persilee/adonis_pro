@@ -1,0 +1,39 @@
+@layout('layouts.main_sidebar_left')
+
+@section('sidebar')
+  @include('user.partials.nav')
+@endsection
+
+@section('content')
+@set('pageTitle', 'Update password')
+<form action="{{ route('password.update') }}" method="POST">
+  <h3 class="mb-4">Password</h3>
+  @!component('components.form.input', {
+    name: 'old_password',
+    type: 'password',
+    label: 'Current password',
+    getErrorFor,
+    hasErrorFor,
+    old
+  })
+  @!component('components.form.input', {
+    name: 'new_password',
+    type: 'password',
+    label: 'New password',
+    getErrorFor,
+    hasErrorFor,
+    old
+  })
+  @!component('components.form.input', {
+    name: 'new_password_confirmation',
+    type: 'password',
+    label: 'Confirm New password',
+    getErrorFor,
+    hasErrorFor,
+    old
+  })
+
+  {{ csrfField() }}
+  <button class="btn btn-primary btn-block my-4" type="submit">Update password</button>
+</form>
+@endsection
