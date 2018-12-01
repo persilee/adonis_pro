@@ -47,12 +47,19 @@ class PostController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-	async create ({ request, response, view }) {
-		const users = await User.all()
+	async create ({ request, response, view, auth }) {
+    const userItems = [
+      {
+        ...auth.user.toJSON(),
+        check: true
+      }
+    ]
+
+		// const users = await User.all()
 		const tags = await Tag.all()
 
 		return view.render('post.create', {
-			users: users.toJSON(),
+			users: userItems,
 			tags: tags.toJSON()
 		})
 	}
@@ -65,7 +72,7 @@ class PostController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-	async store ({ request, response, session }) {
+	async store ({ request, response, session, auth }) {
 		const rules = {
 			title: 'required',
 			content: 'required'
@@ -85,11 +92,11 @@ class PostController {
 		// console.log(postId)
 		// const post = await Post.create(newPost)
 
-		const user = await User.find(request.input('user_id'))
-		const post = await user.posts().create(newPost)
+		// const user = await User.find(request.input('user_id'))
+		const post = await auth.user.posts().create(newPost)
 		await post.tags().attach(tags)
 
-		return response.redirect(`posts/${post.id}`)
+		return response.route('posts.show', { id: post.id })
 	}
 
 	/**
@@ -121,7 +128,7 @@ class PostController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-	async edit ({ params, request, response, view }) {
+	async edit ({ params, request, response, view, auth }) {
 		// const post = await Database.from('posts')
 		//   .where('id', params.id)
 		//   .first()
@@ -130,7 +137,7 @@ class PostController {
 		const users = await User.all()
 		const _tags = await Tag.all()
 		const tags = _tags.toJSON()
-		await _post.load('tags')
+		await _post.loadMany(['tags', 'user'])
 		const post = _post.toJSON()
 		const postTagIds = post.tags.map((tag) => tag.id)
 
@@ -140,15 +147,26 @@ class PostController {
 			}
 
 			return tag
-		})
+    })
 
-		const userItems = users.toJSON().map((user) => {
-			if (user.id === post.user_id) {
-				user.check = true
-			}
+    let userItems = []
 
-			return user
-		})
+    userItems = [
+      {
+        ...post.user,
+        check: true
+      }
+    ]
+
+    if (auth.user.id === 2) {
+      userItems = users.toJSON().map((user) => {
+        if (user.id === post.user_id) {
+          user.check = true
+        }
+
+        return user
+      })
+    }
 
 		return view.render('post.edit', {
 			post: post,
@@ -165,7 +183,7 @@ class PostController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-	async update ({ params, request, response, session }) {
+	async update ({ params, request, response, session, auth }) {
 		const { title, content, user_id, tags } = request.all()
 
 		// const updatedPost = request.only([ 'title', 'content' ])
@@ -177,8 +195,10 @@ class PostController {
 		post.merge({ title, content })
 		await post.save()
 
-		const user = await User.findOrFail(user_id)
-		await post.user().associate(user)
+    if (auth.user.id === 2) {
+      const user = await User.findOrFail(user_id)
+      await post.user().associate(user)
+    }
 
 		await post.tags().sync(tags)
 

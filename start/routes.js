@@ -24,7 +24,10 @@ Route.get('register', 'UserController.create').as('signUp')
 Route.get('users/create', ({ response }) => response.route('signUp'))
 
 Route.resource('posts', 'PostController').middleware(
-	new Map([ [ [ 'create', 'store', 'edit', 'update', 'destroy' ], [ 'auth' ] ] ])
+	new Map([
+		[ [ 'create', 'store', 'edit', 'update', 'destroy' ], [ 'auth' ] ],
+		[ [ 'update', 'destroy', 'edit' ], [ 'own:post' ] ]
+	])
 )
 
 Route.resource('users', 'UserController')
