@@ -29,6 +29,7 @@
     "@adonisjs/session": "^1.0.27",
     "@adonisjs/shield": "^1.0.8",
     "@adonisjs/validator": "^5.0.6",
+    "@adonisjs/websocket": "^1.0.11",
     "filesize": "^3.6.1",
     "lodash": "^4.17.11",
     "mysql": "^2.16.0",
