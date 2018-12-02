@@ -9,6 +9,8 @@ ws.on('open', () => {
   connectionStatus.removeClass('text-muted')
   connectionStatusIcon.addClass('text-success')
   connectionStatusText.text('Connected')
+
+  subscribeToChannel()
 })
 
 ws.on('close', () => {
@@ -16,3 +18,7 @@ ws.on('close', () => {
   connectionStatusIcon.removeClass('text-success')
   connectionStatusText.text('Disconnected')
 })
+
+const subscribeToChannel = () => {
+  const demo = ws.subscribe('demo')
+}
