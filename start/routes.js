@@ -3,7 +3,7 @@
 const Route = use('Route')
 const Profile = use('App/Models/Profile')
 
-Route.on('/').render('welcome')
+Route.get('/', ({ response }) => response.route('posts.index')).as('index')
 
 Route.get('demo/ws', ({ view }) => {
   return view.render('demo.ws')
