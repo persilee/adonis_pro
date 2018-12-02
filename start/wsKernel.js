@@ -11,6 +11,8 @@ const Ws = use('Ws')
 |
 */
 const globalMiddleware = [
+  'Adonis/Middleware/Session',
+  'Adonis/Middleware/AuthInit'
 ]
 
 
@@ -31,6 +33,7 @@ const globalMiddleware = [
 | Ws.channel('chat', 'ChatController').middleware(['auth'])
 */
 const namedMiddleware = {
+  auth: 'Adonis/Middleware/Auth',
 }
 
 
