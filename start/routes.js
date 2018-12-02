@@ -5,6 +5,10 @@ const Profile = use('App/Models/Profile')
 
 Route.on('/').render('welcome')
 
+Route.get('demo/ws', ({ view }) => {
+  return view.render('demo.ws')
+})
+
 Route.get('users/verification/:token', 'VerificationController.verify').as('verification.email')
 
 Route.post('users/verification/resend', 'VerificationController.resend').as('verification.resend')

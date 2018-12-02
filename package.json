@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node ace test"
+    "test": "node ace test",
+    "browser-sync": "./node_modules/.bin/gulp browser-sync"
   },
   "keywords": [
     "adonisjs",
@@ -36,7 +37,10 @@
     "randomstring": "^1.1.5",
     "sqlite3": "^4.0.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "browser-sync": "^2.26.3",
+    "gulp": "^3.9.1"
+  },
   "autoload": {
     "App": "./app"
   }
