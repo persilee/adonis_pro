@@ -8,6 +8,16 @@ const Model = use('Model')
 const randomstring = use('randomstring')
 
 class User extends Model {
+  async hasProfile () {
+    const profile = await this.profile().fetch()
+
+    if (!profile) {
+      return false
+    }
+
+    return true
+  }
+
   verification () {
     return this.hasOne('App/Models/Verification')
   }

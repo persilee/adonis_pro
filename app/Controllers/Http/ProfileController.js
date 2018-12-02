@@ -75,10 +75,21 @@ class ProfileController {
    * @param {Response} ctx.response
    */
 	async update ({ params, request, response, auth, session }) {
-		const { username, email, github } = request.all()
-		auth.user.merge({ username, email })
-		await auth.user.save()
-    await auth.user.profile().update({ github })
+    const { username, email, github } = request.all()
+    const user = auth.user
+    if (!user.id_verified) {
+      user.merge({ username, email })
+    }else{
+      user.merge({ username })
+    }
+
+    await user.save()
+
+    if (!await user.hasProfile()) {
+      await user.profile().create({ github })
+    }else{
+      await user.profile().update({ github })
+    }
 
     session.flash({
       type: 'success',

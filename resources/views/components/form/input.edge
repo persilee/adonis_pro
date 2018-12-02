@@ -1,6 +1,7 @@
 <div class="form-group">
   <label for="{{ name }}">{{ label }}</label>
   <input type="{{ type || 'text' }}}"
+  {{ readonly ? 'readonly' : '' }}
   class="form-control {{ hasErrorFor(name) ? 'is-invalid' : '' }}"
     name="{{ name }}"
     value="{{ old(name, value) }}"

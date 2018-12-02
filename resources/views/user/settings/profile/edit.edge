@@ -20,6 +20,7 @@
   @!component('components.form.input', {
     name: 'email',
     type: 'email',
+    readonly: user.is_verified,
     label: 'Email',
     value: user.email,
     getErrorFor,
