@@ -7,7 +7,13 @@ class AuthController {
     return response.redirect('back')
   }
 
-  async login ({ view, auth, response }) {
+  async login ({ view, auth, response, request, session }) {
+    const { redirect } = request.get()
+
+    if (redirect) {
+      session.put('redirectUrl', redirect)
+    }
+
     try {
       await auth.check()
     } catch (error) {
