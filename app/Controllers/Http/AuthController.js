@@ -1,5 +1,6 @@
 'use strict'
 
+const Event = use('Event')
 class AuthController {
   async logout ({ auth, response }) {
     await auth.logout()
@@ -29,6 +30,8 @@ class AuthController {
     await auth.attempt(username, password)
 
     const user = await auth.getUser()
+
+    Event.emit('user.login', user)
 
     const redirectUrl = session.get('redirectUrl')
 
