@@ -1,5 +1,9 @@
 .navbar-brand {
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	font-weight: bold;
+}
+
+.editor-preview pre, .editor-preview-side pre , .hljs {
+	padding: 2em 1.5em;
 }

@@ -11,7 +11,7 @@
             {{ file.client_name }}
             <a href="{{ route('files.download', { id: file.id }) }}" class="btn text-muted">
               <small>({{ file.size }})</small>
-              <i class="fas fa-download"></i>
+              <i class="fa fa-download"></i>
             </a>
           </figcaption>
         </figure>
@@ -20,7 +20,7 @@
         <p class="text-muted text-right"><small>{{ file.client_name }}</small>
         <a href="{{ route('files.download', { id: file.id }) }}" class="btn text-muted">
           <small>({{ file.size }})</small>
-          <i class="fas fa-download"></i>
+          <i class="fa fa-download"></i>
         </a>
         </p>
       @endif

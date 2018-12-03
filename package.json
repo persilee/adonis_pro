@@ -31,8 +31,10 @@
     "@adonisjs/shield": "^1.0.8",
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/websocket": "^1.0.11",
+    "decode-html": "^2.0.0",
     "filesize": "^3.6.1",
     "lodash": "^4.17.11",
+    "markdown-it": "^8.4.2",
     "mysql": "^2.16.0",
     "randomstring": "^1.1.5",
     "sqlite3": "^4.0.4"

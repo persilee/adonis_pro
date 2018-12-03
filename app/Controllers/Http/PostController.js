@@ -5,6 +5,8 @@ const Post = use('App/Models/Post')
 const User = use('App/models/User')
 const Tag = use('App/models/Tag')
 const Route = use('Route')
+const MarkdownIt = require('markdown-it'),
+	md = new MarkdownIt()
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -24,10 +26,10 @@ class PostController {
    * @param {View} ctx.view
    */
 	async index ({ request, response, view }) {
-    const page = request.input('page')
-    const perPage = 6
-    const posts = await Post.query()
-      .orderBy('updated_at', 'desc')
+		const page = request.input('page')
+		const perPage = 6
+		const posts = await Post.query()
+			.orderBy('updated_at', 'desc')
 			.with('user', (builder) => {
 				builder.select('id', 'username')
 			})
@@ -47,19 +49,19 @@ class PostController {
    * @param {View} ctx.view
    */
 	async create ({ request, response, view, auth }) {
-    const userItems = [
-      {
-        ...auth.user.toJSON(),
-        check: true
-      }
-    ]
+		const userItems = [
+			{
+				...auth.user.toJSON(),
+				check : true
+			}
+		]
 
 		// const users = await User.all()
 		const tags = await Tag.all()
 
 		return view.render('post.create', {
-			users: userItems,
-			tags: tags.toJSON()
+			users : userItems,
+			tags  : tags.toJSON()
 		})
 	}
 
@@ -123,7 +125,7 @@ class PostController {
 		const users = await User.all()
 		const _tags = await Tag.all()
 		const tags = _tags.toJSON()
-		await _post.loadMany(['tags', 'user'])
+		await _post.loadMany([ 'tags', 'user' ])
 		const post = _post.toJSON()
 		const postTagIds = post.tags.map((tag) => tag.id)
 
@@ -133,31 +135,31 @@ class PostController {
 			}
 
 			return tag
-    })
+		})
 
-    let userItems = []
+		let userItems = []
 
-    userItems = [
-      {
-        ...post.user,
-        check: true
-      }
-    ]
+		userItems = [
+			{
+				...post.user,
+				check : true
+			}
+		]
 
-    if (auth.user.id === 2) {
-      userItems = users.toJSON().map((user) => {
-        if (user.id === post.user_id) {
-          user.check = true
-        }
+		if (auth.user.id === 2) {
+			userItems = users.toJSON().map((user) => {
+				if (user.id === post.user_id) {
+					user.check = true
+				}
 
-        return user
-      })
-    }
+				return user
+			})
+		}
 
 		return view.render('post.edit', {
-			post: post,
-			users: userItems,
-			tags: tagItems
+			post  : post,
+			users : userItems,
+			tags  : tagItems
 		})
 	}
 
@@ -172,30 +174,32 @@ class PostController {
 	async update ({ params, request, response, session, auth }) {
 		const { title, content, user_id, tags } = request.all()
 
+		const md_content = md.render(content)
+
 		// const updatedPost = request.only([ 'title', 'content' ])
 		// await Database.table('posts')
 		//   .where('id', params.id)
 		//   .update(updatedPost)
 
 		const post = await Post.findOrFail(params.id)
-		post.merge({ title, content })
+		post.merge({ title, content, md_content })
 		await post.save()
 
-    if (auth.user.id === 2) {
-      const user = await User.find(user_id)
-      await post.user().associate(user)
-    }
+		if (auth.user.id === 2) {
+			const user = await User.find(user_id)
+			await post.user().associate(user)
+		}
 
 		await post.tags().sync(tags)
 
 		session.flash({
-			type: 'primary',
-			message: `Post updated. <a href="${Route.url('PostController.show', {
-				id: post.id
+			type    : 'primary',
+			message : `Post updated. <a href="${Route.url('PostController.show', {
+				id : post.id
 			})}" class="alert-link">Preview Post.</a>`
-    })
+		})
 
-    return response.redirect('back')
+		// return response.redirect('back')
 	}
 
 	/**

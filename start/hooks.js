@@ -1,5 +1,6 @@
 const { hooks } = require('@adonisjs/ignitor')
 const { range } = require('lodash')
+const decode = require('decode-html')
 
 hooks.after.providersBooted(() => {
   const View = use('View')
@@ -51,6 +52,10 @@ hooks.after.providersBooted(() => {
 
   View.global('parseInt', (value) => {
     return parseInt(value)
+  })
+
+  View.global('decodeHtml', (str) => {
+    return decode(str)
   })
 
   const Exception = use('Exception')
