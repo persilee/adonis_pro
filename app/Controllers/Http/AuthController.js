@@ -24,6 +24,13 @@ class AuthController {
 
     const user = await auth.getUser()
 
+    const redirectUrl = session.get('redirectUrl')
+
+    if (redirectUrl) {
+      session.forget('redirectUrl')
+      return response.redirect(redirectUrl)
+    }
+
     return response.route('UserController.show', { id: user.id })
   }
 }

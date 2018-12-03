@@ -55,7 +55,10 @@ hooks.after.providersBooted(() => {
 
   const Exception = use('Exception')
 
-  Exception.handle('InvalidSessionException', async (error, { response }) => {
+  Exception.handle('InvalidSessionException', async (error, { response, request, session }) => {
+    session.put('redirectUrl', request.url())
+    await session.commit()
+
     return response.route('login')
   })
 
