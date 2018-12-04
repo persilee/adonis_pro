@@ -35,9 +35,9 @@ class PostController {
 				builder.select('id', 'username')
 			})
 			.with('user.profile')
-			.paginate(page, perPage)
-		// return posts
-		return view.render('post.index', { ...posts.toJSON() })
+      .paginate(page, perPage)
+
+    return view.render('post.index', { ...posts.toJSON() })
 	}
 
 	/**
@@ -51,6 +51,7 @@ class PostController {
    */
 	async create ({ request, response, view, auth }) {
     const userPhoto = `https://cn.gravatar.com/avatar/${md5(auth.user.email)}?s=60&d=robohash&r=G`
+    const userId = auth.user.toJSON().id
 		const userItems = [
 			{
 				...auth.user.toJSON(),
@@ -60,10 +61,11 @@ class PostController {
 
 		// const users = await User.all()
 		const tags = await Tag.all()
-
+    console.log(userId)
 		return view.render('post.create', {
       users : userItems,
       userPhoto,
+      userId,
 			tags  : tags.toJSON()
 		})
 	}

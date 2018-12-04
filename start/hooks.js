@@ -1,6 +1,7 @@
 const { hooks } = require('@adonisjs/ignitor')
 const { range } = require('lodash')
 const decode = require('decode-html')
+const md5 = require('js-md5')
 
 hooks.after.providersBooted(() => {
   const View = use('View')
@@ -56,6 +57,10 @@ hooks.after.providersBooted(() => {
 
   View.global('decodeHtml', (str) => {
     return decode(str)
+  })
+
+  View.global('md5', (str) => {
+    return md5(str)
   })
 
   const Exception = use('Exception')

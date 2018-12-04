@@ -32,6 +32,8 @@ Route.resource('files', 'FileController')
 
 Route.post('logout', 'AuthController.logout').as('logout')
 
+Route.get('logout', 'AuthController.logout').as('logout')
+
 Route.get('login', 'AuthController.login').as('login')
 
 Route.post('auth', 'AuthController.auth').as('auth').validator('LoginUser')

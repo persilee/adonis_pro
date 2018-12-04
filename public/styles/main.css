@@ -142,3 +142,19 @@ a[title="Toggle Fullscreen (F11)"] {
 	right: 25px;
 	top: 4px;
 }
+
+.user-photo.dropdown-toggle::after {
+	content: none;
+}
+
+.navbar {
+	padding: .2rem 1rem;
+}
+
+.dropdown-menu {
+  border: 1px solid #e0dfdf;
+}
+
+.dropdown-item {
+  color: #757575;
+}

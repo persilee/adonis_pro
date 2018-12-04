@@ -14,29 +14,47 @@
     </ul>
     <ul class="navbar-nav">
       @loggedIn
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ auth.user.username }}
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{{ route('UserController.show', { id: auth.user.id }) }}">Profile</a>
-            <a class="dropdown-item" href="{{ route('profile.edit') }}">Settings</a>
-            <div class="dropdown-divider"></div>
-            <form action="{{ route('logout') }}" method="POST">
-              {{ csrfField() }}
-              <button class="dropdown-item" type="submit">Logout</button>
-            </form>
-          </div>
-        </li>
         <li class="nav-item">
-          <a href="{{ route('PostController.create') }}" class="btn text-muted">
+          <a href="{{ route('PostController.create') }}" class="btn mt-1 text-muted">
             <i class="fa fa-plus"></i>
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ route('upload') }}" class="btn text-muted">
+          <a href="{{ route('upload') }}" class="btn mt-1 text-muted">
             <i class="fa fa-upload"></i>
           </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle user-photo" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div  class="toggle-btn" style="background-image: url(https://cn.gravatar.com/avatar/{{ md5(auth.user.email) }}?s=60&d=robohash&r=G);"></div>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{{ route('PostController.create') }}">
+              <i class="fa fa-pencil"></i>
+              <span class="ml-2">Write post<span>
+            </a>
+            <a class="dropdown-item" href="{{ route('upload') }}">
+              <i class="fa fa-upload"></i>
+              <span class="ml-2">Upload file<span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ route('UserController.show', { id: auth.user.id }) }}">
+              <i class="fa fa-user"></i>
+              <span class="ml-2">Profile<span>
+            </a>
+            <a class="dropdown-item" href="{{ route('profile.edit') }}">
+              <i class="fa fa-cog"></i>
+              <span class="ml-2">Settings</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <form action="{{ route('logout') }}" method="POST">
+              {{ csrfField() }}
+              <button class="dropdown-item" type="submit">
+                <i class="fa fa-sign-out"></i>
+                <span class="ml-2">Logout</span>
+              </button>
+            </form>
+          </div>
         </li>
       @else
         <li class="nav-item mr-3">

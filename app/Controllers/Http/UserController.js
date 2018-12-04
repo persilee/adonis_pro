@@ -63,14 +63,14 @@ class UserController {
    */
 	async show ({ params, request, response, view }) {
 		const pageNumber = request.input('page', 1)
-		const pageSize = 10
+    const pageSize = 10
 
 		const user = await User.find(params.id)
-		await user.load('profile')
+    await user.load('profile')
 
 		const posts = await user.posts().orderBy('updated_at', 'desc').with('user').paginate(pageNumber, pageSize)
 
-		return view.render('user.show', { user: user.toJSON(), ...posts.toJSON() })
+    return view.render('user.show', { user: user.toJSON(), ...posts.toJSON() })
 		// const { username, email } = user.toJSON()
 		// const profile = await user.profile()
 		//   .select('github')
