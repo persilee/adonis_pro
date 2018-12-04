@@ -78,8 +78,8 @@
 				'guide'
 			]
 		})
-		// simplemde.toggleSideBySide()
-		// simplemde.toggleFullScreen()
+		simplemde.toggleSideBySide()
+		simplemde.toggleFullScreen()
 		herder_status.text('Post ' + $('.editor-statusbar .autosave').text())
 		setInterval(() => {
 			herder_status.text('Post ' + $('.editor-statusbar .autosave').text())
