@@ -4,6 +4,12 @@
   @set('pageTitle', 'Add New Post')
   <h3 class="mt-5 mb-4">Add New Post</h3>
   <form action="{{ route('PostController.store') }}" method="POST">
+    @!component('components.form.header-input',{
+      title: post.title,
+      btnName: 'PUBLISH',
+      userPhoto: userPhoto
+    })
+
     @!component('components.form.input',{
       name: 'title',
       label: 'Title',
@@ -53,6 +59,6 @@
       @endslot
     @endcomponent
     {{ csrfField() }}
-    <button class="btn btn-primary" type="submit">Submit</button>
+    <button id="create-btn" class="btn btn-primary" type="submit">Submit</button>
   </form>
 @endsection

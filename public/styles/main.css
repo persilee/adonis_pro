@@ -1,0 +1,144 @@
+.navbar-brand {
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	font-weight: bold;
+}
+
+.editor-preview pre,
+.editor-preview-side pre,
+.hljs {
+	padding: 2em 1.5em;
+}
+
+.editor-toolbar.fullscreen {
+	top: 60px;
+}
+
+.editor-preview-side,
+.CodeMirror-fullscreen {
+	top: 110px;
+}
+
+.header.editor-header {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	padding: 0 1.4rem;
+	height: 60px;
+	background-color: #fff;
+	border-bottom: 1px solid #ddd;
+	z-index: 100;
+}
+
+.header.editor-header .title-input {
+	margin: 0;
+	padding: 0;
+	font-size: 2rem;
+	font-weight: 700;
+	color: #000;
+	flex: 1 1 auto;
+	border: none;
+	outline: none;
+}
+
+.header.editor-header .right-box {
+	height: 60px;
+	width: 20%;
+	-webkit-box-pack: end;
+	-ms-flex-pack: end;
+	justify-content: flex-end;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.navigator {
+	position: relative;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	padding-right: 0;
+}
+
+.toggle-btn {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background-color: #eee;
+	background-position: 50%;
+	background-size: cover;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.popover {
+	border-radius: 0;
+}
+
+.popover-header {
+	background-color: #fff;
+	border-bottom: none;
+	border: 0;
+}
+
+span.badge {
+	border-radius: 0;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
+.badge-light {
+	color: #9e9e9e;
+	background-color: #f8f9fa91;
+	border: 1px solid #eeeeee;
+}
+
+.badge-light.active {
+	color: #007bff;
+	text-decoration: none;
+	background-color: #dae0e561;
+	border: 1px solid #007bff94;
+}
+
+.btn.btn-link.nav-link {
+	font-size: 18px;
+}
+
+.btn-sm.edit-btn.btn {
+	border-radius: 0;
+	padding: 3px 10px;
+}
+
+a[title="Toggle Fullscreen (F11)"] {
+	display: none;
+}
+
+.status-text {
+	white-space: nowrap;
+	color: #ddd;
+	cursor: default;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.alert.in.fade {
+	opacity: 1;
+}
+
+.notifications.top-right {
+	right: 25px;
+	top: 4px;
+}

@@ -6,7 +6,8 @@ const User = use('App/models/User')
 const Tag = use('App/models/Tag')
 const Route = use('Route')
 const MarkdownIt = require('markdown-it'),
-	md = new MarkdownIt()
+  md = new MarkdownIt()
+const md5 = require('js-md5')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -49,6 +50,7 @@ class PostController {
    * @param {View} ctx.view
    */
 	async create ({ request, response, view, auth }) {
+    const userPhoto = `https://cn.gravatar.com/avatar/${md5(auth.user.email)}?s=60&d=robohash&r=G`
 		const userItems = [
 			{
 				...auth.user.toJSON(),
@@ -60,7 +62,8 @@ class PostController {
 		const tags = await Tag.all()
 
 		return view.render('post.create', {
-			users : userItems,
+      users : userItems,
+      userPhoto,
 			tags  : tags.toJSON()
 		})
 	}
@@ -74,13 +77,17 @@ class PostController {
    * @param {Response} ctx.response
    */
 	async store ({ request, response, session, auth }) {
-		const newPost = request.only([ 'title', 'content' ])
+    const newPost = request.only([ 'title', 'content' ])
+    const { content } = newPost
+    const md_content = md.render(content)
+    newPost.md_content = md_content
 		const tags = request.input('tags')
 		// const postId = await Database.insert(newPost).into('posts')
 		// console.log(postId)
 		// const post = await Post.create(newPost)
 
-		// const user = await User.find(request.input('user_id'))
+    // const user = await User.find(request.input('user_id'))
+
 		const post = await auth.user.posts().create(newPost)
 		await post.tags().attach(tags)
 
@@ -127,7 +134,8 @@ class PostController {
 		const tags = _tags.toJSON()
 		await _post.loadMany([ 'tags', 'user' ])
 		const post = _post.toJSON()
-		const postTagIds = post.tags.map((tag) => tag.id)
+    const postTagIds = post.tags.map((tag) => tag.id)
+    const userPhoto = `https://cn.gravatar.com/avatar/${ md5(auth.user.email) }?s=60&d=robohash&r=G`
 
 		const tagItems = tags.map((tag) => {
 			if (postTagIds.includes(tag.id)) {
@@ -158,8 +166,9 @@ class PostController {
 
 		return view.render('post.edit', {
 			post  : post,
-			users : userItems,
-			tags  : tagItems
+      users : userItems,
+      tags  : tagItems,
+      userPhoto
 		})
 	}
 
@@ -194,12 +203,14 @@ class PostController {
 
 		session.flash({
 			type    : 'primary',
-			message : `Post updated. <a href="${Route.url('PostController.show', {
-				id : post.id
-			})}" class="alert-link">Preview Post.</a>`
+      message: 'Post updated successfully.'
 		})
 
-		// return response.redirect('back')
+		return response.redirect(
+			Route.url('PostController.show', {
+				id : post.id
+			})
+		)
 	}
 
 	/**

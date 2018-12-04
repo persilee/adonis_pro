@@ -1,0 +1,14 @@
+<header class="header editor-header">
+  <input id="edit-title" placeholder="Enter title here..." spellcheck="false" maxlength="80" class="title-input" value="{{ title }}">
+  <div class="right-box">
+    <div class="status-text"></div>
+    <div class="header-btn mr-1">
+        <button type="button" class="btn btn-link nav-link" data-placement="bottom" id="myPopover" data-toggle="popover">{{ btnName }}
+          <i class="fa fa-sort-down" style="position: relative; top: -4px;"></i>
+        </button>
+    </div>
+    <nav class="navigator main-navigator with-padding">
+    <div  class="toggle-btn" style="background-image: url({{ userPhoto }});"></div>
+    </nav>
+  </div>
+</header>

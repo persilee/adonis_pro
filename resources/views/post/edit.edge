@@ -4,6 +4,12 @@
   @set('pageTitle', 'Edit Post')
   <h3 class="mt-5 mb-4">Edit Post</h3>
   <form action="/posts/{{ post.id }}?_method=PUT" method="POST">
+    @!component('components.form.header-input',{
+      title: post.title,
+      btnName: 'UPDATE',
+      userPhoto: userPhoto
+    })
+
     @!component('components.form.input',{
       name: 'title',
       label: 'Title',
@@ -13,6 +19,7 @@
     @!component('components.form.textarea',{
       name: 'content',
       label: 'Content',
+      id: post.id,
       value: post.content
     })
 
@@ -47,6 +54,6 @@
       @endslot
     @endcomponent
     {{ csrfField() }}
-    <button class="btn btn-primary" type="submit">Submit</button>
+    <button id="edit-btn" class="btn btn-primary" type="submit">Submit</button>
   </form>
 @endsection
