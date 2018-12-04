@@ -57,7 +57,7 @@
 			renderingConfig         : {
 				codeSyntaxHighlighting : true
 			},
-			autofocus               : true,
+			autofocus               : false,
 			autoDownloadFontAwesome : false,
 			toolbar                 : [
 				'bold',

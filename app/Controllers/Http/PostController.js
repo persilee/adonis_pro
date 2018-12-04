@@ -164,13 +164,16 @@ class PostController {
 
 				return user
 			})
-		}
+    }
+
+    const userId = auth.user.id
 
 		return view.render('post.edit', {
 			post  : post,
       users : userItems,
       tags  : tagItems,
-      userPhoto
+      userPhoto,
+      userId
 		})
 	}
 

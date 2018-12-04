@@ -1,3 +1,25 @@
+body {
+  font-family: "Songti SC",serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 1.2rem;
+}
+a:hover {
+  text-decoration: none;
+}
+.author, .author a {
+  color: #9E9E9E;
+  font-size: 16px;
+}
+.author .author-photo, .author .author-text, .post-title, .author  {
+  display: inline-block;
+}
+.toggle-btn.author-photo {
+  width: 40px;
+  height: 40px;
+}
+.post-title {
+  position: relative;
+  top: -10px;
+}
 .navbar-brand {
 	text-transform: uppercase;
 	letter-spacing: 3px;
