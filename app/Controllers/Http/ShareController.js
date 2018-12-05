@@ -65,7 +65,28 @@ class ShareController {
 		})
 
 		return response.redirect('back')
-	}
+  }
+
+  async like ({ params, request, auth, view }) {
+    // try {
+    //   await auth.check()
+    // } catch (error) {
+    //   return view.render('auth.login')
+    // }
+    const cookie = request.all()
+    try {
+      const post = await Post.findOrFail(params.id)
+      post.likes += 1
+      await post.save()
+    } catch (error) {
+      console.log(error)
+    }
+
+    return {
+      status: 'success',
+      cookie: cookie.uniqueness_cookie
+    }
+  }
 }
 
 module.exports = ShareController

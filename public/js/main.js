@@ -111,7 +111,7 @@
 					}
 				})
 				.show()
-    } else if (simplemde.value() == '') {
+		} else if (simplemde.value() == '') {
 			$('.top-right')
 				.notify({
 					type     : 'danger',
@@ -145,4 +145,40 @@
 			}
 		})
 	})
+
+	if (Cookies.get('uniqueness_cookie')) {
+		const like = $('.post-suspended-panel .post-panel.likes')
+		like.unbind('click')
+		like.addClass('active')
+		like.find('.is-liked').addClass('liked')
+	} else {
+		$('.post-suspended-panel .post-panel.likes').on('click', function () {
+			const time = new Date().getTime()
+			const ip = returnCitySN['cip'] + returnCitySN['cname']
+			const userAgent = navigator.userAgent
+			const uniqueness_cookie = time + ip + userAgent
+			Cookies.set('uniqueness_cookie', uniqueness_cookie)
+			const post_id = $(this).data('id')
+			let likes = $(this).attr('badge')
+			const _this = $(this)
+			$.ajax({
+				url     : `/share/${post_id}/like`,
+				method  : 'GET',
+				data    : {
+					uniqueness_cookie : uniqueness_cookie
+				},
+				success : function (response) {
+					if (response.status == 'success') {
+						if (Cookies.get('uniqueness_cookie') == response.cookie) {
+							_this.addClass('active')
+							_this.attr('badge', parseInt(likes) + 1)
+							$('.status .likes').html(`<i class="iconfont icon-love mr-2"></i>${parseInt(likes) + 1}`)
+							_this.unbind('click')
+							_this.find('.is-liked').addClass('liked')
+						}
+					}
+				}
+			})
+		})
+	}
 })()

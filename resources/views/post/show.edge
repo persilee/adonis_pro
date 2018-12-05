@@ -46,10 +46,13 @@
     </div>
   @endif
   <div class="post-suspended-panel">
-    <div class="post-panel likes my-3 shadow-sm">
+    <div data-id="{{ post.id }}" badge="{{ post.likes ? post.likes : 0 }}" class="post-panel likes my-3 shadow-sm">
       <a href="#">
         <i class="iconfont icon-love"></i>
       </a>
+      <div class="is-liked">
+        Liked
+      </div>
     </div>
     <div class="post-panel email my-3 shadow-sm">
       <a href="{{ route('share.email', { id: post.id, type: 'post' }) }}">

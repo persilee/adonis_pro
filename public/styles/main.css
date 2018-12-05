@@ -292,7 +292,7 @@ a[title="Toggle Fullscreen (F11)"] {
 	background-color: #ffffff !important;
 }
 
-.container > .list-group > .list-group-item:first-child > .post-title {
+.container > div:first-child > .list-group-item:first-child > .post-title {
 	margin-top: 6px !important;
 }
 
@@ -345,12 +345,61 @@ a[title="Toggle Fullscreen (F11)"] {
 .post-suspended-panel .post-panel {
 	width: 2.5rem;
 	height: 2.5rem;
-	background-color: #fafafa;
+	background-color: #fafafadb;
 	text-align: center;
 	line-height: 2.5rem;
-	border-radius: 50%;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .pagination {
-  font-size: 14px;
+	font-size: 14px;
+}
+
+.post-suspended-panel .post-panel.likes:after {
+	content: attr(badge);
+	position: absolute;
+	top: 14px;
+	left: 66%;
+	padding: .15rem .4rem;
+	font-size: 1rem;
+	text-align: center;
+	line-height: 1;
+	white-space: nowrap;
+	color: #fff;
+	background-color: #b2bac2;
+	border-radius: .7rem;
+	transform-origin: left top;
+	transform: scale(.65);
+}
+
+.post-suspended-panel .post-panel a:hover,
+.post-suspended-panel .post-panel.active a {
+	color: #ef5350;
+}
+
+.post-suspended-panel .post-panel.active.likes:after {
+	color: #fff;
+	font-weight: bold;
+	background-color: #ef5350e0;
+}
+
+.post-suspended-panel .post-panel.likes .liked {
+	width: 2.55rem;
+	height: 2.55rem;
+	background-color: #fafafaeb;
+	text-align: center;
+	line-height: 2.45rem;
+	border-radius: 50%;
+	font-size: 14px;
+	color: #4caf50;
+	font-weight: bold;
+	position: relative;
+	top: -38px;
+  left: -46px;
+  transition: all 0.7s ease 0s;
+}
+
+.post-suspended-panel .post-panel.likes:hover .liked {
+  left: 0;
 }
