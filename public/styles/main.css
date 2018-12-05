@@ -1,24 +1,29 @@
 body {
-  font-family: "Songti SC",serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-  font-size: 1.2rem;
+	font-family: "Songti SC", serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+		sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-size: 1.2rem;
 }
 a:hover {
-  text-decoration: none;
+	text-decoration: none;
 }
-.author, .author a {
-  color: #9E9E9E;
-  font-size: 16px;
+.author,
+.author a {
+	color: #9e9e9e;
+	font-size: 16px;
 }
-.author .author-photo, .author .author-text, .post-title, .author  {
-  display: inline-block;
+.author .author-photo,
+.author .author-text,
+.post-title,
+.author {
+	display: inline-block;
 }
 .toggle-btn.author-photo {
-  width: 40px;
-  height: 40px;
+	width: 40px;
+	height: 40px;
 }
 .post-title {
-  position: relative;
-  top: -10px;
+	position: relative;
+	top: -10px;
 }
 .navbar-brand {
 	text-transform: uppercase;
@@ -174,9 +179,25 @@ a[title="Toggle Fullscreen (F11)"] {
 }
 
 .dropdown-menu {
-  border: 1px solid #e0dfdf;
+	border: 1px solid #e0dfdf;
 }
 
 .dropdown-item {
-  color: #757575;
+	color: #757575;
+}
+
+.page-item.active .page-link {
+	color: #212121;
+	background-color: #e0e0e0;
+	border-color: #BDBDBD;
+}
+
+.page-link {
+	color: #424242;
+}
+
+.page-link:hover {
+	color: #212121;
+	background-color: #e0e0e0;
+	border-color: #e0e0e0;
 }
