@@ -13,13 +13,19 @@ a:hover {
 }
 .author .author-photo,
 .author .author-text,
-.post-title,
-.author {
+.author-text .name,
+.author-text .update,
+.post-title {
 	display: inline-block;
 }
+.author-text .name,
+.author-text .update {
+	position: relative;
+	top: -6px;
+}
 .toggle-btn.author-photo {
-	width: 40px;
-	height: 40px;
+	width: 20px;
+	height: 20px;
 }
 .post-title {
 	position: relative;
@@ -189,7 +195,7 @@ a[title="Toggle Fullscreen (F11)"] {
 .page-item.active .page-link {
 	color: #212121;
 	background-color: #e0e0e0;
-	border-color: #BDBDBD;
+	border-color: #bdbdbd;
 }
 
 .page-link {
