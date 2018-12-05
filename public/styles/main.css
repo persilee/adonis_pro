@@ -11,6 +11,7 @@ a:hover {
 }
 
 body > .container {
+	max-width: 860px;
 	padding-top: 46px;
 }
 
@@ -283,7 +284,7 @@ a[title="Toggle Fullscreen (F11)"] {
 }
 
 .navbar {
-	max-width: 1170px;
+	max-width: 960px;
 	margin: 0 auto;
 }
 
@@ -293,4 +294,63 @@ a[title="Toggle Fullscreen (F11)"] {
 
 .container > .list-group > .list-group-item:first-child > .post-title {
 	margin-top: 6px !important;
+}
+
+.author.post-show .author-photo {
+	width: 48px;
+	height: 48px;
+}
+
+.author.post-show .author-text .name {
+	display: block;
+}
+
+.author.post-show .author-text .name a {
+	font-size: 18px;
+}
+
+.author.post-show .status {
+	position: relative;
+	top: -6px;
+}
+.edit-btn {
+	margin-right: 10%;
+}
+.edit-btn .btn.btn-outline-light {
+	margin-top: 6px;
+	padding: 0 16px;
+	font-size: 14px;
+	border: 1px solid #dcdcdc;
+	color: #424242;
+	line-height: 30px;
+	border-radius: 50px;
+}
+
+.post-tags {
+	font-size: 14px;
+}
+
+.post-tags .badge {
+	transform: scale(0.9);
+}
+
+.post-suspended-panel {
+	position: fixed;
+	z-index: 1040;
+	margin-left: -6rem;
+	top: 16rem;
+	color: #9e9e9e;
+}
+
+.post-suspended-panel .post-panel {
+	width: 2.5rem;
+	height: 2.5rem;
+	background-color: #fafafa;
+	text-align: center;
+	line-height: 2.5rem;
+	border-radius: 50%;
+}
+
+.pagination {
+  font-size: 14px;
 }

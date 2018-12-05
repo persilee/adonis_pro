@@ -79,9 +79,6 @@ class UserController {
       .where('user_id', params.id)
       .getSum('likes')
 
-    console.log(total_reads)
-    console.log(total_likes)
-
     return view.render('user.show', {
       user: user.toJSON(),
       ...posts.toJSON(),

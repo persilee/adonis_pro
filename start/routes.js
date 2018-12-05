@@ -23,6 +23,7 @@ Route.group(() => {
 	.middleware([ 'auth' ])
 
 Route.post('share/:type/:id/email', 'ShareController.email').as('share.email')
+Route.get('share/:type/:id/email', 'ShareController.email').as('share.email')
 
 Route.get('files/:id/download', 'FileController.download').as('files.download')
 

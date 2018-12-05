@@ -28,7 +28,7 @@ class PostController {
    */
 	async index ({ request, response, view }) {
 		const page = request.input('page')
-		const perPage = 6
+		const perPage = 10
 		const posts = await Post.query()
 			.orderBy('updated_at', 'desc')
 			.with('user', (builder) => {
@@ -113,9 +113,14 @@ class PostController {
     const post = await Post.findOrFail(params.id)
     post.reads += 1
     await post.save()
+    const user = await post.user().fetch()
 		const tags = await post.tags().select('id', 'title').fetch()
 
-		return view.render('post.show', { post, tags: tags.toJSON() })
+		return view.render('post.show', {
+      post,
+      tags: tags.toJSON(),
+      user: user.toJSON()
+     })
 	}
 
 	/**
