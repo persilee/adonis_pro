@@ -2,11 +2,48 @@
 
 @section('content')
   @set('pageTitle', user.username)
-  <h1 class="my-5 text-center display-4">{{ user.username }}</h1>
+  <div class="d-flex justify-content-center">
+    <div class="toggle-btn profile"
+    style="background-image: url('https://cn.gravatar.com/avatar/{{ md5(user.email) }}?s=60&d=robohash&r=G');">
+    </div>
+  </div>
+  <h1 class="my-4 text-center">{{ user.username }}</h1>
   <div class="mb-5 text-center">
-    <a href="https://github.com/{{ user.profile.github }}" class="text-muted">
-      <i class="fa fa-github"></i>
-    </a>
+    <div class="d-flex justify-content-center flex-row">
+      <div class="profile-item mx-3">
+        <div class="profile-icon">
+          <a href="https://github.com/{{ user.profile.github }}" class="text-muted d-block">
+            <i class="fa fa-github"></i>
+          </a>
+          <span class="profile-text">GitHub</span>
+        </div>
+      </div>
+      <div class="profile-item mx-3">
+        <div class="profile-icon">
+          <span class="text-muted d-block">
+            <i class="iconfont icon-article1"></i>
+          </span>
+          <span class="profile-text">{{ total }} Posts</span>
+        </div>
+      </div>
+      <div class="profile-item mx-3">
+        <div class="profile-icon">
+          <span class="text-muted d-block">
+            <i class="iconfont icon-read"></i>
+          </span>
+          <span class="profile-text read">{{ total_reads ? total_reads : 0 }} Reads</span>
+        </div>
+      </div>
+      <div class="profile-item mx-3">
+        <div class="profile-icon">
+          <span class="text-muted d-block">
+            <i class="iconfont icon-love"></i>
+          </span>
+          <span class="profile-text">{{ total_likes ? total_likes : 0 }} Likes</span>
+        </div>
+      </div>
+    </div>
+
   </div>
   @!component('components.post.list', {
     items: data

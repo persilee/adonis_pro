@@ -9,6 +9,7 @@
  */
 
 const User = use('App/Models/User')
+const Post = use('App/Models/Post')
 const Event = use('Event')
 
 class UserController {
@@ -68,9 +69,25 @@ class UserController {
 		const user = await User.find(params.id)
     await user.load('profile')
 
-		const posts = await user.posts().orderBy('updated_at', 'desc').with('user').paginate(pageNumber, pageSize)
+    const posts = await user.posts().orderBy('updated_at', 'desc').with('user').paginate(pageNumber, pageSize)
 
-    return view.render('user.show', { user: user.toJSON(), ...posts.toJSON() })
+    const total_reads = await Post.query()
+      .where('user_id', params.id)
+      .getSum('reads')
+
+    const total_likes = await Post.query()
+      .where('user_id', params.id)
+      .getSum('likes')
+
+    console.log(total_reads)
+    console.log(total_likes)
+
+    return view.render('user.show', {
+      user: user.toJSON(),
+      ...posts.toJSON(),
+      total_reads: total_reads,
+      total_likes: total_likes
+    })
 		// const { username, email } = user.toJSON()
 		// const profile = await user.profile()
 		//   .select('github')

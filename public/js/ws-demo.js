@@ -25,7 +25,6 @@ const subscribeToChannel = () => {
   const demo = ws.subscribe('demo')
 
   demo.on('message', (message) => {
-    console.log(message)
     messages.append(`
     <div class="message my-4 d-flex">
       <div class="mr-2">

@@ -61,7 +61,7 @@ class PostController {
 
 		// const users = await User.all()
 		const tags = await Tag.all()
-    console.log(userId)
+
 		return view.render('post.create', {
       users : userItems,
       userPhoto,
@@ -108,9 +108,11 @@ class PostController {
 	async show ({ params, request, response, view }) {
 		// const post = await Database.from('posts')
 		//   .where('id', params.id)
-		//   .first()
+    //   .first()
 
-		const post = await Post.findOrFail(params.id)
+    const post = await Post.findOrFail(params.id)
+    post.reads += 1
+    await post.save()
 		const tags = await post.tags().select('id', 'title').fetch()
 
 		return view.render('post.show', { post, tags: tags.toJSON() })

@@ -18,12 +18,10 @@
 	})
 
 	if (url.indexOf('edit') != -1) {
-		console.log('edit')
 		simplemdeId = $('textarea').attr('id')
 		post_btn =
 			'<div id="post-edit-btn" class="mt-4 mb-2 d-flex justify-content-center"><button type="button" class="btn btn-outline-primary btn-sm edit-btn">Confirm and Update</button></div>'
 	} else if (url.indexOf('create') != -1) {
-		console.log('create')
 		simplemdeId = 'simplemde'
 		post_btn =
 			'<div id="post-create-btn" class="mt-4 mb-2 d-flex justify-content-center"><button type="button" class="btn btn-outline-primary btn-sm edit-btn">Confirm and Publish</button></div>'

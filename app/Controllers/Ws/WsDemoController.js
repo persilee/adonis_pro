@@ -8,7 +8,6 @@ class WsDemoController {
   }
 
   onMessage (message) {
-    console.log(message)
     const { username } = this.user
     const { content } = message
 
