@@ -9,6 +9,22 @@ a {
 a:hover {
 	text-decoration: none;
 }
+
+body > .container {
+	padding-top: 46px;
+}
+
+.limit-width {
+	background-color: #fff;
+	border: 1px solid #eeeeee;
+	border-width: 0 0 1px;
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 1030;
+}
+
 .author,
 .author a {
 	color: #9e9e9e;
@@ -20,19 +36,19 @@ a:hover {
 	font-size: 14px;
 }
 .status .reads .iconfont.icon-read {
-  font-size: 15px;
-  position: relative;
+	font-size: 15px;
+	position: relative;
 	top: 1px;
 }
 
 .status .likes .iconfont.icon-love {
-  font-size: 12px;
-  position: relative;
+	font-size: 12px;
+	position: relative;
 	top: -1px;
 }
 .status .reads,
 .status .likes {
-  position: relative;
+	position: relative;
 	top: -1px;
 }
 
@@ -101,7 +117,7 @@ a:hover {
 	height: 60px;
 	background-color: #fff;
 	border-bottom: 1px solid #ddd;
-	z-index: 100;
+	z-index: 1036;
 }
 
 .header.editor-header .title-input {
@@ -260,4 +276,21 @@ a[title="Toggle Fullscreen (F11)"] {
 .profile-text.read {
 	position: relative;
 	top: -4px;
+}
+
+.editor-preview-side {
+	border-left: none;
+}
+
+.navbar {
+	max-width: 1170px;
+	margin: 0 auto;
+}
+
+.bg-light {
+	background-color: #ffffff !important;
+}
+
+.container > .list-group > .list-group-item:first-child > .post-title {
+	margin-top: 6px !important;
 }
