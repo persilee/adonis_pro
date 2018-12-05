@@ -21,7 +21,15 @@
             </a>
           </div>
           <div class="update">
-            <small class="">·{{ item.updated_at }}</small>
+            <small>·{{ item.updated_at }}</small>
+          </div>
+        </div>
+        <div class="status ml-2">
+          <div class="reads text-muted mr-2">
+            <i class="iconfont icon-read mr-2"></i>{{ item.reads ? item.reads : 0 }}
+          </div>
+          <div class="likes text-muted mr-2">
+            <i class="iconfont icon-love mr-2"></i></i>{{ item.likes ? item.likes : 0 }}
           </div>
         </div>
       </div>
