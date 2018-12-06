@@ -60,7 +60,18 @@ class FileController {
 		const file = request.file('file', {
 			types : [ 'image', 'video' ],
 			size  : '100mb'
-		})
+    })
+
+    if (!file) {
+      session.flash({
+        type: 'warning',
+        message: 'You have not selected the file, please select.'
+      })
+
+      return response.redirect('back')
+    }
+
+    console.log(file)
 
 		const fileName = `${new Date().getTime()}.${file.subtype}`
 

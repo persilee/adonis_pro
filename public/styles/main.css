@@ -348,8 +348,8 @@ a[title="Toggle Fullscreen (F11)"] {
 	background-color: #fafafadb;
 	text-align: center;
 	line-height: 2.5rem;
-  border-radius: 50%;
-  overflow: hidden;
+	border-radius: 50%;
+	overflow: hidden;
 }
 
 .pagination {
@@ -396,10 +396,17 @@ a[title="Toggle Fullscreen (F11)"] {
 	font-weight: bold;
 	position: relative;
 	top: -38px;
-  left: -46px;
-  transition: all 0.7s ease 0s;
+	left: -46px;
+	transition: all 0.7s ease 0s;
 }
 
 .post-suspended-panel .post-panel.likes:hover .liked {
-  left: 0;
+	left: 0;
+}
+.file-icon{
+  display: block;
+}
+.file-icon i {
+	font-size: 88px;
+	color: #1e88e5;
 }

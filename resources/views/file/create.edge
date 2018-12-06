@@ -2,12 +2,21 @@
 
 @section('content')
   @set('pageTitle', 'Upload')
-  <h3 class="my-5">Upload</h3>
-  <form action="{{ route('files.store') }}" method="POST" enctype="multipart/form-data">
-    <div class="form-group">
-      <input type="file" name="file">
+  <div class="d-flex align-items-center flex-column">
+    <div class="title">
+      <h1 class="my-5">Upload</h1>
     </div>
-    {{ csrfField() }}
-    <button class="btn btn-primary my-3" type="submit">Submit</button>
-  </form>
+    <div class="content text-center">
+      <form action="{{ route('files.store') }}" method="POST" enctype="multipart/form-data">
+        <div class="form-group file-input">
+          <input id="file" hidden type="file" name="file" accept="image/*, video/*">
+          <a href="javascript:void(0);" class="file-icon" id="file-icon"><i class="iconfont icon-upload"></i></a>
+          <span class="text-success d-block my-2"><small></small></span>
+          <span class="text-muted"><small>Please select file</small></span>
+        </div>
+        {{ csrfField() }}
+        <button class="btn btn-primary my-4 px-3" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
 @endsection

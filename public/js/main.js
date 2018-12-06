@@ -181,5 +181,17 @@
 				}
 			})
 		})
-	}
+  }
+
+  $('#file-icon').on('click', function(){
+    $('#file').click()
+  })
+
+  $('#file').on('change', function(){
+    $('.file-input .text-success small').text($(this).get(0).files[0].name)
+    $('.file-input .text-muted small').text('')
+  })
+
+
+
 })()
