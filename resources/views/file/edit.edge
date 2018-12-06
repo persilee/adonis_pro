@@ -2,9 +2,10 @@
 
 @section('content')
   @set('pageTitle', 'Edit file')
-  <div class="row">
+  <div class="file-content">
+    <div class="row">
     <div class="col-md-8">
-        @if(file.type === 'image')
+      @if(file.type === 'image')
         <figure class="figure">
           <img src="/uploads/{{ file.file_name }}" alt="{{ file.client_name }}" class="figure-img img-fluid rounded">
           <figcaption class="figure-caption text-right">
@@ -15,31 +16,32 @@
             </a>
           </figcaption>
         </figure>
-      @elseif(file.type === 'video')
-        <video src="/uploads/{{ file.file_name }}" class="w-100" controls></video>
-        <p class="text-muted text-right"><small>{{ file.client_name }}</small>
-        <a href="{{ route('files.download', { id: file.id }) }}" class="btn text-muted">
-          <small>({{ file.size }})</small>
-          <i class="fa fa-download"></i>
-        </a>
-        </p>
-      @endif
-    </div>
-    <div class="col-md-4">
-      <form action="{{ route('files.update', { id: file.id }) }}?_method=PUT" method="POST">
-        @!component('components.form.input',{
-          name: 'client_name',
-          label: 'Original file name',
-          value: file.client_name
-        })
-        @!component('components.form.input',{
-          name: 'file_name',
-          label: 'File name',
-          value: file.file_name
-        })
-      {{ csrfField() }}
-      <button class="btn btn-primary my-3" type="submit">Submit</button>
-      </form>
+        @elseif(file.type === 'video')
+          <video src="/uploads/{{ file.file_name }}" class="w-100" controls></video>
+          <p class="text-muted text-right"><small>{{ file.client_name }}</small>
+          <a href="{{ route('files.download', { id: file.id }) }}" class="btn text-muted">
+            <small>({{ file.size }})</small>
+            <i class="fa fa-download"></i>
+          </a>
+          </p>
+        @endif
+      </div>
+      <div class="col-md-4">
+        <form action="{{ route('files.update', { id: file.id }) }}?_method=PUT" method="POST">
+          @!component('components.form.input',{
+            name: 'client_name',
+            label: 'Original file name',
+            value: file.client_name
+          })
+          @!component('components.form.input',{
+            name: 'file_name',
+            label: 'File name',
+            value: file.file_name
+          })
+        {{ csrfField() }}
+        <button class="btn btn-sm btn-primary my-3 px-2" type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   </div>
 @endsection

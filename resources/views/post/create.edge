@@ -2,64 +2,66 @@
 
 @section('content')
   @set('pageTitle', 'Add New Post')
-  <h3 class="mt-5 mb-4">Add New Post</h3>
-  <form action="{{ route('PostController.store') }}" method="POST">
-    @!component('components.form.header-input',{
-      title: post.title,
-      btnName: 'PUBLISH',
-      userPhoto,
-      userId
-    })
+  <div class="post-content">
+    <h3 class="mt-5 mb-4">Add New Post</h3>
+    <form action="{{ route('PostController.store') }}" method="POST">
+      @!component('components.form.header-input',{
+        title: post.title,
+        btnName: 'PUBLISH',
+        userPhoto,
+        userId
+      })
 
-    @!component('components.form.input',{
-      name: 'title',
-      label: 'Title',
-      placeholder: 'Enter title here',
-      getErrorFor,
-      hasErrorFor,
-      old
-    })
+      @!component('components.form.input',{
+        name: 'title',
+        label: 'Title',
+        placeholder: 'Enter title here',
+        getErrorFor,
+        hasErrorFor,
+        old
+      })
 
-    @!component('components.form.textarea',{
-      name: 'content',
-      label: 'Content',
-      placeholder: 'Write something amazing',
-      getErrorFor,
-      hasErrorFor,
-      old
-    })
+      @!component('components.form.textarea',{
+        name: 'content',
+        label: 'Content',
+        placeholder: 'Write something amazing',
+        getErrorFor,
+        hasErrorFor,
+        old
+      })
 
-    @component('components.form.radio-horizontal',{
-      name: 'user_id',
-      items: users,
-      value: 'id',
-      label: 'username',
-      inline: true,
-      labelCol: 1
-    })
-      @slot('label')
-        <span class="px-3 text-muted">
-          <i class="fa fa-user"></i>
-        </span>
-      @endslot
-    @endcomponent
+      @component('components.form.radio-horizontal',{
+        name: 'user_id',
+        items: users,
+        value: 'id',
+        label: 'username',
+        inline: true,
+        labelCol: 1
+      })
+        @slot('label')
+          <span class="px-3 text-muted">
+            <i class="fa fa-user"></i>
+          </span>
+        @endslot
+      @endcomponent
 
-    @component('components.form.radio-horizontal',{
-      name: 'tags',
-      items: tags,
-      type: 'checkbox',
-      value: 'id',
-      label: 'title',
-      inline: true,
-      labelCol: 1
-    })
-      @slot('label')
-        <span class="px-3 text-muted">
-          <i class="fa fa-tags"></i>
-        </span>
-      @endslot
-    @endcomponent
-    {{ csrfField() }}
-    <button id="create-btn" class="btn btn-primary" type="submit">Submit</button>
-  </form>
+      @component('components.form.radio-horizontal',{
+        name: 'tags',
+        items: tags,
+        type: 'checkbox',
+        value: 'id',
+        label: 'title',
+        inline: true,
+        labelCol: 1
+      })
+        @slot('label')
+          <span class="px-3 text-muted">
+            <i class="fa fa-tags"></i>
+          </span>
+        @endslot
+      @endcomponent
+      {{ csrfField() }}
+      <button id="create-btn" class="btn btn-primary" type="submit">Submit</button>
+    </form>
+  </div>
 @endsection

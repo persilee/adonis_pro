@@ -2,22 +2,24 @@
 
 @section('content')
   @set('pageTitle', 'File list')
-  <table class="table my-5">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Size</th>
-      </tr>
-    </thead>
-    <tbody>
-      @each(file in files)
+  <div class="file-content">
+    <table class="table my-5">
+      <thead>
         <tr>
-          <td><a href="{{ route('files.show', { id: file.id }) }}">{{ file.client_name }}</a></td>
-          <td>{{ file.type }}</td>
-          <td>{{ file.size }}</td>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Size</th>
         </tr>
-      @endeach
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        @each(file in files)
+          <tr>
+            <td><a href="{{ route('files.show', { id: file.id }) }}">{{ file.client_name }}</a></td>
+            <td>{{ file.type }}</td>
+            <td>{{ file.size }}</td>
+          </tr>
+        @endeach
+      </tbody>
+    </table>
+  </div>
 @endsection

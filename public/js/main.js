@@ -192,6 +192,8 @@
     $('.file-input .text-muted small').text('')
   })
 
-
+  $('.container.frofile .list-group-item .input-box .input-content .action-box').on('click', function () {
+    $(this).siblings('input').select()
+  })
 
 })()

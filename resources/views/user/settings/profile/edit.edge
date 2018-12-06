@@ -1,50 +1,125 @@
 @layout('layouts.main_sidebar_left')
 
-@section('sidebar')
+@section('navbar')
   @include('user.partials.nav')
 @endsection
 
 @section('content')
-@set('pageTitle', 'Update profile')
-<form action="{{ route('profile.update') }}" method="POST">
-  <h3 class="mb-4">Profile</h3>
-  @!component('components.form.input', {
-    name: 'username',
-    label: 'Username',
-    value: user.username,
-    getErrorFor,
-    hasErrorFor,
-    old
-  })
-
-  @!component('components.form.input', {
-    name: 'email',
-    type: 'email',
-    readonly: user.is_verified,
-    label: 'Email',
-    value: user.email,
-    getErrorFor,
-    hasErrorFor,
-    old
-  })
-
-  @!component('components.form.input', {
-    name: 'github',
-    label: 'Github',
-    value: user.profile.github,
-    getErrorFor,
-    hasErrorFor,
-    old
-  })
-  {{ csrfField() }}
-  <button class="btn btn-primary btn-block my-4" type="submit">Update profile</button>
-</form>
-@if(!auth.user.is_verified)
-  <form action="{{ route('verification.resend') }}" method="POST">
-    {{ csrfField() }}
-    <button class="btn btn-link px-0 text-warning" type="submit">
-      <i class="fa fa-exclamation-triangle"></i>Resend verification email.
-    </button>
-  </form>
-@endif
+  @set('pageTitle', 'Update profile')
+  <div class="user-content">
+    <form action="{{ route('profile.update') }}" method="POST">
+      <h3 class="mb-4 ml-3">Profile</h3>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <span class="title">Avatar</span>
+          <div class="avatar d-flex">
+            <div class="toggle-btn"
+            style="background-image: url('https://cn.gravatar.com/avatar/{{ md5(user.email) }}?s=60&d=robohash&r=G');">
+            </div>
+            <div class="introduce-box ml-3">
+              <div class="text">头像功能来自 <strong>Gravatar</strong></div>
+              <div class="button"><a href="http://cn.gravatar.com" target="_blank">Setting</a></div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <span class="title">Username</span>
+          <div class="input-box">
+            <div class="input-content d-flex">
+              <input type="text"
+                class="form-control {{ hasErrorFor('username') ? 'is-invalid' : '' }}"
+                name="username"
+                value="{{ old('username', user.username,) }}"
+                placeholder="">
+              <div class="action-box bt-1">
+                <a href="javascript:void(0);" class="eidt-btn"><i class="iconfont icon-article1 mx-2"></i>Edit</a>
+              </div>
+            </div>
+            {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('username'), hasErrorFor('username')) }}
+          </div>
+        </li>
+        <li class="list-group-item">
+          <span class="title">Email</span>
+          <div class="input-box">
+            <div class="input-content d-flex">
+              <input type="email"
+                class="form-control {{ hasErrorFor('email') ? 'is-invalid' : '' }}"
+                name="email"
+                {{ user.is_verified ? 'readonly' : '' }}
+                value="{{ old('email', user.email,) }}"
+                placeholder="">
+              @if(user.is_verified)
+                <div class="action-box bt-1">
+                  <a href="javascript:void(0);" style="cursor: default; color: #28a745;" class="eidt-btn"><i class="iconfont icon-verifiedqualityc mx-2"></i>Verified</a>
+                </div>
+              @else
+                <div class="action-box bt-1">
+                  <a href="javascript:void(0);" class="eidt-btn"><i class="iconfont icon-article1 mx-2"></i>Edit</a>
+                </div>
+              @endif
+            </div>
+            {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('email'), hasErrorFor('email')) }}
+          </div>
+        </li>
+        <li class="list-group-item">
+          <span class="title">Github</span>
+          <div class="input-box">
+            <div class="input-content d-flex">
+              <input type="text"
+                class="form-control {{ hasErrorFor('github') ? 'is-invalid' : '' }}"
+                name="github"
+                value="{{ old('github', user.profile.github,) }}"
+                placeholder="">
+              <div class="action-box bt-1">
+                <a href="javascript:void(0);" class="eidt-btn"><i class="iconfont icon-article1 mx-2"></i>Edit</a>
+              </div>
+            </div>
+            {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('github'), hasErrorFor('github')) }}
+          </div>
+        </li>
+        <li class="list-group-item">
+          <span class="title">Bio</span>
+          <div class="input-box">
+            <div class="input-content d-flex">
+              <input type="text"
+                class="form-control {{ hasErrorFor('github') ? 'is-invalid' : '' }}"
+                name="github"
+                value="{{ old('github', user.profile.github,) }}"
+                placeholder="">
+              <div class="action-box bt-1">
+                <a href="javascript:void(0);" class="eidt-btn"><i class="iconfont icon-article1 mx-2"></i>Edit</a>
+              </div>
+            </div>
+            {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('github'), hasErrorFor('github')) }}
+          </div>
+        </li>
+        <li class="list-group-item">
+          <span class="title">Website</span>
+          <div class="input-box">
+            <div class="input-content d-flex">
+              <input type="text"
+                class="form-control {{ hasErrorFor('github') ? 'is-invalid' : '' }}"
+                name="github"
+                value="{{ old('github', user.profile.github,) }}"
+                placeholder="">
+              <div class="action-box bt-1">
+                <a href="javascript:void(0);" class="eidt-btn"><i class="iconfont icon-article1 mx-2"></i>Edit</a>
+              </div>
+            </div>
+            {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('github'), hasErrorFor('github')) }}
+          </div>
+        </li>
+      </ul>
+      {{ csrfField() }}
+      <button class="btn btn-sm btn-primary my-4 mx-3" type="submit">Update profile</button>
+    </form>
+    @if(!auth.user.is_verified)
+      <form action="{{ route('verification.resend') }}" method="POST">
+        {{ csrfField() }}
+        <button class="btn btn-link px-0 text-warning" type="submit">
+          <i class="fa fa-exclamation-triangle"></i>Resend verification email.
+        </button>
+      </form>
+    @endif
+  </div>
 @endsection

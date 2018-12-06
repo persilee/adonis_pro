@@ -1,7 +1,8 @@
 body {
 	font-family: "Songti SC", serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
 		sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-	font-size: 1.2rem;
+	font-size: 1.1rem;
+	background-color: #fafafa;
 }
 a {
 	color: #9e9e9e;
@@ -12,7 +13,20 @@ a:hover {
 
 body > .container {
 	max-width: 860px;
-	padding-top: 46px;
+	padding: 5rem 2rem;
+}
+
+body > .container .post-content,
+body > .container .file-content,
+body > .container .user-content {
+	background-color: #fff;
+	padding: 2rem;
+	border-radius: 2px;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+}
+
+.shadow-sm {
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
 }
 
 .limit-width {
@@ -292,10 +306,6 @@ a[title="Toggle Fullscreen (F11)"] {
 	background-color: #ffffff !important;
 }
 
-.container > div:first-child > .list-group-item:first-child > .post-title {
-	margin-top: 6px !important;
-}
-
 .author.post-show .author-photo {
 	width: 48px;
 	height: 48px;
@@ -345,7 +355,7 @@ a[title="Toggle Fullscreen (F11)"] {
 .post-suspended-panel .post-panel {
 	width: 2.5rem;
 	height: 2.5rem;
-	background-color: #fafafadb;
+	background-color: #fff;
 	text-align: center;
 	line-height: 2.5rem;
 	border-radius: 50%;
@@ -395,18 +405,118 @@ a[title="Toggle Fullscreen (F11)"] {
 	color: #4caf50;
 	font-weight: bold;
 	position: relative;
-	top: -38px;
+	top: -40px;
 	left: -46px;
 	transition: all 0.7s ease 0s;
+	cursor: default;
 }
 
 .post-suspended-panel .post-panel.likes:hover .liked {
 	left: 0;
 }
-.file-icon{
-  display: block;
+.file-icon {
+	display: block;
 }
 .file-icon i {
 	font-size: 88px;
 	color: #1e88e5;
+}
+
+.frofile.container {
+	margin-top: 2.6rem;
+}
+
+.profile-nav {
+	width: 100%;
+	position: fixed;
+	top: 3.4rem;
+	z-index: 100;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+	transition: all .2s;
+	transform: translateZ(0);
+	background: #fffffffc;
+}
+
+.nav.profile {
+	max-width: 860px;
+	margin: 0 auto;
+	font-size: 16px;
+}
+
+.nav.profile .nav-link.active {
+	color: #007bff;
+}
+
+.container.frofile .list-group-item {
+	display: flex;
+	align-items: center;
+}
+
+.container.frofile .list-group-item:not(:first-child) {
+	padding-top: 1.5rem;
+	padding-bottom: 1.5rem;
+}
+
+.container.frofile .list-group-item .title {
+	font-size: 1.1rem;
+	color: #333;
+	width: 8rem;
+}
+
+.container.frofile .list-group-item .toggle-btn {
+	width: 4.6rem;
+	height: 4.6rem;
+	border-radius: 0px;
+}
+
+.container.frofile .list-group-item .introduce-box .text {
+	color: #909090;
+	font-size: .75rem;
+	margin-bottom: .7rem;
+	margin-top: .66rem;
+}
+
+.container.frofile .list-group-item .introduce-box .button a {
+	font-size: 1.12rem;
+	color: #1e88e5;
+}
+
+.container.frofile .list-group-item .form-control {
+	border: none;
+}
+
+.container.frofile .list-group-item .form-control[readonly] {
+	background-color: transparent;
+	color: #bdbdbd;
+}
+
+.container.frofile .list-group-item .form-control:focus {
+	box-shadow: none;
+}
+.container.frofile .list-group-item .input-box {
+	width: 100%;
+}
+
+.container.frofile .list-group-item .input-box .input-content {
+	display: flex;
+	align-items: center;
+	flex: 1;
+}
+
+.container.frofile .list-group-item .input-box .input-content .action-box a {
+	font-size: .9rem;
+	color: #1e88e5;
+}
+
+.container.frofile .list-group-item .input-box .input-content .action-box .iconfont {
+	font-size: .75rem;
+}
+
+.container.frofile .list-group-item .input-box .input-content .action-box .iconfont.icon-verifiedqualityc {
+	font-size: 1rem;
+	color: #28a745;
+}
+
+.container > .post-content > div:first-child > .list-group-item:first-child > .post-title {
+	margin-top: .9rem !important;
 }

@@ -1,9 +1,11 @@
 @layout('layouts.main')
 @section('content')
   @set('pageTitle', 'Posts')
-  @!component('components.post.list', {
-    items: data
-  })
+  <div class="post-content">
+    @!component('components.post.list', {
+      items: data
+    })
+  </div>
   @!component('components.pagination', {
     total,
     perPage,
