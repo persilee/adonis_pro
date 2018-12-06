@@ -152,7 +152,7 @@
 	if (Cookies.get(cookieName)) {
 		likeElement.unbind('click')
 		likeElement.addClass('active')
-		likeElement.find('.is-liked').addClass('liked')
+    likeElement.find('.is-liked').addClass('liked')
 	} else {
 		likeElement.on('click', function () {
 			const time = new Date().getTime()
@@ -161,7 +161,7 @@
 			const uniqueness_cookie = time + ip + userAgent
 			let likes = $(this).attr('badge')
 			const _this = $(this)
-			Cookies.set(cookieName, uniqueness_cookie)
+      Cookies.set(cookieName, { cookieContent: uniqueness_cookie, cookieId: post_id})
 			$.ajax({
 				url     : `/share/${post_id}/like`,
 				method  : 'GET',
@@ -170,7 +170,7 @@
 				},
 				success : function (response) {
 					if (response.status == 'success') {
-            if (Cookies.get(cookieName) == response.cookie) {
+            if (Cookies.getJSON(cookieName).cookieContent == response.cookie) {
 							_this.addClass('active')
 							_this.attr('badge', parseInt(likes) + 1)
 							$('.status .likes').html(`<i class="iconfont icon-love mr-2"></i>${parseInt(likes) + 1}`)
@@ -181,6 +181,22 @@
 				}
 			})
 		})
+  }
+
+  const listLikes = $('.list-group-item .icon-love')
+  const likeIds = Object.keys(Cookies.get())
+
+  if (listLikes.length > 0){
+    $.each(likeIds, function (i, n) {
+      if (n.indexOf('uniqueness') != -1) {
+        const id = n.slice(10, 'uniqueness14'.length)
+        listLikes.each(function (a, b) {
+          if (id == $(this).attr('id')) {
+            $(this).addClass('liked')
+          }
+        })
+      }
+    })
   }
 
   $('#file-icon').on('click', function(){

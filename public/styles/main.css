@@ -302,7 +302,7 @@ a[title="Toggle Fullscreen (F11)"] {
 }
 
 .iconfont.icon-read {
-	font-size: 22px;
+	font-size: 20px;
 	position: relative;
 	top: -1px;
 }
@@ -544,4 +544,8 @@ a[title="Toggle Fullscreen (F11)"] {
 
 .invalid-feedback {
 	padding: .375rem .75rem;
+}
+
+.list-group-item .icon-love.liked {
+  color: #ef5350;
 }
