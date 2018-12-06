@@ -29,8 +29,8 @@
               <input type="text"
                 class="form-control {{ hasErrorFor('username') ? 'is-invalid' : '' }}"
                 name="username"
-                value="{{ old('username', user.username,) }}"
-                placeholder="">
+                value="{{ old('username', user.username,) ? old('username', user.username,) : '' }}"
+                placeholder="Please enter nickname...">
               <div class="action-box bt-1">
                 <a href="javascript:void(0);" class="eidt-btn"><i class="iconfont icon-article1 mx-2"></i>Edit</a>
               </div>
@@ -46,8 +46,8 @@
                 class="form-control {{ hasErrorFor('email') ? 'is-invalid' : '' }}"
                 name="email"
                 {{ user.is_verified ? 'readonly' : '' }}
-                value="{{ old('email', user.email,) }}"
-                placeholder="">
+                value="{{ old('email', user.email,) ? old('email', user.email,) : '' }}"
+                placeholder="Please enter your email address...">
               @if(user.is_verified)
                 <div class="action-box bt-1">
                   <a href="javascript:void(0);" style="cursor: default; color: #28a745;" class="eidt-btn"><i class="iconfont icon-verifiedqualityc mx-2"></i>Verified</a>
@@ -68,8 +68,8 @@
               <input type="text"
                 class="form-control {{ hasErrorFor('github') ? 'is-invalid' : '' }}"
                 name="github"
-                value="{{ old('github', user.profile.github,) }}"
-                placeholder="">
+                value="{{ old('github', user.profile.github,) ? old('github', user.profile.github,) : '' }}"
+                placeholder="A github name...">
               <div class="action-box bt-1">
                 <a href="javascript:void(0);" class="eidt-btn"><i class="iconfont icon-article1 mx-2"></i>Edit</a>
               </div>
@@ -82,15 +82,15 @@
           <div class="input-box">
             <div class="input-content d-flex">
               <input type="text"
-                class="form-control {{ hasErrorFor('github') ? 'is-invalid' : '' }}"
-                name="github"
-                value="{{ old('github', user.profile.github,) }}"
-                placeholder="">
+                class="form-control {{ hasErrorFor('bio') ? 'is-invalid' : '' }}"
+                name="bio"
+                value="{{ old('bio', user.profile.bio,) ? old('bio', user.profile.bio,) : '' }}"
+                placeholder="Write something about yourself...">
               <div class="action-box bt-1">
                 <a href="javascript:void(0);" class="eidt-btn"><i class="iconfont icon-article1 mx-2"></i>Edit</a>
               </div>
             </div>
-            {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('github'), hasErrorFor('github')) }}
+            {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('bio'), hasErrorFor('bio')) }}
           </div>
         </li>
         <li class="list-group-item">
@@ -98,15 +98,15 @@
           <div class="input-box">
             <div class="input-content d-flex">
               <input type="text"
-                class="form-control {{ hasErrorFor('github') ? 'is-invalid' : '' }}"
-                name="github"
-                value="{{ old('github', user.profile.github,) }}"
-                placeholder="">
+                class="form-control {{ hasErrorFor('website') ? 'is-invalid' : '' }}"
+                name="website"
+                value="{{ old('website', user.profile.website,) ? old('website', user.profile.website,) : '' }}"
+                placeholder="A url of website...">
               <div class="action-box bt-1">
                 <a href="javascript:void(0);" class="eidt-btn"><i class="iconfont icon-article1 mx-2"></i>Edit</a>
               </div>
             </div>
-            {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('github'), hasErrorFor('github')) }}
+            {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('website'), hasErrorFor('website')) }}
           </div>
         </li>
       </ul>

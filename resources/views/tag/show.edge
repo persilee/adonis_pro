@@ -2,10 +2,13 @@
 
 @section('content')
   @set('pageTitle', tag.title)
-  <h1 class="my-5 font-weight-light text-center">{{ tag.title }}</h1>
-  @!component('components.post.list', {
-    items: data
-  })
+  <h1 class="mt-4 mb-5 font-weight-light text-center">{{ tag.title }}</h1>
+
+  <div class="tag-content">
+    @!component('components.post.list', {
+      items: data
+    })
+  </div>
   @!component('components.pagination', {
     total,
     perPage,

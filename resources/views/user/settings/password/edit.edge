@@ -6,34 +6,53 @@
 
 @section('content')
 @set('pageTitle', 'Update password')
-<form action="{{ route('password.update') }}" method="POST">
-  <h3 class="mb-4">Password</h3>
-  @!component('components.form.input', {
-    name: 'old_password',
-    type: 'password',
-    label: 'Current password',
-    getErrorFor,
-    hasErrorFor,
-    old
-  })
-  @!component('components.form.input', {
-    name: 'new_password',
-    type: 'password',
-    label: 'New password',
-    getErrorFor,
-    hasErrorFor,
-    old
-  })
-  @!component('components.form.input', {
-    name: 'new_password_confirmation',
-    type: 'password',
-    label: 'Confirm New password',
-    getErrorFor,
-    hasErrorFor,
-    old
-  })
-
-  {{ csrfField() }}
-  <button class="btn btn-primary btn-block my-4" type="submit">Update password</button>
-</form>
+<div class="user-content">
+  <form action="{{ route('password.update') }}" method="POST">
+    <h3 class="mb-4">Password</h3>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <span class="title">Current password</span>
+        <div class="input-box">
+          <div class="input-content d-flex">
+            <input type="password"
+              class="form-control {{ hasErrorFor('old_password') ? 'is-invalid' : '' }}"
+              name="old_password"
+              value="{{ old('old_password', user.old_password,) ? old('old_password', user.old_password,) : '' }}"
+              placeholder="Please enter your current password...">
+          </div>
+          {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('old_password'), hasErrorFor('old_password')) }}
+        </div>
+      </li>
+      <li class="list-group-item">
+        <span class="title">New password</span>
+        <div class="input-box">
+          <div class="input-content d-flex">
+            <input type="password"
+              class="form-control {{ hasErrorFor('new_password') ? 'is-invalid' : '' }}"
+              name="new_password"
+              {{ user.is_verified ? 'readonly' : '' }}
+              value="{{ old('new_password', user.new_password,) ? old('new_password', user.new_password,) : '' }}"
+              placeholder="Please enter your new password...">
+          </div>
+          {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('email'), hasErrorFor('email')) }}
+        </div>
+      </li>
+      <li class="list-group-item">
+        <span class="title">Confirm New password</span>
+        <div class="input-box">
+          <div class="input-content d-flex">
+            <input type="password"
+              class="form-control {{ hasErrorFor('new_password_confirmation') ? 'is-invalid' : '' }}"
+              name="new_password_confirmation"
+              value="{{ old('new_password_confirmation', user.new_password_confirmation,) ? old('new_password_confirmation', user.new_password_confirmation,) : '' }}"
+              placeholder="Please enter the new password again...">
+          </div>
+          {{ elIf('<div class="invalid-feedback">$self</div>', getErrorFor('new_password_confirmation'), hasErrorFor('new_password_confirmation')) }}
+        </div>
+      </li>
+    </ul>
+    {{ csrfField() }}
+    <button class="btn btn-sm btn-primary my-4 mx-3" type="submit">Update password</button>
+  </form>
+</div>
 @endsection

@@ -18,7 +18,8 @@ body > .container {
 
 body > .container .post-content,
 body > .container .file-content,
-body > .container .user-content {
+body > .container .user-content,
+body > .container .tag-content {
 	background-color: #fff;
 	padding: 2rem;
 	border-radius: 2px;
@@ -27,6 +28,24 @@ body > .container .user-content {
 
 .shadow-sm {
 	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+}
+
+.card {
+	border: none;
+	border-radius: 2px;
+}
+.user .card label {
+	margin-left: .7rem;
+}
+
+.user .card .form-control {
+	border: none;
+	border-bottom: 1px solid #ced4da;
+	border-radius: 0;
+}
+
+.user .card .form-control:focus {
+	box-shadow: none;
 }
 
 .limit-width {
@@ -510,6 +529,8 @@ a[title="Toggle Fullscreen (F11)"] {
 
 .container.frofile .list-group-item .input-box .input-content .action-box .iconfont {
 	font-size: .75rem;
+	position: relative;
+	top: -2px;
 }
 
 .container.frofile .list-group-item .input-box .input-content .action-box .iconfont.icon-verifiedqualityc {
@@ -519,4 +540,8 @@ a[title="Toggle Fullscreen (F11)"] {
 
 .container > .post-content > div:first-child > .list-group-item:first-child > .post-title {
 	margin-top: .9rem !important;
+}
+
+.invalid-feedback {
+	padding: .375rem .75rem;
 }

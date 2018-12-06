@@ -196,4 +196,8 @@
     $(this).siblings('input').select()
   })
 
+  if ($('.invalid-feedback').length) {
+    $('.invalid-feedback').css('display', 'block')
+  }
+
 })()

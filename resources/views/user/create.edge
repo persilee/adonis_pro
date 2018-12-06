@@ -2,9 +2,9 @@
 
 @section('content')
   @set('pageTitle', 'Register')
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card my-5">
+  <div class="row justify-content-center user">
+    <div class="col-md-7">
+      <div class="card my-5 px-4 shadow-sm">
         <div class="card-body">
           <h1 class="my-5 display-4">Register</h1>
           <form action="{{ route('UserController.store') }}" method="POST">
@@ -37,7 +37,7 @@
               old
             })
             {{ csrfField() }}
-            <button class="btn btn-primary btn-block my-4" type="submit">Create an account</button>
+            <button class="btn btn-primary btn-block my-5" type="submit">Create an account</button>
           </form>
         </div>
       </div>
