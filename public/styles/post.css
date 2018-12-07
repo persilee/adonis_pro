@@ -5,8 +5,19 @@ code {
 	background-color: #fff5f5;
 	color: #ff502c;
 	font-size: 78%;
-	padding: .065em .4em;
+	padding: .15em .4em;
+	border-radius: 2px;
 	overflow-x: auto;
+	position: relative;
+	top: -1px;
+}
+
+.post-content img {
+	cursor: zoom-in;
+}
+
+.viewer-canvas > img {
+	cursor: zoom-out;
 }
 
 .hljs {
