@@ -546,6 +546,21 @@ a[title="Toggle Fullscreen (F11)"] {
 	padding: .375rem .75rem;
 }
 
-.list-group-item .icon-love.liked {
-  color: #ef5350;
+.list-group-item .icon-love.liked,
+.status .likes .icon-love.liked {
+	color: #ef5350;
+}
+
+.alert {
+	border: none;
+	border-radius: 2px;
+	font-size: .86rem;
+}
+
+.close:not(:disabled):not(.disabled):focus {
+	outline: 0;
+}
+
+.btn-primary, .btn-sm {
+  border-radius: 2px;
 }

@@ -3,7 +3,8 @@
   @set('pageTitle', 'Posts')
   <div class="post-content">
     @!component('components.post.list', {
-      items: data
+      items: data,
+      userId
     })
   </div>
   @!component('components.pagination', {

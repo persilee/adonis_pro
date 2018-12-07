@@ -26,9 +26,13 @@ class PostController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-	async index ({ request, response, view }) {
+	async index ({ request, auth, view, response}) {
 		const page = request.input('page')
-		const perPage = 10
+    const perPage = 10
+    let userId = ''
+    if (auth.user){
+      userId = auth.user.toJSON().id
+    }
 		const posts = await Post.query()
 			.orderBy('created_at', 'desc')
 			.with('user', (builder) => {
@@ -37,7 +41,7 @@ class PostController {
 			.with('user.profile')
       .paginate(page, perPage)
 
-    return view.render('post.index', { ...posts.toJSON() })
+    return view.render('post.index', { ...posts.toJSON(), userId })
 	}
 
 	/**
@@ -105,7 +109,7 @@ class PostController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-	async show ({ params, request, response, view }) {
+	async show ({ params, auth, response, view }) {
 		// const post = await Database.from('posts')
 		//   .where('id', params.id)
     //   .first()
@@ -114,10 +118,16 @@ class PostController {
     post.reads += 1
     await post.save()
     const user = await post.user().fetch()
-		const tags = await post.tags().select('id', 'title').fetch()
+    const tags = await post.tags().select('id', 'title').fetch()
+    let userId = ''
+
+    if (auth.user) {
+      userId = auth.user.toJSON().id
+    }
 
 		return view.render('post.show', {
       post,
+      userId,
       tags: tags.toJSON(),
       user: user.toJSON()
      })

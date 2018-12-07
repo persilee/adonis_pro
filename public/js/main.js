@@ -146,22 +146,24 @@
 		})
 	})
 
-	const likeElement = $('.post-suspended-panel .post-panel.likes')
-	const post_id = likeElement.data('id')
-	const cookieName = 'uniqueness' + post_id
-	if (Cookies.get(cookieName)) {
+  const likeElement = $('.post-suspended-panel .post-panel.likes')
+  const userId = likeElement.data('user')
+  const post_id = likeElement.data('id')
+  const cookieName = 'uniqueness' + userId + post_id
+  if (Cookies.getJSON(cookieName) && Cookies.getJSON(cookieName).userId == userId && Cookies.getJSON(cookieName).cookieId == post_id) {
 		likeElement.unbind('click')
 		likeElement.addClass('active')
     likeElement.find('.is-liked').addClass('liked')
-	} else {
+    $('.status .likes .icon-love').addClass('liked')
+  } else if (post_id) {
 		likeElement.on('click', function () {
 			const time = new Date().getTime()
 			const ip = returnCitySN['cip'] + returnCitySN['cname']
 			const userAgent = navigator.userAgent
 			const uniqueness_cookie = time + ip + userAgent
 			let likes = $(this).attr('badge')
-			const _this = $(this)
-      Cookies.set(cookieName, { cookieContent: uniqueness_cookie, cookieId: post_id})
+      const _this = $(this)
+      Cookies.set(cookieName, { cookieContent: uniqueness_cookie, cookieId: post_id, userId: userId})
 			$.ajax({
 				url     : `/share/${post_id}/like`,
 				method  : 'GET',
@@ -173,7 +175,7 @@
             if (Cookies.getJSON(cookieName).cookieContent == response.cookie) {
 							_this.addClass('active')
 							_this.attr('badge', parseInt(likes) + 1)
-							$('.status .likes').html(`<i class="iconfont icon-love mr-2"></i>${parseInt(likes) + 1}`)
+              $('.status .likes').html(`<i class="iconfont icon-love liked mr-2"></i>${parseInt(likes) + 1}`)
 							_this.unbind('click')
 							_this.find('.is-liked').addClass('liked')
 						}
@@ -189,9 +191,9 @@
   if (listLikes.length > 0){
     $.each(likeIds, function (i, n) {
       if (n.indexOf('uniqueness') != -1) {
-        const id = n.slice(10, 'uniqueness14'.length)
+        const id = n.slice(10, n.length)
         listLikes.each(function (a, b) {
-          if (id == $(this).attr('id')) {
+          if (id == $(this).attr('user') + $(this).attr('id')) {
             $(this).addClass('liked')
           }
         })
