@@ -3,67 +3,69 @@
 @section('content')
   @set('pageTitle', post.title)
   <div class="post-content shadow-sm">
-    <h1 class="mt-3 mb-4">{{{ post.title }}}</h1>
-    <div class="author post-show my-4">
-      <a href="{{ route('users.show', { id: user.id}) }}">
-        <div class="toggle-btn author-photo"
-        style="background-image: url('https://cn.gravatar.com/avatar/{{ md5(user.email) }}?s=60&d=robohash&r=G');">
+    <div class="post-details">
+      <h1 class="mt-3 mb-4">{{{ post.title }}}</h1>
+      <div class="author post-show my-4">
+        <a href="{{ route('users.show', { id: user.id}) }}">
+          <div class="toggle-btn author-photo"
+          style="background-image: url('https://cn.gravatar.com/avatar/{{ md5(user.email) }}?s=60&d=robohash&r=G');">
+          </div>
+        </a>
+        <div class="author-text ml-2">
+          <div class="name">
+            <a href="{{ route('users.show', { id: user.id}) }}" class="text-muted">
+              <small>{{ user.username }}</small>
+            </a>
+          </div>
+          <div class="update">
+            <small>{{ user.created_at }}</small>
+          </div>
         </div>
-      </a>
-      <div class="author-text ml-2">
-        <div class="name">
-          <a href="{{ route('users.show', { id: user.id}) }}" class="text-muted">
-            <small>{{ user.username }}</small>
+        <div class="status ml-2">
+          <div class="reads text-muted mr-2">
+            <i class="iconfont icon-read mr-2"></i>{{ post.reads ? post.reads : 0 }}
+          </div>
+          <div class="likes text-muted mr-2">
+            <i class="iconfont icon-love mr-2"></i>{{ post.likes ? post.likes : 0 }}
+          </div>
+        </div>
+        @loggedIn
+          <div class="edit-btn float-right">
+            <a href="{{ route('PostController.edit', { id: post.id }) }}" class="btn btn-outline-light">Edit Post</a>
+          </div>
+        @endloggedIn
+      </div>
+
+      <div>{{{ post.md_content ? decodeHtml(post.md_content) : post.content }}}</div>
+      @if(tags)
+        <div class="my-5 post-tags">
+          <span class="text-muted font-weight-light">标签：</span>
+          @each( tag in tags)
+          <a href="/tags/{{ tag.id }}" class="badge badge-pill badge-secondary px-2 py-1">
+            {{ tag.title }}
+          </a>
+          @endeach
+        </div>
+      @endif
+      <div class="post-suspended-panel">
+        <div data-id="{{ post.id }}" data-user="{{ userId }}" badge="{{ post.likes ? post.likes : 0 }}" class="post-panel likes my-3 shadow-sm">
+          <a href="javascript:void(0);">
+            <i class="iconfont icon-love"></i>
+          </a>
+          <div class="is-liked">
+            Liked
+          </div>
+        </div>
+        <div class="post-panel email my-3 shadow-sm">
+          <a href="{{ route('share.email', { id: post.id, type: 'post' }) }}">
+            <i class="iconfont icon-emailFilled"></i>
           </a>
         </div>
-        <div class="update">
-          <small>{{ user.created_at }}</small>
+        <div class="post-panel top my-3 shadow-sm">
+          <a href="javascript:void(0);">
+            <i class="iconfont icon-top"></i>
+          </a>
         </div>
-      </div>
-      <div class="status ml-2">
-        <div class="reads text-muted mr-2">
-          <i class="iconfont icon-read mr-2"></i>{{ post.reads ? post.reads : 0 }}
-        </div>
-        <div class="likes text-muted mr-2">
-          <i class="iconfont icon-love mr-2"></i>{{ post.likes ? post.likes : 0 }}
-        </div>
-      </div>
-      @loggedIn
-        <div class="edit-btn float-right">
-          <a href="{{ route('PostController.edit', { id: post.id }) }}" class="btn btn-outline-light">Edit Post</a>
-        </div>
-      @endloggedIn
-    </div>
-
-    <div>{{{ post.md_content ? decodeHtml(post.md_content) : post.content }}}</div>
-    @if(tags)
-      <div class="my-5 post-tags">
-        <span class="text-muted font-weight-light">标签：</span>
-        @each( tag in tags)
-        <a href="/tags/{{ tag.id }}" class="badge badge-pill badge-secondary px-2 py-1">
-          {{ tag.title }}
-        </a>
-        @endeach
-      </div>
-    @endif
-    <div class="post-suspended-panel">
-      <div data-id="{{ post.id }}" data-user="{{ userId }}" badge="{{ post.likes ? post.likes : 0 }}" class="post-panel likes my-3 shadow-sm">
-        <a href="javascript:void(0);">
-          <i class="iconfont icon-love"></i>
-        </a>
-        <div class="is-liked">
-          Liked
-        </div>
-      </div>
-      <div class="post-panel email my-3 shadow-sm">
-        <a href="{{ route('share.email', { id: post.id, type: 'post' }) }}">
-          <i class="iconfont icon-emailFilled"></i>
-        </a>
-      </div>
-      <div class="post-panel top my-3 shadow-sm">
-        <a href="javascript:void(0);">
-          <i class="iconfont icon-top"></i>
-        </a>
       </div>
     </div>
   </div>

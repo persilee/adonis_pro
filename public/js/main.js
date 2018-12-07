@@ -250,19 +250,21 @@
 		}, 0)
 	})
 
-	const viewer = new Viewer($('.post-content')[0], {
-		toolbar          : false,
-		button           : false,
-		navbar           : false,
-		movable          : false,
-		zoomable         : false,
-		toggleOnDblclick : false,
-		shown () {
-			$(document).on('click', '.viewer-container img', function () {
-				viewer.hide()
-			})
-		}
-	})
+  if ($('.post-content>.post-details').length) {
+    const viewer = new Viewer($('.post-content>.post-details')[0], {
+      toolbar: false,
+      button: false,
+      navbar: false,
+      movable: false,
+      zoomable: false,
+      toggleOnDblclick: false,
+      shown () {
+        $(document).on('click', '.viewer-container img', function () {
+          viewer.hide()
+        })
+      }
+    })
+  }
 
 	$(document).on('mousewheel', '.viewer-container', function () {
 		viewer.hide()

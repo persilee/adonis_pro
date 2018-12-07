@@ -12,7 +12,7 @@ code {
 	top: -1px;
 }
 
-.post-content img {
+.post-content>.post-details img {
 	cursor: zoom-in;
 }
 
