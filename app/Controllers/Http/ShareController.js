@@ -33,28 +33,30 @@ class ShareController {
 				// })
 				await Mail.send(
 					'email.share_post',
-					{ host: request.header('host'), post: post.toJSON(), user: user.toJSON() },
+					{
+						host: request.header('host'),
+						post: post.toJSON(),
+						user: user.toJSON(),
+						appURL: Env.get('APP_URL')
+					},
 					(message) => {
 						message
 							.to(user.email)
-              .from(Env.get('SITE_MAIL'))
+							.from(Env.get('SITE_MAIL'))
 							.subject(`《${post.title}》 - ${author.username}`)
 					}
 				)
 				break
-      case 'file':
-        const file = await File.find(params.id)
-        const filePath = `${ Helpers.publicPath('uploads') }/${ file.file_name }`
+			case 'file':
+				const file = await File.find(params.id)
+				const filePath = `${Helpers.publicPath('uploads')}/${file.file_name}`
 
-        await Mail.raw(`${ file.client_name }`, (message) => {
-          message.to(user.email)
-            .from(Env.get('SITE_MAIL'))
-            .subject(file.client_name)
-            .attach(filePath, {
-              filename: file.client_name
-            })
-        })
-        break
+				await Mail.raw(`${file.client_name}`, (message) => {
+					message.to(user.email).from(Env.get('SITE_MAIL')).subject(file.client_name).attach(filePath, {
+						filename : file.client_name
+					})
+				})
+				break
 			default:
 				break
 		}
@@ -65,28 +67,28 @@ class ShareController {
 		})
 
 		return response.redirect('back')
-  }
+	}
 
-  async like ({ params, request, auth, view }) {
-    // try {
-    //   await auth.check()
-    // } catch (error) {
-    //   return view.render('auth.login')
-    // }
-    const cookie = request.all()
-    try {
-      const post = await Post.findOrFail(params.id)
-      post.likes += 1
-      await post.save()
-    } catch (error) {
-      console.log(error)
-    }
+	async like ({ params, request, auth, view }) {
+		// try {
+		//   await auth.check()
+		// } catch (error) {
+		//   return view.render('auth.login')
+		// }
+		const cookie = request.all()
+		try {
+			const post = await Post.findOrFail(params.id)
+			post.likes += 1
+			await post.save()
+		} catch (error) {
+			console.log(error)
+		}
 
-    return {
-      status: 'success',
-      cookie: cookie.uniqueness_cookie
-    }
-  }
+		return {
+			status : 'success',
+			cookie : cookie.uniqueness_cookie
+		}
+	}
 }
 
 module.exports = ShareController

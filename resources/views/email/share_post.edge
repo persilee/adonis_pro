@@ -21,7 +21,7 @@ height: 100%;
     <div class="l-mail-content" style="
     font-size: 16px;
     margin-bottom: 32px;
-    ">{{ post.content }}</div>
+    ">{{{ post.md_content ? htmlToText(post.md_content, 166) : post.content }}}</div>
     <a style="
     display: inline-block;
     background: #007bff;
@@ -30,6 +30,6 @@ height: 100%;
     color: #fff;
     text-decoration: none;
     border-radius: 4px;
-    " class="l-mail-button" href="https://{{ host }}{{ route('posts.show', { id: post.id }) }}">View post</a>
+    " class="l-mail-button" href="{{ appURL }}{{ route('posts.show', { id: post.id }) }}">View post</a>
   </div>
 </div>

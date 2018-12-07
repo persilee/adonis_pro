@@ -585,6 +585,16 @@ a[title="Toggle Fullscreen (F11)"] {
 	flex: 0 0 auto;
 }
 
+.alert-dismissible .close {
+	top: -4px;
+}
+
+.post-content > .list-group h4,
+.user-content > .list-group h4,
+.tag-content>.list-group h4 {
+	margin-top: 16px;
+}
+
 .slideOutUp {
 	-webkit-animation-name: slideOutUp;
 	animation-name: slideOutUp;
