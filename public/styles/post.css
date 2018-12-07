@@ -1,0 +1,84 @@
+.post-content {
+	line-height: 1.8;
+}
+code {
+	background-color: #fff5f5;
+	color: #ff502c;
+	font-size: 78%;
+	padding: .065em .4em;
+	overflow-x: auto;
+}
+
+.hljs {
+	line-height: 2;
+	font-size: 86%;
+	border-radius: 0;
+}
+
+.editor-preview pre,
+.editor-preview-side pre,
+.hljs {
+	padding: 18px 16px;
+}
+
+blockquote {
+	color: #666;
+	padding: 8px 23px;
+	margin: 22px 0;
+	border-left: 4px solid #cbcbcb;
+	background-color: #f8f8f8;
+}
+
+blockquote:after {
+	display: block;
+	content: "";
+}
+
+blockquote > p {
+	margin: 10px 0;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+	color: #333;
+	line-height: 1.5;
+	margin-top: 35px;
+	margin-bottom: 10px;
+	padding-bottom: 5px;
+}
+
+.post-content h1 {
+	font-size: 30px;
+	margin-bottom: 5px;
+}
+
+.post-content h2 {
+	padding-bottom: 12px;
+	font-size: 26px;
+	border-bottom: 1px solid #ececec;
+}
+
+.post-content h3 {
+	font-size: 20px;
+	padding-bottom: 0;
+}
+
+.post-content h4 {
+	font-size: 18px;
+}
+
+.post-content h5 {
+	font-size: 16px;
+}
+
+.post-content h6 {
+	margin-top: 5px;
+}
+
+.post-content h1.heading + h2.heading {
+	margin-top: 20px;
+}

@@ -34,9 +34,9 @@
         </div>
       </div>
       @if(item.md_content)
-        <div class="font-weight-light text-truncate mx-2 mb-4">{{{ decodeHtml(item.md_content) }}}</div>
+        <div class="font-weight-light mx-2 mb-4">{{{ decodeHtml(item.md_content) }}}</div>
       @else
-        <div class="font-weight-light text-truncate mx-2 mb-4">{{{ item.content }}}</div>
+        <div class="font-weight-light mx-2 mb-4">{{{ item.content }}}</div>
       @endif
     </div>
   @endeach

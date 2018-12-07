@@ -146,24 +146,28 @@
 		})
 	})
 
-  const likeElement = $('.post-suspended-panel .post-panel.likes')
-  const userId = likeElement.data('user')
-  const post_id = likeElement.data('id')
-  const cookieName = 'uniqueness' + userId + post_id
-  if (Cookies.getJSON(cookieName) && Cookies.getJSON(cookieName).userId == userId && Cookies.getJSON(cookieName).cookieId == post_id) {
+	const likeElement = $('.post-suspended-panel .post-panel.likes')
+	const userId = likeElement.data('user')
+	const post_id = likeElement.data('id')
+	const cookieName = 'uniqueness' + userId + post_id
+	if (
+		Cookies.getJSON(cookieName) &&
+		Cookies.getJSON(cookieName).userId == userId &&
+		Cookies.getJSON(cookieName).cookieId == post_id
+	) {
 		likeElement.unbind('click')
 		likeElement.addClass('active')
-    likeElement.find('.is-liked').addClass('liked')
-    $('.status .likes .icon-love').addClass('liked')
-  } else if (post_id) {
+		likeElement.find('.is-liked').addClass('liked')
+		$('.status .likes .icon-love').addClass('liked')
+	} else if (post_id) {
 		likeElement.on('click', function () {
 			const time = new Date().getTime()
 			const ip = returnCitySN['cip'] + returnCitySN['cname']
 			const userAgent = navigator.userAgent
 			const uniqueness_cookie = time + ip + userAgent
 			let likes = $(this).attr('badge')
-      const _this = $(this)
-      Cookies.set(cookieName, { cookieContent: uniqueness_cookie, cookieId: post_id, userId: userId})
+			const _this = $(this)
+			Cookies.set(cookieName, { cookieContent: uniqueness_cookie, cookieId: post_id, userId: userId })
 			$.ajax({
 				url     : `/share/${post_id}/like`,
 				method  : 'GET',
@@ -172,10 +176,12 @@
 				},
 				success : function (response) {
 					if (response.status == 'success') {
-            if (Cookies.getJSON(cookieName).cookieContent == response.cookie) {
+						if (Cookies.getJSON(cookieName).cookieContent == response.cookie) {
 							_this.addClass('active')
 							_this.attr('badge', parseInt(likes) + 1)
-              $('.status .likes').html(`<i class="iconfont icon-love liked mr-2"></i>${parseInt(likes) + 1}`)
+							$('.status .likes').html(
+								`<i class="iconfont icon-love liked mr-2"></i>${parseInt(likes) + 1}`
+							)
 							_this.unbind('click')
 							_this.find('.is-liked').addClass('liked')
 						}
@@ -183,39 +189,67 @@
 				}
 			})
 		})
+	}
+
+	const listLikes = $('.list-group-item .icon-love')
+	const likeIds = Object.keys(Cookies.get())
+
+	if (listLikes.length > 0) {
+		$.each(likeIds, function (i, n) {
+			if (n.indexOf('uniqueness') != -1) {
+				const id = n.slice(10, n.length)
+				listLikes.each(function (a, b) {
+					if (id == $(this).attr('user') + $(this).attr('id')) {
+						$(this).addClass('liked')
+					}
+				})
+			}
+		})
+	}
+
+	$('#file-icon').on('click', function () {
+		$('#file').click()
+	})
+
+	$('#file').on('change', function () {
+		$('.file-input .text-success small').text($(this).get(0).files[0].name)
+		$('.file-input .text-muted small').text('')
+	})
+
+	$('.container.frofile .list-group-item .input-box .input-content .action-box').on('click', function () {
+		$(this).siblings('input').select()
+	})
+
+	if ($('.invalid-feedback').length) {
+		$('.invalid-feedback').css('display', 'block')
   }
 
-  const listLikes = $('.list-group-item .icon-love')
-  const likeIds = Object.keys(Cookies.get())
-
-  if (listLikes.length > 0){
-    $.each(likeIds, function (i, n) {
-      if (n.indexOf('uniqueness') != -1) {
-        const id = n.slice(10, n.length)
-        listLikes.each(function (a, b) {
-          if (id == $(this).attr('user') + $(this).attr('id')) {
-            $(this).addClass('liked')
-          }
-        })
-      }
+  if ($('.post-suspended-panel .top').length) {
+    $('.post-suspended-panel .top').on('click', function(){
+      $(document).scrollTop(0)
     })
   }
 
-  $('#file-icon').on('click', function(){
-    $('#file').click()
-  })
-
-  $('#file').on('change', function(){
-    $('.file-input .text-success small').text($(this).get(0).files[0].name)
-    $('.file-input .text-muted small').text('')
-  })
-
-  $('.container.frofile .list-group-item .input-box .input-content .action-box').on('click', function () {
-    $(this).siblings('input').select()
-  })
-
-  if ($('.invalid-feedback').length) {
-    $('.invalid-feedback').css('display', 'block')
-  }
-
+	var p = 0,
+		t = 0
+	$(document).on('scroll', function (e) {
+		p = $(this).scrollTop()
+		if (t <= p) {
+			//下滚
+			if ($(window).scrollTop() > 10) {
+				if (!$('#header').hasClass('slideOutUp')) $('#header').addClass('slideOutUp').removeClass('slideInDown')
+				if ($('#load').hasClass('header')) $('#load').removeClass('header')
+			}
+			if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+				if (typeof showMessage == 'function') showMessage('喵~ 页面到底了，点击右下角箭头 ⬆️ ，可回到顶部', 3000)
+			}
+		} else {
+			//上滚
+			if (!$('#load').hasClass('header')) $('#load').addClass('header')
+			if ($('#header').hasClass('slideOutUp')) $('#header').removeClass('slideOutUp').addClass('slideInDown')
+		}
+		setTimeout(function () {
+			t = p
+		}, 0)
+	})
 })()
