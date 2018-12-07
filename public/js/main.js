@@ -222,13 +222,13 @@
 
 	if ($('.invalid-feedback').length) {
 		$('.invalid-feedback').css('display', 'block')
-  }
+	}
 
-  if ($('.post-suspended-panel .top').length) {
-    $('.post-suspended-panel .top').on('click', function(){
-      $(document).scrollTop(0)
-    })
-  }
+	if ($('.post-suspended-panel .top').length) {
+		$('.post-suspended-panel .top').on('click', function () {
+			$(document).scrollTop(0)
+		})
+	}
 
 	var p = 0,
 		t = 0
@@ -237,16 +237,13 @@
 		if (t <= p) {
 			//下滚
 			if ($(window).scrollTop() > 10) {
-				if (!$('#header').hasClass('slideOutUp')) $('#header').addClass('slideOutUp').removeClass('slideInDown')
-				if ($('#load').hasClass('header')) $('#load').removeClass('header')
-			}
-			if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-				if (typeof showMessage == 'function') showMessage('喵~ 页面到底了，点击右下角箭头 ⬆️ ，可回到顶部', 3000)
+				if (!$('.limit-width').hasClass('slideOutUp'))
+					$('.limit-width').addClass('slideOutUp').removeClass('slideInDown')
 			}
 		} else {
 			//上滚
-			if (!$('#load').hasClass('header')) $('#load').addClass('header')
-			if ($('#header').hasClass('slideOutUp')) $('#header').removeClass('slideOutUp').addClass('slideInDown')
+			if ($('.limit-width').hasClass('slideOutUp'))
+				$('.limit-width').removeClass('slideOutUp').addClass('slideInDown')
 		}
 		setTimeout(function () {
 			t = p

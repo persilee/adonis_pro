@@ -14,7 +14,10 @@
       </figcaption>
     </figure>
   @elseif(file.type === 'video')
-    <video src="/uploads/{{ file.file_name }}" class="w-100" controls></video>
+    <video class="video-js vjs-default-skin" controls preload="auto" poster=""
+    data-setup="{'example_option':true}" class="w-100" controls>
+      <source src="/uploads/{{ file.file_name }}" />
+    </video>
     <p class="text-muted text-right"><small>{{ file.client_name }}</small>
     <a href="{{ route('files.download', { id: file.id }) }}" class="btn text-muted">
       <small>({{ file.size }})</small>

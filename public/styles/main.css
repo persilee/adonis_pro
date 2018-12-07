@@ -300,7 +300,8 @@ a[title="Toggle Fullscreen (F11)"] {
 }
 
 .profile-text {
-	font-size: 13px;
+	font-size: 12px;
+	font-weight: 300;
 }
 
 .iconfont.icon-read {
@@ -311,7 +312,12 @@ a[title="Toggle Fullscreen (F11)"] {
 
 .profile-text.read {
 	position: relative;
-	top: -4px;
+	top: -5px;
+}
+
+.profile-text.like {
+	position: relative;
+	top: 2px;
 }
 
 .editor-preview-side {
@@ -565,4 +571,47 @@ a[title="Toggle Fullscreen (F11)"] {
 .btn-primary,
 .btn-sm {
 	border-radius: 2px;
+}
+
+.slideOutUp {
+    -webkit-animation-name: slideOutUp;
+    animation-name: slideOutUp;
+}
+
+.slideInDown {
+    -webkit-animation-name: slideInDown;
+    animation-name: slideInDown;
+}
+
+.animated {
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@keyframes slideOutUp{
+  0% {
+      -webkit-transform: translate3d(0,0,0);
+      transform: translate3d(0,0,0);
+  }
+
+  100% {
+      visibility: hidden;
+      -webkit-transform: translate3d(0,-100%,0);
+      transform: translate3d(0,-100%,0);
+  }
+}
+
+@keyframes slideInDown{
+  0% {
+      -webkit-transform: translate3d(0,-100%,0);
+      transform: translate3d(0,-100%,0);
+      visibility: visible;
+  }
+
+  100% {
+      -webkit-transform: translate3d(0,0,0);
+      transform: translate3d(0,0,0);
+  }
 }
