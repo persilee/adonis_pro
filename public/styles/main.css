@@ -658,7 +658,7 @@ a[title="Toggle Fullscreen (F11)"] {
 }
 
 .file-user {
-  margin-top: 11px;
+	margin-top: 11px;
 }
 
 .file-user .toggle-btn {
@@ -669,6 +669,110 @@ a[title="Toggle Fullscreen (F11)"] {
 .toggle-btn.table-list {
 	width: 25px;
 	height: 25px;
+}
+
+.chat-room-box {
+	background-color: #fff;
+	border-radius: 2px;
+	height: 65vh;
+	max-height: 740px;
+	overflow: hidden;
+}
+
+.chat-room-content .user-list-box {
+	background-color: #2e3238;
+	color: #fff;
+	width: 25%;
+}
+
+.user-list-box .header .toggle-btn {
+	width: 38px;
+	height: 38px;
+}
+
+.user-list-box .user-list {
+	max-height: 100%;
+	overflow: scroll;
+}
+
+.user-list .toggle-btn {
+	width: 28px;
+	height: 28px;
+}
+
+.chat-room-content .message-box {
+	background-color: #fff;
+	width: 75%;
+}
+
+.user-list-box .describe span {
+	font-size: .8rem;
+	color: #ccc;
+}
+.user-list-box .user-list .list-group-item {
+	padding: 0 .86rem;
+	background-color: #2e3238;
+	border: none;
+	border-bottom: 2px solid #292c33;
+	font-size: .8rem;
+}
+
+.toggle-btn.char-room {
+	width: 40px;
+	height: 40px;
+}
+
+.message-box .message-box-inner {
+	height: 100%;
+	overflow: scroll;
+}
+
+.message-box .messages {
+	height: 78%;
+}
+
+.message-box .write-box {
+	height: 22%;
+	border-top: 1px solid #e0e0e0;
+	padding: .66rem .84rem .62rem;
+}
+.message-box .write-box .content {
+	height: 75%;
+}
+.message-box .write-box .editArea {
+	display: block;
+	width: 100%;
+	min-height: 44px;
+	margin: 0;
+	padding: 0;
+	background-color: #fff;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border: 0;
+	outline: none;
+	color: black;
+	font-size: 1em;
+	line-height: 1.38em;
+	resize: none;
+}
+
+.message-box .write-box .action span {
+	font-size: 13px;
+	color: #9e9e9e;
+}
+
+.message .username {
+	font-size: 12px;
+	position: relative;
+	top: -10px;
+}
+
+.message-box .messages .text {
+	font-size: 14px;
+	padding: 4px 12px;
+	background-color: #fafafa;
+	position: relative;
+	top: -7px;
 }
 
 .slideOutUp {

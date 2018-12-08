@@ -25,13 +25,21 @@ const subscribeToChannel = () => {
   const demo = ws.subscribe('demo')
 
   demo.on('message', (message) => {
+    console.log(message)
     messages.append(`
     <div class="message my-4 d-flex">
       <div class="mr-2">
-        <small class="text-black-50" style="white-space: nowrap">${message.username}: </small>
+          <div class="toggle-btn char-room"
+          style="background-image: url('https://cn.gravatar.com/avatar/${ message.email }?s=60&d=robohash&r=G');">
+          </div>
       </div>
-      <div>
-        ${message.content}
+      <div class="d-flex flex-column">
+        <div class="username">
+          <small class="text-muted" style="white-space: nowrap">${message.username}: </small>
+        </div>
+        <div class="text shadow-sm">
+          ${message.content}
+        </div>
       </div>
     </div>
     `)
@@ -51,5 +59,6 @@ $(message).keyup(function (e) {
         content: messageContent
       })
     }
+    console.log(messageContent)
   }
 });

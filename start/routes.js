@@ -5,9 +5,7 @@ const Profile = use('App/Models/Profile')
 
 Route.get('/', ({ response }) => response.route('posts.index')).as('index')
 
-Route.get('demo/ws', ({ view }) => {
-  return view.render('demo.ws')
-})
+Route.resource('chatRooms', 'ChatRoomController')
 
 Route.get('users/verification/:token', 'VerificationController.verify').as('verification.email')
 

@@ -37,7 +37,12 @@ hooks.after.providersBooted(() => {
 
 	View.global('parseInt', (value) => {
 		return parseInt(value)
-	})
+  })
+
+  View.global('randomStr', () => {
+    const str = Math.random().toString(36).substr(2)
+    return md5(str)
+  })
 
 	View.global('decodeHtml', (str) => {
 		return decode(str)
@@ -45,10 +50,6 @@ hooks.after.providersBooted(() => {
 
 	View.global('md5', (str) => {
 		return md5(str)
-  })
-
-  View.global('csrf', () => {
-    return csrfField()
   })
 
 	View.global('htmlToText', (text, length) => {

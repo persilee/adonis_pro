@@ -2,45 +2,78 @@
 
 @section('content')
 @set('pageTitle', 'Websocket demo')
-  <div class="row">
-    <div class="col-md-6 mx-auto">
-      <h1 class="text-center text-uppercase py-5">
-        <span style="letter-spacing: 13px; font-weight: 100">
-          Web<span style="font-weight: 300">socket</span>
-        </span>
-        <span class="badge badge-primary badge-pill position-absolute" style="font-size: 14px">
-          demo
-        </span>
-      </h1>
-      <div class="btn btn-light btn-sm connection-status text-muted">
-        <span class="text">Disconnected</span>
-        <span class="icon ml-1">
-          <i class="fa fa-circle"></i>
-        </span>
-      </div>
-      <div class="messages mb-5 pb-5" style="height: 55vh; overflow: scroll;">
-        <div class="message my-4 d-flex">
-          <div class="mr-2">
-            <small class="text-black-50">System: </small>
-          </div>
-          <div>
-            If you want to learn more about Websocket, go to ninghao.net.
-          </div>
-        </div>
-        <div class="message my-4 d-flex">
-          <div class="mr-2">
-            <small class="text-black-50">System: </small>
-          </div>
-          <div>
-            hello ~ nice to meet you :)
-          </div>
-        </div>
-      </div>
+  <div class="chat-room-content">
+    <h1 class="text-center text-uppercase py-4">
+      <span style="letter-spacing: 13px; font-weight: 100">
+        chat<span style="font-weight: 300">room</span>
+      </span>
+    </h1>
+    <div class="d-flex justify-content-end btn-sm connection-status text-muted my-2">
+      <span class="text text-muted">Disconnected</span>
+      <span class="icon ml-1">
+        <i class="fa fa-circle"></i>
+      </span>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6 my-5 fixed-bottom mx-auto">
-      <input id="message" type="text" class="form-control">
+    <div class="chat-room-box shadow-sm d-flex">
+      <div class="user-list-box">
+        <div class="header py-3 px-3 d-flex align-items-center border-bottom">
+          <div class="avatar mr-2">
+            <div class="toggle-btn"
+            style="background-image: url('https://cn.gravatar.com/avatar/{{ user.email ? md5(user.email) : randomStr() }}?s=60&d=robohash&r=G');">
+            </div>
+          </div>
+          <div class="info">
+            <span>{{ user.username }}</span>
+          </div>
+        </div>
+        <div class="describe py-2 text-center">
+          <span class="text-uppercase">activity users</span>
+        </div>
+        <div class="user-list">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex align-items-center py-3">
+              <div class="avatar mr-2">
+                <div class="toggle-btn"
+                style="background-image: url('https://cn.gravatar.com/avatar/{{ md5(user.email) }}?s=60&d=robohash&r=G');">
+                </div>
+              </div>
+              <div class="info">
+                <span>{{ user.username }}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="message-box d-flex flex-column">
+        <div class="message-box-inner px-4 py-3">
+          <div class="messages">
+            <div class="message my-4 d-flex">
+              <div class="mr-2">
+                  <div class="toggle-btn char-room"
+                  style="background-image: url('https://cn.gravatar.com/avatar/system?s=60&d=robohash&r=G');">
+                  </div>
+              </div>
+              <div class="d-flex flex-column">
+                <div class="username">
+                  <small class="text-muted" style="white-space: nowrap">System: </small>
+                </div>
+                <div class="text shadow-sm">
+                  hello ~ nice to meet you : )
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="write-box">
+          <div class="content">
+            <textarea id="message" class="editArea" placeholder="Say something ..."></textarea>
+          </div>
+          <div class="action float-right">
+            <span class="instruction">Press Cmd+Enter to start a new line</span>
+            <button type="button" class="btn btn-dark mx-2 px-3 shadow-sm btn-sm">Send</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 @endsection
