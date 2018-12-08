@@ -20,7 +20,13 @@ img {
 }
 
 button:focus {
-  outline: none;
+	outline: none;
+}
+
+.btn.focus,
+.btn:focus {
+	outline: 0;
+	box-shadow: none;
 }
 
 body > .container {
@@ -46,17 +52,20 @@ body > .container .tag-content {
 	border: none;
 	border-radius: 2px;
 }
-.user .card label {
+.user .card label,
+.file-content label {
 	margin-left: .7rem;
 }
 
-.user .card .form-control {
+.user .card .form-control,
+.file-content .form-control {
 	border: none;
 	border-bottom: 1px solid #ced4da;
 	border-radius: 0;
 }
 
-.user .card .form-control:focus {
+.user .card .form-control:focus,
+.file-content .form-control:focus {
 	box-shadow: none;
 }
 
@@ -599,11 +608,33 @@ a[title="Toggle Fullscreen (F11)"] {
 	margin-top: 16px;
 }
 
-.file-action .nav-item .btn.btn-link {
+.file-action .nav-item {
+	background: #fff;
+	border-radius: 50%;
+	width: 1.99rem;
+	height: 1.99rem;
+	padding: 0;
+	text-align: center;
+}
+
+.file-action .nav-item a,
+.file-action .nav-item button.btn.btn-link.delete {
+	color: #0e0e0e;
+	position: relative;
+	top: -3px;
+	left: -4px;
+	font-size: 14px;
+}
+
+.file-action .nav-item button.btn.btn-link.delete {
+	left: -5px;
+}
+
+/* .file-action .nav-item .btn.btn-link {
 	font-size: .92rem;
 	position: relative;
 	top: 1px;
-}
+} */
 
 .file-action .nav-item .btn.btn-link:hover {
 	text-decoration: none;
@@ -617,12 +648,27 @@ a[title="Toggle Fullscreen (F11)"] {
 .file-tool-box .file-mail .btn {
 	border-radius: 50%;
 	padding: 0;
-	width: 2.4rem;
-	height: 2.4rem;
+	width: 1.99rem;
+	height: 1.99rem;
+	font-size: 14px;
 }
 
-.file-status .vodio-name {
-  font-size: 90%;
+.file-status span {
+	font-size: 90%;
+}
+
+.file-user {
+  margin-top: 11px;
+}
+
+.file-user .toggle-btn {
+	width: 20px;
+	height: 20px;
+}
+
+.toggle-btn.table-list {
+	width: 25px;
+	height: 25px;
 }
 
 .slideOutUp {

@@ -45,7 +45,11 @@ hooks.after.providersBooted(() => {
 
 	View.global('md5', (str) => {
 		return md5(str)
-	})
+  })
+
+  View.global('csrf', () => {
+    return csrfField()
+  })
 
 	View.global('htmlToText', (text, length) => {
     const htmlToText = require('html-to-text')

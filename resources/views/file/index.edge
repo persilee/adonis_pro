@@ -9,17 +9,27 @@
           <th>Name</th>
           <th>Type</th>
           <th>Size</th>
+          <th>Author</th>
         </tr>
       </thead>
       <tbody>
-        @each(file in files)
+        @each(file in data)
           <tr>
             <td><a href="{{ route('files.show', { id: file.id }) }}">{{ file.client_name }}</a></td>
             <td>{{ file.type }}</td>
             <td>{{ file.size }}</td>
+            <td><div class="toggle-btn table-list ml-3"
+              style="background-image: url('https://cn.gravatar.com/avatar/{{ md5(file.user.email) }}?s=60&d=robohash&r=G');">
+              </div></td>
           </tr>
         @endeach
       </tbody>
     </table>
   </div>
+    @!component('components.pagination', {
+      total,
+      perPage,
+      page,
+      lastPage,
+    })
 @endsection

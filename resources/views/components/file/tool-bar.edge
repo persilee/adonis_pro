@@ -1,0 +1,45 @@
+<div class="file-tool-box d-flex">
+  @if(userId)
+    <div class="file-mail mt-1">
+      <form action="{{ route('share.email', { id: file.id, type: 'file' }) }}" method="POST">
+        @!yield($slot.csrfOne)
+        <button class="btn shadow-sm" type="submit">
+          <i class="fa fa-envelope"></i>
+        </button>
+      </form>
+    </div>
+    <div class="file-action mt-1 mr-auto">
+      @if(userId === user.id)
+      <ul class="nav justify-content-end pb-4">
+        <li class="nav-item shadow-sm mx-3">
+          <a href="{{ route('files.edit', { id: file.id }) }}" class="btn">
+            <i class="iconfont icon-article1"></i>
+          </a>
+        </li>
+        <li class="nav-item shadow-sm">
+          <form action="{{ route('files.destroy', { id: file.id }) }}?_method=DELETE" method="POST">
+            @!yield($slot.csrfTwo)
+            <button class="btn btn-link delete" type="submit">
+              <i class="iconfont icon-system-deleteb"></i>
+            </button>
+          </form>
+        </li>
+      </ul>
+      @endif
+    </div>
+  @endif
+  <div class="file-status mt-1 {{ userId ? '' : 'ml-auto' }}">
+    <span>{{ file.client_name }}</span>
+    <a href="{{ route('files.download', { id: file.id }) }}" class="btn text-muted">
+      <small>({{ file.size }})</small>
+      <i class="fa fa-download"></i>
+    </a>
+  </div>
+  <div class="file-user ml-1 mr-3">
+    <a href="/users/{{ user.id }}" class="">
+      <div class="toggle-btn"
+      style="background-image: url('https://cn.gravatar.com/avatar/{{ md5(user.email) }}?s=60&d=robohash&r=G');">
+      </div>
+    </a>
+  </div>
+</div>

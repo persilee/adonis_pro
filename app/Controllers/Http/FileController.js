@@ -13,12 +13,12 @@ const Route = use('Route')
  * Resourceful controller for interacting with files
  */
 class FileController {
-  async download ({ params, response }) {
-    const file = await File.find(params.id)
-    const filePath = `${ Helpers.publicPath('uploads') }/${ file.file_name }`
+	async download ({ params, response }) {
+		const file = await File.find(params.id)
+		const filePath = `${Helpers.publicPath('uploads')}/${file.file_name}`
 
-    return response.attachment(filePath, file.client_name)
-  }
+		return response.attachment(filePath, file.client_name)
+	}
 	/**
    * Show a list of all files.
    * GET files
@@ -29,10 +29,21 @@ class FileController {
    * @param {View} ctx.view
    */
 	async index ({ request, response, view }) {
-		const _files = await File.all()
-		const files = _files.toJSON()
+		// const _files = await File.all()
+		// const files = _files.toJSON()
 
-		return view.render('file.index', { files })
+		const page = request.input('page')
+		const perPage = 30
+
+		const files = await File.query()
+			.orderBy('created_at', 'desc')
+			.with('user', (builder) => {
+				builder.select('id', 'username', 'email')
+			})
+			.paginate(page, perPage)
+
+		console.log(files.toJSON())
+		return view.render('file.index', { ...files.toJSON() })
 	}
 
 	/**
@@ -56,22 +67,22 @@ class FileController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-	async store ({ request, response, session }) {
+	async store ({ request, response, session, auth }) {
 		const file = request.file('file', {
 			types : [ 'image', 'video' ],
 			size  : '100mb'
-    })
+		})
 
-    if (!file) {
-      session.flash({
-        type: 'warning',
-        message: 'You have not selected the file, please select.'
-      })
+		if (!file) {
+			session.flash({
+				type    : 'warning',
+				message : 'You have not selected the file, please select.'
+			})
 
-      return response.redirect('back')
-    }
+			return response.redirect('back')
+		}
 
-    console.log(file)
+		console.log(file)
 
 		const fileName = `${new Date().getTime()}.${file.subtype}`
 
@@ -95,7 +106,8 @@ class FileController {
 			file_name   : fileName,
 			type        : file.type,
 			subtype     : file.subtype,
-			size        : file.size
+			size        : file.size,
+			user_id     : auth.user.toJSON().id
 		})
 
 		session.flash({
@@ -115,11 +127,16 @@ class FileController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-	async show ({ params, request, response, view }) {
-    const file = await File.find(params.id)
+	async show ({ params, auth, response, view }) {
+		const file = await File.find(params.id)
+		const user = await file.user().fetch()
+		let userId = ''
+		if (auth.user) {
+			userId = auth.user.toJSON().id
+		}
 
-    return view.render('file.show', { file: file.toJSON() })
-  }
+		return view.render('file.show', { file: file.toJSON(), user: user.toJSON(), userId })
+	}
 
 	/**
    * Render a form to update an existing file.
@@ -131,10 +148,10 @@ class FileController {
    * @param {View} ctx.view
    */
 	async edit ({ params, request, response, view }) {
-    const file = await File.find(params.id)
+		const file = await File.find(params.id)
 
-    return view.render('file.edit', { file })
-  }
+		return view.render('file.edit', { file })
+	}
 
 	/**
    * Update file details.
@@ -145,34 +162,34 @@ class FileController {
    * @param {Response} ctx.response
    */
 	async update ({ params, request, response, session }) {
-    const fileData = await File.find(params.id)
-    const { client_name, file_name } = request.all()
+		const fileData = await File.find(params.id)
+		const { client_name, file_name } = request.all()
 
-    if (file_name !== fileData.file_name) {
-      try {
-        const basePath = Helpers.publicPath('uploads')
-        const originalFilePath = `${ basePath }/${ fileData.file_name }`
-        const filePath = `${ basePath }/${ file_name }`
-        await Drive.move(originalFilePath, filePath)
-      } catch (error) {
-        session.flash({
-          type: 'warning',
-          message: error.message
-        })
-        return response.redirect('back')
-      }
-    }
+		if (file_name !== fileData.file_name) {
+			try {
+				const basePath = Helpers.publicPath('uploads')
+				const originalFilePath = `${basePath}/${fileData.file_name}`
+				const filePath = `${basePath}/${file_name}`
+				await Drive.move(originalFilePath, filePath)
+			} catch (error) {
+				session.flash({
+					type    : 'warning',
+					message : error.message
+				})
+				return response.redirect('back')
+			}
+		}
 
-    fileData.merge({ client_name, file_name })
-    await fileData.save()
+		fileData.merge({ client_name, file_name })
+		await fileData.save()
 
-    session.flash({
-      type: 'success',
-      message: 'Successfully updated.'
-    })
+		session.flash({
+			type    : 'success',
+			message : 'Successfully updated.'
+		})
 
-    return response.redirect('back')
-  }
+		return response.redirect('back')
+	}
 
 	/**
    * Delete a file with id.
@@ -183,28 +200,27 @@ class FileController {
    * @param {Response} ctx.response
    */
 	async destroy ({ params, request, response, session }) {
-    try {
-      const fileData = await File.findOrFail(params.id)
-      const filePath = `${ Helpers.publicPath('uploads') }/${ fileData.file_name }`
-      await Drive.delete(filePath)
-      await fileData.delete()
+		try {
+			const fileData = await File.findOrFail(params.id)
+			const filePath = `${Helpers.publicPath('uploads')}/${fileData.file_name}`
+			await Drive.delete(filePath)
+			await fileData.delete()
 
-      session.flash({
-        type: 'success',
-        message: `<small>${ fileData.client_name }:</small> successfully deleted.`
-      })
+			session.flash({
+				type    : 'success',
+				message : `<small>${fileData.client_name}:</small> successfully deleted.`
+			})
 
-      return response.redirect(Route.url('files.index'))
-    } catch (error) {
-      session.flash({
-        type: 'warning',
-        message: error.message
-      })
+			return response.redirect(Route.url('files.index'))
+		} catch (error) {
+			session.flash({
+				type    : 'warning',
+				message : error.message
+			})
 
-      return response.redirect('back')
-    }
-
-  }
+			return response.redirect('back')
+		}
+	}
 }
 
 module.exports = FileController

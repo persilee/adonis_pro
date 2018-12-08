@@ -6,38 +6,19 @@
     <figure class="figure">
       <img src="/uploads/{{ file.file_name }}" alt="{{ file.client_name }}" class="figure-img img-fluid rounded">
       <figcaption class="figure-caption">
-        <div class="file-tool-box d-flex flex-row">
-          <div class="file-mail flex-grow-1">
-            <form action="{{ route('share.email', { id: file.id, type: 'file' }) }}" method="POST">
-              {{ csrfField() }}
-              <button class="btn shadow-sm" type="submit">
-                <i class="fa fa-envelope"></i>
-              </button>
-            </form>
-          </div>
-          @loggedIn
-          <div class="file-action mt-2">
-            <ul class="nav justify-content-end pb-4">
-              <li class="nav-item">
-                <a href="{{ route('files.edit', { id: file.id }) }}" class="btn btn-link">Edit</a>
-              </li>
-              <li class="nav-item">
-                <form action="{{ route('files.destroy', { id: file.id }) }}?_method=DELETE" method="POST">
-                  {{ csrfField() }}
-                  <button class="btn btn-link " type="submit">Delete</button>
-                </form>
-              </li>
-            </ul>
-          </div>
-          @endloggedIn
-          <div class="file-status mt-2">
-            <span>{{ file.client_name }}</span>
-            <a href="{{ route('files.download', { id: file.id }) }}" class="btn text-muted">
-              <small>({{ file.size }})</small>
-              <i class="fa fa-download"></i>
-            </a>
-          </div>
-        </div>
+        @component('components.file.tool-bar', {
+          file,
+          user,
+          userId
+        })
+          @slot('csrfOne')
+            {{ csrfField() }}
+          @endslot
+          @slot('csrfTwo')
+            {{ csrfField() }}
+          @endslot
+        @endcomponent
+
       </figcaption>
     </figure>
   @elseif(file.type === 'video')
@@ -45,37 +26,17 @@
     data-setup="{'example_option':true}" class="w-100" controls>
       <source src="/uploads/{{ file.file_name }}" />
     </video>
-    <div class="file-tool-box d-flex flex-row">
-      <div class="file-mail flex-grow-1">
-        <form action="{{ route('share.email', { id: file.id, type: 'file' }) }}" method="POST">
-          {{ csrfField() }}
-          <button class="btn shadow-sm" type="submit">
-            <i class="fa fa-envelope"></i>
-          </button>
-        </form>
-      </div>
-      @loggedIn
-      <div class="file-action mt-2">
-        <ul class="nav justify-content-end pb-4">
-          <li class="nav-item">
-            <a href="{{ route('files.edit', { id: file.id }) }}" class="btn btn-link">Edit</a>
-          </li>
-          <li class="nav-item">
-            <form action="{{ route('files.destroy', { id: file.id }) }}?_method=DELETE" method="POST">
-              {{ csrfField() }}
-              <button class="btn btn-link " type="submit">Delete</button>
-            </form>
-          </li>
-        </ul>
-      </div>
-      @endloggedIn
-      <div class="file-status mt-2">
-        <span class="vodio-name text-muted text-right"> {{ file.client_name }}</span>
-        <a href="{{ route('files.download', { id: file.id }) }}" class="btn text-muted">
-          <small>({{ file.size }})</small>
-          <i class="fa fa-download"></i>
-        </a>
-      </div>
-    </div>
+    @component('components.file.tool-bar', {
+      file,
+      user,
+      userId
+    })
+      @slot('csrfOne')
+        {{ csrfField() }}
+      @endslot
+      @slot('csrfTwo')
+        {{ csrfField() }}
+      @endslot
+    @endcomponent
   @endif
 @endsection
