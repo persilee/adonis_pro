@@ -30,9 +30,11 @@
           </div>
         </div>
         @loggedIn
+        @if(userId === user.id)
           <div class="edit-btn float-right">
             <a href="{{ route('PostController.edit', { id: post.id }) }}" class="btn btn-outline-light">Edit Post</a>
           </div>
+        @endif
         @endloggedIn
       </div>
 

@@ -8,6 +8,10 @@ class File extends Model {
   getSize (size) {
     return filesize(size)
   }
+
+  user () {
+    return this.belongsTo('App/Models/User')
+  }
 }
 
 module.exports = File

@@ -43,6 +43,10 @@ class User extends Model {
     return this.hasMany('App/Models/Post')
   }
 
+  files () {
+    return this.hasMany('App/Models/Post')
+  }
+
   static boot () {
     super.boot()
 

@@ -19,6 +19,10 @@ img {
 	margin: .8rem 0;
 }
 
+button:focus {
+  outline: none;
+}
+
 body > .container {
 	max-width: 860px;
 	padding: 5rem 2rem;
@@ -75,7 +79,7 @@ body > .container .tag-content {
 
 .status .reads,
 .status .likes {
-	font-size: 14px;
+	font-size: 12px;
 }
 .status .reads .iconfont.icon-read {
 	font-size: 15px;
@@ -591,8 +595,34 @@ a[title="Toggle Fullscreen (F11)"] {
 
 .post-content > .list-group h4,
 .user-content > .list-group h4,
-.tag-content>.list-group h4 {
+.tag-content > .list-group h4 {
 	margin-top: 16px;
+}
+
+.file-action .nav-item .btn.btn-link {
+	font-size: .92rem;
+	position: relative;
+	top: 1px;
+}
+
+.file-action .nav-item .btn.btn-link:hover {
+	text-decoration: none;
+}
+
+.file-status a {
+	position: relative;
+	top: -1px;
+}
+
+.file-tool-box .file-mail .btn {
+	border-radius: 50%;
+	padding: 0;
+	width: 2.4rem;
+	height: 2.4rem;
+}
+
+.file-status .vodio-name {
+  font-size: 90%;
 }
 
 .slideOutUp {
