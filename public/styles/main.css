@@ -471,9 +471,17 @@ a[title="Toggle Fullscreen (F11)"] {
 	top: 3.4rem;
 	z-index: 100;
 	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
-	transition: all .2s;
+	transition: all .5s;
 	transform: translateZ(0);
 	background: #fffffffc;
+}
+
+.profile-nav.down {
+  top: 3.4rem;
+}
+
+.profile-nav.up {
+  top: 0;
 }
 
 .nav.profile {
@@ -789,6 +797,17 @@ a[title="Toggle Fullscreen (F11)"] {
   background-color: transparent;
   padding-left: 2px;
   color: #BDBDBD;
+}
+.mail-resend-text {
+  position: relative;
+  top: -76px;
+}
+.mail-resend-text button {
+  font-size: 14px;
+}
+
+.mail-resend-text button i {
+  font-size: 12px;
 }
 
 .slideOutUp {

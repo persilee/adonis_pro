@@ -113,11 +113,11 @@
       {{ csrfField() }}
       <button class="btn btn-sm btn-primary my-4 mx-3" type="submit">Update profile</button>
     </form>
-    @if(!auth.user.is_verified)
-      <form action="{{ route('verification.resend') }}" method="POST">
+    @if(!auth.user.is_verified && user.email)
+      <form action="{{ route('verification.resend') }}" method="POST" class="mail-resend-text float-right">
         {{ csrfField() }}
         <button class="btn btn-link px-0 text-warning" type="submit">
-          <i class="fa fa-exclamation-triangle"></i>Resend verification email.
+          <i class="fa fa-exclamation-triangle mr-1"></i>Resend verification email.
         </button>
       </form>
     @endif

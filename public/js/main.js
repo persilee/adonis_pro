@@ -238,12 +238,16 @@
 			//下滚
 			if ($(window).scrollTop() > 10) {
 				if (!$('.limit-width').hasClass('slideOutUp'))
-					$('.limit-width').addClass('slideOutUp').removeClass('slideInDown')
+          $('.limit-width').addClass('slideOutUp').removeClass('slideInDown')
+        if (!$('.profile-nav').hasClass('up'))
+          $('.profile-nav').addClass('up').removeClass('down')
 			}
 		} else {
 			//上滚
 			if ($('.limit-width').hasClass('slideOutUp'))
-				$('.limit-width').removeClass('slideOutUp').addClass('slideInDown')
+        $('.limit-width').removeClass('slideOutUp').addClass('slideInDown')
+      if ($('.profile-nav').hasClass('up'))
+        $('.profile-nav').removeClass('up').addClass('down')
 		}
 		setTimeout(function () {
 			t = p

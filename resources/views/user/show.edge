@@ -9,33 +9,39 @@
       </div>
     </div>
     <h1 class="my-4 text-center">{{ user.username }}</h1>
-    <div class="bio">
-      <p class="bio-text text-center text-muted"><small>{{ user.profile.bio }}</small></p>
-    </div>
+    @if(user.profile.bio)
+      <div class="bio">
+        <p class="bio-text text-center text-muted"><small>{{ user.profile.bio }}</small></p>
+      </div>
+    @endif
     <div class="mb-5 text-center">
       <div class="d-flex justify-content-center flex-row">
-        <div class="profile-item mx-3">
-          <div class="profile-icon">
-            <a href="https://github.com/{{ user.profile.github }}" target="_blank" class="text-muted d-block">
-              <i class="fa fa-github"></i>
-            </a>
-            <span class="profile-text">GitHub</span>
+        @if(user.profile.github)
+          <div class="profile-item mx-3">
+            <div class="profile-icon">
+              <a href="https://github.com/{{ user.profile.github }}" target="_blank" class="text-muted d-block">
+                <i class="fa fa-github"></i>
+              </a>
+              <span class="profile-text">GitHub</span>
+            </div>
           </div>
-        </div>
-        <div class="profile-item mx-3">
-          <div class="profile-icon">
-            <a href="{{ user.profile.website }}" target="_blank" class="text-muted d-block">
-               <i class="iconfont icon-icontabbarwebsitenormal"></i>
-            </a>
-            <span class="profile-text">Website</span>
+        @endif
+        @if(user.profile.website)
+          <div class="profile-item mx-3">
+            <div class="profile-icon">
+              <a href="{{ user.profile.website }}" target="_blank" class="text-muted d-block">
+                <i class="iconfont icon-icontabbarwebsitenormal"></i>
+              </a>
+              <span class="profile-text">Website</span>
+            </div>
           </div>
-        </div>
+        @endif
         <div class="profile-item mx-3">
           <div class="profile-icon">
             <span class="text-muted d-block">
               <i class="iconfont icon-article1"></i>
             </span>
-            <span class="profile-text">{{ total }} Posts</span>
+            <span class="profile-text">{{ total ? total : '0' }} Posts</span>
           </div>
         </div>
         <div class="profile-item mx-3">
