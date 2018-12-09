@@ -18,8 +18,8 @@
       <div class="user-list-box">
         <div class="header py-3 px-3 d-flex align-items-center border-bottom">
           <div class="avatar mr-2">
-            <div class="toggle-btn"
-            style="background-image: url('https://cn.gravatar.com/avatar/{{ user.email ? md5(user.email) : randomStr() }}?s=60&d=robohash&r=G');">
+            <div class="toggle-btn" data-email="{{ md5(user.email) }}" data-status="{{ user.status }}"
+            style="background-image: url('https://cn.gravatar.com/avatar/{{ md5(user.email) }}?s=60&d=robohash&r=G');">
             </div>
           </div>
           <div class="info">
@@ -30,17 +30,8 @@
           <span class="text-uppercase">activity users</span>
         </div>
         <div class="user-list">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item d-flex align-items-center py-3">
-              <div class="avatar mr-2">
-                <div class="toggle-btn"
-                style="background-image: url('https://cn.gravatar.com/avatar/{{ md5(user.email) }}?s=60&d=robohash&r=G');">
-                </div>
-              </div>
-              <div class="info">
-                <span>{{ user.username }}</span>
-              </div>
-            </li>
+          <ul id="user-list" class="list-group list-group-flush">
+
           </ul>
         </div>
       </div>

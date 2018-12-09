@@ -18,8 +18,11 @@ class ChatRoomController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view, auth }) {
-    const user = auth.user || { username: 'Anonymous', email: '' }
+    let user = auth.user || { username: 'Anonymous', email: Math.random().toString(16).substr(2), status: 'not' }
 
+    if (user.username !== 'Anonymous' && !user.email) {
+      user.email = user.username
+    }
     console.log(user)
     return view.render('ws.ws', { user })
   }

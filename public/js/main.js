@@ -4,7 +4,7 @@
 	let post_btn = ''
 	let simplemde
 	let simplemdeId = ''
-	let herder_status = $('.header.editor-header .status-text')
+  let herder_status = $('.header.editor-header .status-text')
 	$.each($('input:checkbox'), function () {
 		if ($(this).is(':checked')) {
 			tags += `<span id="${$(this).attr('id')}" value="${$(

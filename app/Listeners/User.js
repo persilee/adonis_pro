@@ -3,6 +3,7 @@
 const Ws = use('Ws')
 const Mail = use('Mail')
 const Env = use('Env')
+const md5 = require('js-md5')
 
 const User = exports = module.exports = {}
 
@@ -13,7 +14,9 @@ User.log = async (user) => {
   Ws.getChannel('demo')
     .topic('demo')
     .broadcast('message', {
+      type: 'login',
       username: user.username,
+      email: md5(user.email),
       content: '<small class="text-muted">just logged in.</small>'
     })
 }

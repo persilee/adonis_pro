@@ -39,7 +39,11 @@ hooks.after.providersBooted(() => {
 		return parseInt(value)
   })
 
-  View.global('randomStr', () => {
+  const randomStr = Math.random().toString(36).substr(2)
+  View.global('randomStr', (isTrue) => {
+    if (isTrue) {
+      return md5(randomStr)
+    }
     const str = Math.random().toString(36).substr(2)
     return md5(str)
   })
