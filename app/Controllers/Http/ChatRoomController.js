@@ -23,7 +23,7 @@ class ChatRoomController {
     if (user.username !== 'Anonymous' && !user.email) {
       user.email = user.username
     }
-    console.log(user)
+
     return view.render('ws.ws', { user })
   }
 

@@ -236,7 +236,7 @@
 		p = $(this).scrollTop()
 		if (t <= p) {
 			//下滚
-			if ($(window).scrollTop() > 10) {
+			if ($(window).scrollTop() > 46) {
 				if (!$('.limit-width').hasClass('slideOutUp'))
           $('.limit-width').addClass('slideOutUp').removeClass('slideInDown')
         if (!$('.profile-nav').hasClass('up'))

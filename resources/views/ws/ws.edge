@@ -37,7 +37,7 @@
       </div>
       <div class="message-box d-flex flex-column">
         <div class="message-box-inner px-4 py-3">
-          <div class="messages">
+          <div id="messages" class="messages">
             <div class="message my-4 d-flex">
               <div class="mr-2">
                   <div class="toggle-btn char-room"
@@ -57,7 +57,7 @@
         </div>
         <div class="write-box">
           <div class="content">
-            <textarea id="message" class="editArea" placeholder="Say something ..."></textarea>
+            <pre contenteditable="true" id="message" class="editArea" placeholder="Say something ..."></pre>
           </div>
           <div class="action float-right">
             <span class="instruction">Press Cmd+Enter to start a new line</span>

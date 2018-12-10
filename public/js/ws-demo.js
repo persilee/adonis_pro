@@ -6,7 +6,7 @@ const connectionStatusText = $('.connection-status .text')
 const connectionStatusIcon = $('.connection-status .icon')
 const email = $('.user-list-box .header .toggle-btn').data('email')
 const message = $('#message')
-const messages = $('.messages')
+const messages = $('#messages')
 const userList = $('#user-list')
 
 ws.on('open', () => {
@@ -29,6 +29,9 @@ const subscribeToChannel = () => {
 	demo.on('new:user', (message) => {
 		console.log(message)
 	})
+	demo.on('presence:state', function (state) {
+		console.log(state)
+	})
 	demo.on('message', (message) => {
 		if (message.type == 'login') {
 			userList.append(`
@@ -43,7 +46,8 @@ const subscribeToChannel = () => {
           </div>
         </li>
       `)
-      messages.append(`
+			userList.children('li:last-child')[0].scrollIntoView()
+			messages.append(`
         <div class="message my-4 d-flex justify-content-center">
           <div class="mr-2">
               <div class="toggle-btn char-room login-tip"
@@ -60,6 +64,7 @@ const subscribeToChannel = () => {
           </div>
         </div>
         `)
+			messages.children('div:last-child')[0].scrollIntoView()
 		} else {
 			messages.append(`
         <div class="message my-4 d-flex">
@@ -78,24 +83,138 @@ const subscribeToChannel = () => {
           </div>
         </div>
         `)
+
+			messages.children('div:last-child')[0].scrollIntoView()
 		}
 
 		messages.animate({ scrollTop: messages.height() + messages.scrollTop() }, 'slow')
 	})
 }
 
-$(message).keyup(function (e) {
-	if (e.which == 13) {
+$(message).on('paste', function (e) {
+	e.preventDefault()
+	let text = ''
+
+	if (window.clipboardData && clipboardData.setData) {
+		// IE
+		text = window.clipboardData.getData('text')
+	} else {
+		text = (e.originalEvent || e).clipboardData.getData('text/plain') || prompt('在这里输入文本')
+	}
+
+	if (document.body.createTextRange) {
+		if (document.selection) {
+			textRange = document.selection.createRange()
+		} else if (window.getSelection) {
+			sel = window.getSelection()
+			var range = sel.getRangeAt(0)
+
+			// 创建临时元素，使得TextRange可以移动到正确的位置
+			var tempEl = document.createElement('span')
+			tempEl.innerHTML = '&#FEFF;'
+			range.deleteContents()
+			range.insertNode(tempEl)
+			textRange = document.body.createTextRange()
+			textRange.moveToElementText(tempEl)
+			tempEl.parentNode.removeChild(tempEl)
+		}
+		textRange.text = text
+		textRange.collapse(false)
+		textRange.select()
+	} else {
+		// Chrome之类浏览器
+		document.execCommand('insertText', false, text)
+	}
+})
+
+$(message).keydown(function (e) {
+	if ((e.ctrlKey || e.metaKey) && e.keyCode == 13) {
 		e.preventDefault()
+		//console.log('换行');
+		if (browserType() == 'IE' || browserType() == 'Edge') {
+			$(this).append('<div></div>')
+		} else if (browserType() == 'FF') {
+			$(this).append('<br/><br/>')
+		} else {
+			$(this).append('<div><br/></div>')
+		}
+		//设置输入焦点
+		var o = document.getElementById('message').lastChild
+		var textbox = document.getElementById('message')
+		var sel = window.getSelection()
+		var range = document.createRange()
+		range.selectNodeContents(textbox)
+		range.collapse(false)
+		range.setEndAfter(o)
+		range.setStartAfter(o)
+		sel.removeAllRanges()
+		sel.addRange(range)
 
-		const messageContent = $(this).val()
-		$(this).val('')
+		$(this).scrollTop($(this)[0].scrollHeight)
 
+		return false
+	}
+
+	if (e.keyCode == 13) {
+		e.preventDefault()
+		const messageContent = $.trim($(this).html())
+		$(this).html('')
 		if (messageContent) {
 			ws.getSubscription('demo').emit('message', {
-        content : messageContent,
-        email: email
+				content : messageContent,
+				email   : email
 			})
 		}
 	}
 })
+
+function browserType () {
+	var userAgent = navigator.userAgent //取得浏览器的userAgent字符串
+	var isOpera = false
+	if (userAgent.indexOf('Edge') > -1) {
+		return 'Edge'
+	}
+	if (userAgent.indexOf('.NET') > -1) {
+		return 'IE'
+	}
+	if (userAgent.indexOf('Opera') > -1 || userAgent.indexOf('OPR') > -1) {
+		isOpera = true
+		return 'Opera'
+	} //判断是否Opera浏览器
+	if (userAgent.indexOf('Firefox') > -1) {
+		return 'FF'
+	} //判断是否Firefox浏览器
+	if (userAgent.indexOf('Chrome') > -1) {
+		return 'Chrome'
+	}
+	if (userAgent.indexOf('Safari') > -1) {
+		return 'Safari'
+	} //判断是否Safari浏览器
+	if (userAgent.indexOf('compatible') > -1 && userAgent.indexOf('MSIE') > -1 && !isOpera) {
+		return 'IE'
+	} //判断是否IE浏览器
+}
+
+const os = (function () {
+	const UserAgent = navigator.userAgent.toLowerCase()
+	return {
+		isIpad          : /ipad/.test(UserAgent),
+		isIphone        : /iphone os/.test(UserAgent),
+		isAndroid       : /android/.test(UserAgent),
+		isWindowsCe     : /windows ce/.test(UserAgent),
+		isWindowsMobile : /windows mobile/.test(UserAgent),
+		isWin2K         : /windows nt 5.0/.test(UserAgent),
+		isXP            : /windows nt 5.1/.test(UserAgent),
+		isVista         : /windows nt 6.0/.test(UserAgent),
+		isWin7          : /windows nt 6.1/.test(UserAgent),
+		isWin8          : /windows nt 6.2/.test(UserAgent),
+		isWin81         : /windows nt 6.3/.test(UserAgent),
+		isMac           : /mac os/.test(UserAgent)
+	}
+})()
+
+if (os.isMac) {
+	$('.action .instruction').text('Press Cmd+Enter to start a new line')
+} else {
+	$('.action .instruction').text('Press Ctrl+Enter to start a new line')
+}
