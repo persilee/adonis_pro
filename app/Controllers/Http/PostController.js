@@ -30,8 +30,13 @@ class PostController {
 		const page = request.input('page')
     const perPage = 10
     let userId = ''
+    let email = ''
     if (auth.user){
       userId = auth.user.toJSON().id
+      email = auth.user.email
+      if(!email){
+        email = auth.user.username
+      }
     }
 		const posts = await Post.query()
 			.orderBy('created_at', 'desc')
@@ -41,7 +46,7 @@ class PostController {
 			.with('user.profile')
       .paginate(page, perPage)
 
-    return view.render('post.index', { ...posts.toJSON(), userId })
+    return view.render('post.index', { ...posts.toJSON(), userId, email})
 	}
 
 	/**

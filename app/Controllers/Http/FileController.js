@@ -129,12 +129,16 @@ class FileController {
 	async show ({ params, auth, response, view }) {
 		const file = await File.find(params.id)
 		const user = await file.user().fetch()
-		let userId = ''
+    let userId = ''
+    let email = ''
 		if (auth.user) {
-			userId = auth.user.toJSON().id
-		}
+      userId = auth.user.toJSON().id
+      email = auth.user.toJSON().email
+    }
 
-		return view.render('file.show', { file: file.toJSON(), user: user.toJSON(), userId })
+    console.log(user.toJSON())
+
+		return view.render('file.show', { file: file.toJSON(), user: user.toJSON(), userId, email })
 	}
 
 	/**

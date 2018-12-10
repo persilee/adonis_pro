@@ -9,7 +9,8 @@
         @component('components.file.tool-bar', {
           file,
           user,
-          userId
+          userId,
+          email
         })
           @slot('csrfOne')
             {{ csrfField() }}

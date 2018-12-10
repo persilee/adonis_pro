@@ -4,18 +4,8 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-/**
- * Resourceful controller for interacting with chatrooms
- */
+const Activity = use('App/models/Activity')
 class ChatRoomController {
-	constructor () {
-		this.activityUsers = [
-			{ username: 'Anonymous', email: Math.random().toString(16).substr(2), status: 'not' },
-      { username: 'Anonymous', email: Math.random().toString(16).substr(2), status: 'not' },
-      { username: 'Anonymous', email: Math.random().toString(16).substr(2), status: 'not' }
-		]
-  }
-
 	/**
    * Show a list of all chatrooms.
    * GET chatrooms
@@ -26,17 +16,21 @@ class ChatRoomController {
    * @param {View} ctx.view
    */
 	async index ({ request, response, view, auth }) {
-		let user = auth.user || { username: 'Anonymous', email: Math.random().toString(16).substr(2), status: 'not' }
+		let user = auth.user
+			? { username: auth.user.username, email: auth.user.email, user_id: auth.user.id }
+			: { username: 'Anonymous', email: Math.random().toString(16).substr(2), user_id: '' }
 
 		if (user.username !== 'Anonymous' && !user.email) {
 			user.email = user.username
-    }
-
-    let userList = this.activityUsers
-
-    userList.splice(userList.length, 0, user)
-    console.log(this.activityUsers)
-		return view.render('ws.ws', { user, userList: this.activityUsers })
+		}
+		const userList = await Activity.all()
+		if (user.username !== 'Anonymous') {
+			const isUser = await Activity.findBy('user_id', user.user_id)
+			if (!isUser) {
+				await Activity.create(user)
+			}
+		}
+		return view.render('ws.ws', { user, userList: userList.toJSON() })
 	}
 
 	/**
@@ -100,7 +94,9 @@ class ChatRoomController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-	async destroy ({ params, request, response }) {}
+	async destroy ({ params, request, response }) {
+
+	}
 }
 
 module.exports = ChatRoomController

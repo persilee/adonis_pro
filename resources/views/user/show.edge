@@ -5,7 +5,7 @@
   <div class="user-content">
     <div class="d-flex justify-content-center">
       <div class="toggle-btn profile"
-      style="background-image: url('https://cn.gravatar.com/avatar/{{ md5(user.email) }}?s=60&d=robohash&r=G');">
+      style="background-image: url('https://cn.gravatar.com/avatar/{{ user.email ? md5(user.email) : md5(user.username) }}?s=60&d=robohash&r=G');">
       </div>
     </div>
     <h1 class="my-4 text-center">{{ user.username }}</h1>

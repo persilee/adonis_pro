@@ -4,7 +4,7 @@
 	let post_btn = ''
 	let simplemde
 	let simplemdeId = ''
-  let herder_status = $('.header.editor-header .status-text')
+	let herder_status = $('.header.editor-header .status-text')
 	$.each($('input:checkbox'), function () {
 		if ($(this).is(':checked')) {
 			tags += `<span id="${$(this).attr('id')}" value="${$(
@@ -238,16 +238,14 @@
 			//下滚
 			if ($(window).scrollTop() > 46) {
 				if (!$('.limit-width').hasClass('slideOutUp'))
-          $('.limit-width').addClass('slideOutUp').removeClass('slideInDown')
-        if (!$('.profile-nav').hasClass('up'))
-          $('.profile-nav').addClass('up').removeClass('down')
+					$('.limit-width').addClass('slideOutUp').removeClass('slideInDown')
+				if (!$('.profile-nav').hasClass('up')) $('.profile-nav').addClass('up').removeClass('down')
 			}
 		} else {
 			//上滚
 			if ($('.limit-width').hasClass('slideOutUp'))
-        $('.limit-width').removeClass('slideOutUp').addClass('slideInDown')
-      if ($('.profile-nav').hasClass('up'))
-        $('.profile-nav').removeClass('up').addClass('down')
+				$('.limit-width').removeClass('slideOutUp').addClass('slideInDown')
+			if ($('.profile-nav').hasClass('up')) $('.profile-nav').removeClass('up').addClass('down')
 		}
 		setTimeout(function () {
 			t = p
@@ -272,5 +270,23 @@
 
 	$(document).on('mousewheel', '.viewer-container', function () {
 		viewer.hide()
+	})
+
+	document.addEventListener('visibilitychange', function () {
+		if (
+			document.visibilityState == 'hidden' &&
+			location.href != location.protocol + '//' + location.host + '/chatRooms'
+		) {
+      const userID = $('.user-photo.nav-link .toggle-btn').data().userId
+			$.ajax({
+        url: `/chatRoom/activity/remove/${userID}}`,
+				method  : 'get',
+				success : (response) => {
+					if (response == 'success') {
+
+					}
+				}
+			})
+		}
 	})
 })()

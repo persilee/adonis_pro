@@ -1,7 +1,7 @@
 @layout('layouts.main')
 
 @section('content')
-@set('pageTitle', 'Websocket demo')
+@set('pageTitle', 'Chat Room')
   <div class="chat-room-content">
     <h1 class="text-center text-uppercase py-4">
       <span style="letter-spacing: 13px; font-weight: 100">
@@ -32,6 +32,7 @@
         <div class="user-list">
           <ul id="user-list" class="list-group list-group-flush">
             @each(item in userList)
+            @if(item.user_id !== user.user_id)
               <li class="list-group-item d-flex align-items-center py-3">
                 <div class="avatar mr-2">
                   <div class="toggle-btn"
@@ -42,6 +43,7 @@
                   <span>{{ item.username }}</span>
                 </div>
               </li>
+            @endif
             @endeach
           </ul>
         </div>

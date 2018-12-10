@@ -1,13 +1,15 @@
 <div class="file-tool-box d-flex">
   @if(userId)
-    <div class="file-mail mt-1">
-      <form action="{{ route('share.email', { id: file.id, type: 'file' }) }}" method="POST">
-        @!yield($slot.csrfOne)
-        <button class="btn shadow-sm" type="submit">
-          <i class="fa fa-envelope"></i>
-        </button>
-      </form>
-    </div>
+    @if(email)
+      <div class="file-mail mt-1">
+        <form action="{{ route('share.email', { id: file.id, type: 'file' }) }}" method="POST">
+          @!yield($slot.csrfOne)
+          <button class="btn shadow-sm" type="submit">
+            <i class="fa fa-envelope"></i>
+          </button>
+        </form>
+      </div>
+    @endif
     <div class="file-action mt-1 mr-auto">
       @if(userId === user.id)
       <ul class="nav justify-content-end pb-4">
@@ -38,7 +40,7 @@
   <div class="file-user ml-1 mr-3">
     <a href="/users/{{ user.id }}" class="">
       <div class="toggle-btn"
-      style="background-image: url('https://cn.gravatar.com/avatar/{{ md5(user.email) }}?s=60&d=robohash&r=G');">
+      style="background-image: url('https://cn.gravatar.com/avatar/{{ user.email ? md5(user.email) : md5(user.username) }}?s=60&d=robohash&r=G');">
       </div>
     </a>
   </div>

@@ -17,6 +17,7 @@ User.log = async (user) => {
       type: 'login',
       username: user.username,
       email: md5(user.email),
+      listId: user.id,
       content: '<small class="text-muted">just logged in.</small>'
     })
 }

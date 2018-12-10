@@ -1,34 +1,25 @@
 'use strict'
 
-const md5 = require('js-md5')
-
 class WsDemoController {
-  constructor ({ socket, request, auth }) {
+	constructor ({ socket, request, auth }) {
 		this.socket = socket
 		this.request = request
-    this.user = auth.user || { username: 'Anonymous' }
-    // presence.track(socket, socket.currentUser.id, {})
+		this.user = auth.user || { username: 'Anonymous' }
+		// presence.track(socket, socket.currentUser.id, {})
 	}
 
 	onMessage (message) {
-    const { username } = this.user
-    const { content, email } = message
+		const { username } = this.user
+		const { content, email } = message
 
-    // console.log(...this.socket.channel.subscriptions.get('demo'))
+		// console.log(...this.socket.channel.subscriptions.get('demo'))
 
 		this.socket.broadcastToAll('message', {
-      username,
-      email,
+			username,
+			email,
 			content
 		})
 	}
-
-  * joinRoom (room) {
-    console.log(room)
-    const user = this.socket.currentUser
-    // throw error to deny a socket from joining room
-  }
-
 }
 
 module.exports = WsDemoController
