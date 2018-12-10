@@ -31,7 +31,18 @@
         </div>
         <div class="user-list">
           <ul id="user-list" class="list-group list-group-flush">
-
+            @each(item in userList)
+              <li class="list-group-item d-flex align-items-center py-3">
+                <div class="avatar mr-2">
+                  <div class="toggle-btn"
+                  style="background-image: url('https://cn.gravatar.com/avatar/{{ md5(item.email) }}?s=60&d=robohash&r=G');">
+                  </div>
+                </div>
+                <div class="info">
+                  <span>{{ item.username }}</span>
+                </div>
+              </li>
+            @endeach
           </ul>
         </div>
       </div>

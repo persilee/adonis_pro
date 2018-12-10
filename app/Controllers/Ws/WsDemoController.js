@@ -23,16 +23,12 @@ class WsDemoController {
 		})
 	}
 
-	joinRoom (room) {
-		console.log('room', room)
-		console.log('coon', this.socket.connection)
-		const user = this.socket.currentUser
-		this.socket.getChannel('demo').topic('demo').broadcast('new:user', {
-			user
-		})
-	}
+  * joinRoom (room) {
+    console.log(room)
+    const user = this.socket.currentUser
+    // throw error to deny a socket from joining room
+  }
 
-	leaveRoom (room) {}
 }
 
 module.exports = WsDemoController

@@ -42,7 +42,6 @@ class FileController {
 			})
 			.paginate(page, perPage)
 
-		console.log(files.toJSON())
 		return view.render('file.index', { ...files.toJSON() })
 	}
 

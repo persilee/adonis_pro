@@ -12,7 +12,14 @@ const userList = $('#user-list')
 ws.on('open', () => {
 	connectionStatus.removeClass('text-muted')
 	connectionStatusIcon.addClass('text-success')
-	connectionStatusText.text('Connected')
+  connectionStatusText.text('Connected')
+
+  console.log('joinRoom')
+
+  // ws.getSubscription('demo').emit('message', {
+  //   content: messageContent,
+  //   email: email
+  // })
 
 	subscribeToChannel()
 })
