@@ -10,15 +10,12 @@ class ActivityController {
 
     const user = await auth.getUser()
 
-    console.log(user)
+    const activityUser = await Activity.findByOrFail('username', auth.user.username)
 
-    try {
+    if (activityUser) {
+      Event.emit('activity.leaveRoom', user)
       await Activity.query().where('username', user.username).delete()
-    } catch (error) {
-      console.log(error)
     }
-
-    Event.emit('activity.leaveRoom', user)
 
     return 'success'
   }

@@ -5,6 +5,7 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const Activity = use('App/models/Activity')
+const Event = use('Event')
 class ChatRoomController {
 	/**
    * Show a list of all chatrooms.
@@ -15,6 +16,7 @@ class ChatRoomController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
+
 	async index ({ request, response, view, auth }) {
 		let user = auth.user
 			? { username: auth.user.username, email: auth.user.email, user_id: auth.user.id }
@@ -24,12 +26,14 @@ class ChatRoomController {
 			user.email = user.username
 		}
 		const userList = await Activity.all()
-		if (user.username !== 'Anonymous') {
-			const isUser = await Activity.findBy('user_id', user.user_id)
-			if (!isUser) {
-				await Activity.create(user)
-			}
+
+		if (user.username != 'Anonymous') {
+			setTimeout(() => {
+				Activity.create(user)
+				Event.emit('activity.joinRoom', user)
+			}, 500)
 		}
+
 		return view.render('ws.ws', { user, userList: userList.toJSON() })
 	}
 
@@ -63,7 +67,17 @@ class ChatRoomController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-	async show ({ params, request, response, view }) {}
+	async show ({ params, request, response, view }) {
+
+    let user = { username: 'Anonymous', email: Math.random().toString(16).substr(2), activity_id: params.id }
+
+		setTimeout(() => {
+			Activity.create(user)
+			Event.emit('activity.joinRoom', user)
+    }, 500)
+
+    return 'success'
+	}
 
 	/**
    * Render a form to update an existing chatroom.
@@ -94,9 +108,7 @@ class ChatRoomController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-	async destroy ({ params, request, response }) {
-
-	}
+	async destroy ({ params, request, response }) {}
 }
 
 module.exports = ChatRoomController

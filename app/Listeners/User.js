@@ -11,12 +11,13 @@ User.method = async () => {
 }
 
 User.log = async (user) => {
+  const email = user.email ? user.email : user.username
   Ws.getChannel('demo')
     .topic('demo')
     .broadcast('message', {
       type: 'login',
       username: user.username,
-      email: md5(user.email),
+      email: md5(email),
       listId: user.id,
       content: '<small class="text-muted">just logged in.</small>'
     })

@@ -288,5 +288,22 @@
 				}
 			})
 		}
-	})
+  })
+
+  $('.navbar-nav .nav-link.chatroom').on('click', function () {
+    let cip = returnCitySN['cip']
+    cip = encodeURIComponent(cip)
+    if ($(this).data('isActivityLogged') == 'Anonymous') {
+      console.log('ajax')
+      $.ajax({
+        url: '/chatRooms/' + cip,
+        method: 'get',
+        success: (response) => {
+          if (response == 'success') {
+
+          }
+        }
+      })
+    }
+   })
 })()

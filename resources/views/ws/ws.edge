@@ -33,7 +33,7 @@
           <ul id="user-list" class="list-group list-group-flush">
             @each(item in userList)
             @if(item.user_id !== user.user_id)
-              <li class="list-group-item d-flex align-items-center py-3">
+              <li id="{{ item.user_id }}" class="list-group-item d-flex align-items-center py-3">
                 <div class="avatar mr-2">
                   <div class="toggle-btn"
                   style="background-image: url('https://cn.gravatar.com/avatar/{{ md5(item.email) }}?s=60&d=robohash&r=G');">

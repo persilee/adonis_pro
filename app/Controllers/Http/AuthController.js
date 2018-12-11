@@ -1,8 +1,17 @@
 'use strict'
 
 const Event = use('Event')
+const Activity = use('App/models/Activity')
 class AuthController {
   async logout ({ auth, response }) {
+
+    const activityUser = await Activity.findByOrFail('username', auth.user.username)
+
+    if (activityUser) {
+      Event.emit('activity.leaveRoom', auth.user)
+      await Activity.query().where('username', auth.user.username).delete()
+    }
+
     await auth.logout()
 
     return response.redirect('back')

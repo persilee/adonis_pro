@@ -13,7 +13,7 @@
           <a class="nav-link" href="{{ route('files.index') }}">Files</a>
         </li>
         <li class="nav-item {{ url.includes(route('chatRooms.index')) ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('chatRooms.index') }}">Chatroom</a>
+          <a class="nav-link chatroom" data-is-activity-logged="{{auth.user.id ? auth.user.id : 'Anonymous'}}" href="{{ route('chatRooms.index') }}">Chatroom</a>
         </li>
       </ul>
       <ul class="navbar-nav">

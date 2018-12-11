@@ -1,14 +1,18 @@
 'use strict'
 
+const Event = use('Event')
+const Activity = use('App/models/Activity')
 class WsDemoController {
 	constructor ({ socket, request, auth }) {
 		this.socket = socket
 		this.request = request
-		this.user = auth.user || { username: 'Anonymous' }
+		this.user = auth.user
+			? { username: auth.user.username, email: auth.user.email, user_id: auth.user.id }
+			: { username: 'Anonymous', email: Math.random().toString(16).substr(2), user_id: '' }
 		// presence.track(socket, socket.currentUser.id, {})
 	}
 
-	onMessage (message) {
+	async onMessage (message) {
 		const { username } = this.user
 		const { content, email } = message
 
@@ -19,6 +23,15 @@ class WsDemoController {
 			email,
 			content
 		})
+	}
+
+	async onClose () {
+		const activityUser = await Activity.findByOrFail('username', this.user.username)
+
+		if (activityUser) {
+			await Activity.query().where('username', this.user.username).delete()
+      Event.emit('activity.leaveRoom', activityUser)
+		}
 	}
 }
 

@@ -1,4 +1,5 @@
 $(function () {
+
 	if (location.href == 'http://localhost:3333/chatRooms') {
 		chatRoom()
 	}
@@ -23,96 +24,122 @@ $(function () {
 			subscribeToChannel()
 		})
 
-		ws.on('close', () => {
+		ws.on('close', (data) => {
 			connectionStatus.addClass('text-muted')
 			connectionStatusIcon.removeClass('text-success')
 			connectionStatusText.text('Disconnected')
-			ws.getSubscription('demo').emit('leaveRoom')
-		})
+
+    })
+
+    // ws.close()
 
 		const subscribeToChannel = () => {
+      const activityId = returnCitySN['cip'].replace(/\./g, '-')
 			const demo = ws.subscribe('demo')
-
-			demo.on('leaveRoom', (message) => {
-				console.log(message)
-			})
-			demo.on('presence:state', function (state) {
-				console.log(state)
-			})
 			demo.on('message', (message) => {
 				if (message.type == 'login') {
-					userList.append(`
-        <li id="${message.listId}" class="list-group-item d-flex align-items-center py-3">
-          <div class="avatar mr-2">
-            <div class="toggle-btn"
-            style="background-image: url('https://cn.gravatar.com/avatar/${message.email}?s=60&d=robohash&r=G');">
-            </div>
-          </div>
-          <div class="info">
-            <span>${message.username}</span>
-          </div>
-        </li>
-      `)
-					userList.children('li:last-child')[0].scrollIntoView()
 					messages.append(`
-        <div class="message my-4 d-flex justify-content-center">
-          <div class="mr-2">
-              <div class="toggle-btn char-room login-tip"
-              style="background-image: url('https://cn.gravatar.com/avatar/${message.email}?s=60&d=robohash&r=G');">
+          <div class="message my-4 d-flex justify-content-center">
+            <div class="mr-2">
+                <div class="toggle-btn char-room login-tip"
+                style="background-image: url('https://cn.gravatar.com/avatar/${message.email}?s=60&d=robohash&r=G');">
+                </div>
+            </div>
+            <div class="d-flex">
+              <div class="username login-tip">
+                <small class="text-muted" style="white-space: nowrap">${message.username}: </small>
               </div>
-          </div>
-          <div class="d-flex">
-            <div class="username login-tip">
-              <small class="text-muted" style="white-space: nowrap">${message.username}: </small>
-            </div>
-            <div class="text login-tip">
-              ${message.content}
+              <div class="text login-tip">
+                ${message.content}
+              </div>
             </div>
           </div>
-        </div>
         `)
-					messages.children('div:last-child')[0].scrollIntoView()
-				} else if (message.type == 'leave') {
+          // messages.children('div:last-child')[0].scrollIntoView()
+          messages.scrollTop(messages[0].scrollHeight)
+        } else if (message.type == 'join'){
+          if (message.id && message.username != 'Anonymous'){
+              $('#' + message.id).remove()
+            } else if (message.activityId){
+              $('#' + activityId).remove()
+            }
+            userList.append(`
+              <li id="${message.id ? message.id : message.activityId}" class="list-group-item d-flex align-items-center py-3">
+                <div class="avatar mr-2">
+                  <div class="toggle-btn"
+                  style="background-image: url('https://cn.gravatar.com/avatar/${message.email}?s=60&d=robohash&r=G');">
+                  </div>
+                </div>
+                <div class="info">
+                  <span>${message.username}</span>
+                </div>
+              </li>
+            `)
+              messages.append(`
+            <div class="message my-4 d-flex justify-content-center">
+              <div class="mr-2">
+                  <div class="toggle-btn char-room login-tip"
+                  style="background-image: url('https://cn.gravatar.com/avatar/${message.email}?s=60&d=robohash&r=G');">
+                  </div>
+              </div>
+              <div class="d-flex">
+                <div class="username login-tip">
+                  <small class="text-muted" style="white-space: nowrap">${message.username}: </small>
+                </div>
+                <div class="text login-tip">
+                  ${message.content}
+                </div>
+              </div>
+            </div>
+          `)
+        } else if (message.type == 'leave') {
+          if (message.id && message.username != 'Anonymous') {
+            $('#' + message.id).remove()
+          } else if (message.activityId) {
+            console.log(message.activityId)
+            $('#' + activityId).remove()
+          }
 					messages.append(`
-        <div class="message my-4 d-flex justify-content-center">
-          <div class="mr-2">
-              <div class="toggle-btn char-room login-tip"
-              style="background-image: url('https://cn.gravatar.com/avatar/${message.email}?s=60&d=robohash&r=G');">
+          <div class="message my-4 d-flex justify-content-center">
+            <div class="mr-2">
+                <div class="toggle-btn char-room login-tip"
+                style="background-image: url('https://cn.gravatar.com/avatar/${message.email}?s=60&d=robohash&r=G');">
+                </div>
+            </div>
+            <div class="d-flex">
+              <div class="username login-tip">
+                <small class="text-muted" style="white-space: nowrap">${message.username}: </small>
               </div>
-          </div>
-          <div class="d-flex">
-            <div class="username login-tip">
-              <small class="text-muted" style="white-space: nowrap">${message.username}: </small>
-            </div>
-            <div class="text login-tip">
-              ${message.content}
+              <div class="text login-tip">
+                ${message.content}
+              </div>
             </div>
           </div>
-        </div>
         `)
-					messages.children('div:last-child')[0].scrollIntoView()
+
 				} else {
 					messages.append(`
-        <div class="message my-4 d-flex">
-          <div class="mr-2">
-              <div class="toggle-btn char-room"
-              style="background-image: url('https://cn.gravatar.com/avatar/${message.email}?s=60&d=robohash&r=G');">
+          <div class="message my-4 d-flex">
+            <div class="mr-2">
+                <div class="toggle-btn char-room"
+                style="background-image: url('https://cn.gravatar.com/avatar/${message.email}?s=60&d=robohash&r=G');">
+                </div>
+            </div>
+            <div class="d-flex flex-column">
+              <div class="username">
+                <small class="text-muted" style="white-space: nowrap">${message.username}: </small>
               </div>
-          </div>
-          <div class="d-flex flex-column">
-            <div class="username">
-              <small class="text-muted" style="white-space: nowrap">${message.username}: </small>
-            </div>
-            <div class="text shadow-sm">
-              ${message.content}
+              <div class="text shadow-sm">
+                ${message.content}
+              </div>
             </div>
           </div>
-        </div>
         `)
-					messages.children('div:last-child')[0].scrollIntoView()
+
 				}
 
-				messages.animate({ scrollTop: messages.height() + messages.scrollTop() }, 'slow')
+        $('.message-box-inner').animate({ scrollTop: $('.message-box-inner').height() + $('.message-box-inner').scrollTop() }, 'slow')
+        $('.user-list').animate({ scrollTop: $('.user-list').height() + $('.user-list').scrollTop() }, 'slow')
 			})
 		}
 
