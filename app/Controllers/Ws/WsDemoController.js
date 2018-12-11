@@ -2,6 +2,7 @@
 
 const Event = use('Event')
 const Activity = use('App/models/Activity')
+const Message = use('App/models/Message')
 class WsDemoController {
 	constructor ({ socket, request, auth }) {
 		this.socket = socket
@@ -22,7 +23,10 @@ class WsDemoController {
 			username,
 			email,
 			content
-		})
+    })
+
+    await Message.create({ username, content, email, user_id: this.user.id  })
+
 	}
 
 	async onClose () {

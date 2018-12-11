@@ -269,6 +269,8 @@ $(function () {
 			$('.action .instruction').text('Press Cmd+Enter to start a new line')
 		} else {
 			$('.action .instruction').text('Press Ctrl+Enter to start a new line')
-		}
+    }
+
+    $('.message-box-inner').scrollTop($('.message-box-inner').height() + 10)
 	}
 })

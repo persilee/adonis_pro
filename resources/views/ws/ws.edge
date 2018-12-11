@@ -51,6 +51,26 @@
       <div class="message-box d-flex flex-column">
         <div class="message-box-inner px-4 py-3">
           <div id="messages" class="messages">
+            @each(message in messages)
+              <div class="message my-4 d-flex">
+                <div class="mr-2">
+                    <div class="toggle-btn char-room"
+                style="background-image: url('https://cn.gravatar.com/avatar/{{ message.email }}?s=60&d=robohash&r=G');">
+                    </div>
+                </div>
+                <div class="d-flex flex-column">
+                  <div class="username">
+                    <small class="text-muted" style="white-space: nowrap">{{ message.username }}: </small>
+                  </div>
+                  <div class="text shadow-sm">
+                    {{ message.content }}
+                  </div>
+                </div>
+              </div>
+            @endeach
+            <div class="dropdown-divider">
+              <span>Message history</span>
+            </div>
             <div class="message my-4 d-flex">
               <div class="mr-2">
                   <div class="toggle-btn char-room"

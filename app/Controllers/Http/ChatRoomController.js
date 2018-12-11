@@ -6,6 +6,7 @@
 
 const Activity = use('App/models/Activity')
 const Event = use('Event')
+const Message = use('App/models/Message')
 class ChatRoomController {
 	/**
    * Show a list of all chatrooms.
@@ -32,9 +33,12 @@ class ChatRoomController {
 				Activity.create(user)
 				Event.emit('activity.joinRoom', user)
 			}, 500)
-		}
+    }
 
-		return view.render('ws.ws', { user, userList: userList.toJSON() })
+
+    const messages = await Message.query().paginate(1,10)
+
+		return view.render('ws.ws', { user, userList: userList.toJSON(), messages: messages.rows })
 	}
 
 	/**

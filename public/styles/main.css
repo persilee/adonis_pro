@@ -744,8 +744,18 @@ a[title="Toggle Fullscreen (F11)"] {
 	overflow: scroll;
 }
 
-.message-box .messages {
-	height: 73%;
+.message-box .messages .dropdown-divider {
+	overflow: visible;
+}
+
+.message-box .messages .dropdown-divider span {
+	position: relative;
+	top: -16px;
+	left: 38%;
+	font-size: 13px;
+	background-color: #fff;
+	padding: 0 .8rem;
+	color: #ccc;
 }
 
 .message-box .write-box {
