@@ -70,7 +70,7 @@ $(function () {
                   style="background-image: url('https://cn.gravatar.com/avatar/${message.email}?s=60&d=robohash&r=G');">
                   </div>
                 </div>
-                <div class="info">
+                <div class="info text-truncate">
                   <span>${message.username}</span>
                 </div>
               </li>

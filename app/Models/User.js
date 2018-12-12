@@ -47,6 +47,10 @@ class User extends Model {
     return this.hasMany('App/Models/Post')
   }
 
+  likes () {
+    return this.belongsToMany('App/Models/Post')
+  }
+
   static boot () {
     super.boot()
 

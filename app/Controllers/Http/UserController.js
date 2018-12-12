@@ -71,6 +71,8 @@ class UserController {
 
     const posts = await user.posts().orderBy('updated_at', 'desc').with('user').paginate(pageNumber, pageSize)
 
+    const total_liked = await user.likes().orderBy('updated_at', 'desc').with('user').getCount()
+
     const total_reads = await Post.query()
       .where('user_id', params.id)
       .getSum('reads')
@@ -82,8 +84,9 @@ class UserController {
     return view.render('user.show', {
       user: user.toJSON(),
       ...posts.toJSON(),
-      total_reads: total_reads,
-      total_likes: total_likes
+      total_reads,
+      total_likes,
+      total_liked
     })
 		// const { username, email } = user.toJSON()
 		// const profile = await user.profile()

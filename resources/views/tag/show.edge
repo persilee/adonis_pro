@@ -9,10 +9,12 @@
       items: data
     })
   </div>
-  @!component('components.pagination', {
-    total,
-    perPage,
-    page,
-    lastPage
-  })
+  @if(total > perPage)
+    @!component('components.pagination', {
+      total,
+      perPage,
+      page,
+      lastPage
+    })
+  @endif
 @endsection

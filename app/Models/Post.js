@@ -8,6 +8,10 @@ class Post extends Model {
     return this.belongsToMany('App/Models/Tag')
   }
 
+  userLikes () {
+    return this.hasMany('App/Models/User')
+  }
+
   user () {
     return this.belongsTo('App/Models/User')
   }

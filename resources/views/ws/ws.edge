@@ -22,7 +22,7 @@
             style="background-image: url('https://cn.gravatar.com/avatar/{{ md5(user.email) }}?s=60&d=robohash&r=G');">
             </div>
           </div>
-          <div class="info">
+          <div class="info text-truncate">
             <span>{{ user.username }}</span>
           </div>
         </div>
@@ -39,7 +39,7 @@
                   style="background-image: url('https://cn.gravatar.com/avatar/{{ md5(item.email) }}?s=60&d=robohash&r=G');">
                   </div>
                 </div>
-                <div class="info">
+                <div class="info text-truncate">
                   <span>{{ item.username }}</span>
                 </div>
               </li>

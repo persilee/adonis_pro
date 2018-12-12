@@ -6,5 +6,5 @@
   "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
   "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
   "prettier.bracesSpacing": true,
-  "prettier.alignObjectProperties": true
+  "prettier.alignObjectProperties": false
 }

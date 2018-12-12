@@ -507,7 +507,7 @@ a[title="Toggle Fullscreen (F11)"] {
 .container.frofile .list-group-item .title {
 	font-size: 1.1rem;
 	color: #333;
-	width: 8rem;
+	width: 9rem;
 }
 
 .container.frofile .list-group-item .toggle-btn {
@@ -826,6 +826,37 @@ a[title="Toggle Fullscreen (F11)"] {
 
 .mail-resend-text button i {
 	font-size: 12px;
+}
+
+.profile-nav.user-show {
+	position: static;
+	box-shadow: none;
+}
+
+.profile-nav.user-show .nav-link {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #212121;
+}
+
+.profile-nav.user-show .nav-link .text-num {
+  font-weight: 200;
+    font-size: .8rem;
+    position: relative;
+    bottom: -1px;
+}
+
+.profile-nav.user-show .nav-link.active {
+    color: #007bff;
+    border-bottom: 1px solid #2c92ff;
+}
+
+.user-content .list-group-flush .list-group-item:first-child {
+      padding-top: 45px;
+}
+
+.dropdown-menu i {
+  font-size: 13px;
 }
 
 .slideOutUp {

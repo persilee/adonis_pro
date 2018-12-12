@@ -51,7 +51,7 @@
       @endif
       <div class="post-suspended-panel">
         <div data-id="{{ post.id }}" data-user="{{ userId }}" badge="{{ post.likes ? post.likes : 0 }}" class="post-panel likes my-3 shadow-sm">
-          <a href="javascript:void(0);">
+          <a href="{{ route('LikedController.liked', { post: post.id, user: auth.user.id}) }}">
             <i class="iconfont icon-love"></i>
           </a>
           <div class="is-liked">
