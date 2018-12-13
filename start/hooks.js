@@ -39,6 +39,10 @@ hooks.after.providersBooted(() => {
 		return parseInt(value)
   })
 
+	View.global('url', () => {
+    return location.protocol + '//' + location.host + '/chatRooms'
+  })
+
   const randomStr = Math.random().toString(36).substr(2)
   View.global('randomStr', (isTrue) => {
     if (isTrue) {

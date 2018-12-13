@@ -296,23 +296,25 @@
 		viewer.hide()
 	})
 
-	document.addEventListener('visibilitychange', function () {
-		if (
-			document.visibilityState == 'hidden' &&
-			location.href != location.protocol + '//' + location.host + '/chatRooms'
-		) {
-      userID = encodeURIComponent(userID)
-			$.ajax({
-        url: `/chatRoom/activity/remove/${userID}}`,
-				method  : 'get',
-				success : (response) => {
-					if (response == 'success') {
+  if (location.href == location.protocol + '//' + location.host + '/chatRooms'){
+    document.addEventListener('visibilitychange', function () {
+      if (
+        document.visibilityState == 'hidden' &&
+        location.href != location.protocol + '//' + location.host + '/chatRooms'
+      ) {
+        userID = encodeURIComponent(userID)
+        $.ajax({
+          url: `/chatRoom/activity/remove/${userID}}`,
+          method: 'get',
+          success: (response) => {
+            if (response == 'success') {
 
-					}
-				}
-			})
-		}
-  })
+            }
+          }
+        })
+      }
+    })
+  }
 
   $('.navbar-nav .nav-link.chatroom').on('click', function () {
     let cip = returnCitySN['cip']
@@ -330,4 +332,58 @@
       })
     }
    })
+
+  $('.post-suspended-panel .post-panel.weibo div').hover(function () {
+    $(this).css('background-image', "url('/image/weibo1.png')")
+  }, function () {
+    $(this).css('background-image', "url('/image/weibo.png')")
+  })
+
+  var ShareTip = function () { }
+  ShareTip.prototype.sharetosina = function (title, url) {
+    var sharesinastring = 'http://v.t.sina.com.cn/share/share.php?title=' + title + '&url=' + url + '&content=utf-8&sourceUrl=' + url;
+    window.open(sharesinastring, '_blank');
+  }
+
+  ShareTip.prototype.sharetoqq = function (title, url, content) {
+    var _shareUrl = 'https://connect.qq.com/widget/shareqq/index.html?';
+      _shareUrl += 'url=' + encodeURIComponent(url||location.href);  
+      _shareUrl += '&title=' + encodeURIComponent(title||document.title); 
+    window.open(_shareUrl, '_blank');
+  }
+
+  $('.post-suspended-panel .post-panel.weibo').on('click', function () {
+    var shareTitle = $('.post-details>h1').text();
+    var shareContent = $('.post-content .post-details>div:not(.author)').text().substring(0, 80) + '...'
+    var shareUrl = window.location.href;
+    var share1 = new ShareTip();
+    share1.sharetosina(shareTitle + " —— " + shareContent, shareUrl);
+  })
+
+  $('.post-suspended-panel .post-panel.qq').on('click', function () {
+    var shareTitle = $('.post-details>h1').text();
+    var shareContent = $('.post-content .post-details>div:not(.author)').text().substring(0, 80) + '...'
+    var shareUrl = window.location.href;
+    var share1 = new ShareTip();
+    share1.sharetoqq(shareTitle + " —— " + shareContent, shareUrl, shareContent);
+  })
+
+  const shareUrl = window.location.href;
+  $(".post-suspended-panel .post-panel.wechat .wechat-img").empty().qrcode({
+    render: 'img',
+    text: shareUrl,
+    size: 85,
+    background: '#fff',
+    minVersion: 5,
+    top: 52,
+  })
+
+  $('.post-suspended-panel .post-panel.wechat').hover(function () {
+    $(this).find('.wechat-img').css('display','block')
+    $(this).find('a').css('color', '#00b30b')
+  }, function () {
+    $(this).find('.wechat-img').css('display','none')
+    $(this).find('a').css('color', '#9e9e9e')
+  })
+
 })()

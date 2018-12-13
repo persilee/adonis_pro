@@ -386,8 +386,8 @@ a[title="Toggle Fullscreen (F11)"] {
 .post-suspended-panel {
 	position: fixed;
 	z-index: 1040;
-	margin-left: -6rem;
-	top: 16rem;
+	margin-left: -6.5rem;
+	top: 12rem;
 	color: #9e9e9e;
 }
 
@@ -399,6 +399,18 @@ a[title="Toggle Fullscreen (F11)"] {
 	line-height: 2.5rem;
 	border-radius: 50%;
 	overflow: hidden;
+	cursor: pointer;
+}
+
+.post-suspended-panel .share-title {
+	margin-top: 1.6rem;
+	font-size: .86rem;
+	text-align: center;
+	color: #c6c6c6;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .pagination {
@@ -422,9 +434,33 @@ a[title="Toggle Fullscreen (F11)"] {
 	transform: scale(.65);
 }
 
-.post-suspended-panel .post-panel a:hover,
+.post-suspended-panel .post-panel:not(.weibo) a:hover,
 .post-suspended-panel .post-panel.active a {
 	color: #ef5350;
+}
+
+.post-suspended-panel .post-panel.weibo {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.post-suspended-panel .post-panel.weibo div {
+	height: 17px;
+	width: 17px;
+	background-size: cover;
+	background-image: url('/image/weibo.png');
+}
+
+.post-suspended-panel .post-panel.qq a:hover {
+	color: #2ab3f6;
+}
+
+.post-suspended-panel .post-panel.wechat .wechat-img {
+  position: absolute;
+  display: none;
+}
+.post-suspended-panel .post-panel.wechat a:hover {
+	color: #00b30b;
 }
 
 .post-suspended-panel .post-panel.active.likes:after {
@@ -834,29 +870,29 @@ a[title="Toggle Fullscreen (F11)"] {
 }
 
 .profile-nav.user-show .nav-link {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #212121;
+	font-size: 1.1rem;
+	font-weight: 500;
+	color: #212121;
 }
 
 .profile-nav.user-show .nav-link .text-num {
-  font-weight: 200;
-    font-size: .8rem;
-    position: relative;
-    bottom: -1px;
+	font-weight: 200;
+	font-size: .8rem;
+	position: relative;
+	bottom: -1px;
 }
 
 .profile-nav.user-show .nav-link.active {
-    color: #007bff;
-    border-bottom: 1px solid #2c92ff;
+	color: #007bff;
+	border-bottom: 1px solid #2c92ff;
 }
 
 .user-content .list-group-flush .list-group-item:first-child {
-      padding-top: 45px;
+	padding-top: 45px;
 }
 
 .dropdown-menu i {
-  font-size: 13px;
+	font-size: 13px;
 }
 
 .slideOutUp {
