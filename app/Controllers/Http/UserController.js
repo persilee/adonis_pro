@@ -62,7 +62,7 @@ class UserController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-	async show ({ params, request, response, view, auth }) {
+  async show ({ params, request, response, view, auth }) {
 		const pageNumber = request.input('page', 1)
     const pageSize = 10
 
@@ -77,7 +77,7 @@ class UserController {
     const likeList = likes.toJSON()
     const posts = _posts.toJSON()
 
-    if(auth.user && uath.user.id == params.id){
+    if (auth.user && auth.user.id == params.id){
       posts.data.forEach(function (post, p) {
         likeList.forEach(function (liked, l) {
           if (post.id == liked.id) {
