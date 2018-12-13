@@ -65,7 +65,7 @@
     <div class="profile-nav user-show">
       <nav class="nav profile d-flex justify-content-center text-center">
         <a class="flex-fill nav-link {{ url == route('UserController.show', { id: user.id }) ? 'active' : '' }}" href="{{ route('UserController.show', { id: user.id }) }}">Post <span class="text-num">{{ total_post ? total_post : '0' }}</span></a>
-        <a class="flex-fill nav-link {{ url == route('LikedController.show') ? 'active' : '' }}" href="{{ route('LikedController.show') }}">Liked <span class="text-num">{{ total ? total : 0 }}</span></a>
+        <a class="flex-fill nav-link {{ url == route('LikedController.likePosts', { id: user.id }) ? 'active' : '' }}" href="{{ route('LikedController.likePosts', { id: user.id }) }}">Liked <span class="text-num">{{ total ? total : 0 }}</span></a>
       </nav>
     </div>
     @!component('components.post.list', {

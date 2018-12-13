@@ -75,14 +75,8 @@ class ShareController {
 		// } catch (error) {
 		//   return view.render('auth.login')
 		// }
-		const cookie = request.all()
-		try {
-			const post = await Post.findOrFail(params.id)
-			post.likes += 1
-			await post.save()
-		} catch (error) {
-			console.log(error)
-		}
+    const cookie = request.all()
+    await Post.query().where('id', params.id).increment('likes', 1)
 
 		return {
 			status : 'success',

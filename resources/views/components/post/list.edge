@@ -11,7 +11,7 @@
       <div class="post-content-box d-flex">
         <div class="post-content-left flex-grow-1">
           <div class="author mb-4 mt-1 ml-2 mr-4">
-            <a href="/users/{{ item.user.id }}" class="">
+            <a href="/users/{{ item.user.id }}" class="avatar">
               <div class="toggle-btn author-photo"
               style="background-image: url('https://cn.gravatar.com/avatar/{{ item.user.email ? md5(item.user.email) : md5(item.user.username) }}?s=60&d=robohash&r=G');">
               </div>
@@ -31,7 +31,7 @@
                 <i class="iconfont icon-read mr-2"></i>{{ item.reads ? item.reads : 0 }}
               </div>
               <div class="likes text-muted mr-2">
-                <i id="{{item.id}}" user="{{ userId }}" class="iconfont icon-love mr-2"></i>{{ item.likes ? item.likes : 0 }}
+                <i id="{{item.id}}" user="{{ item.user.id }}" class="iconfont icon-love mr-2 {{ item.liked ? 'liked' : '' }}"></i>{{ item.likes ? item.likes : 0 }}
               </div>
             </div>
           </div>

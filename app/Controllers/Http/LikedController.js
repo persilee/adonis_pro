@@ -7,15 +7,31 @@ const moment = require('moment')
 
 class LikedController {
 	async liked ({ params, auth }) {
-		await Database.table('post_user').insert({
-			post_id: params.post,
-			user_id: params.user,
-			created_at: moment().format('YYYY-MM-DD HH:mm:ss'),
-			updated_at: moment().format('YYYY-MM-DD HH:mm:ss')
-		})
+
+		if (auth.user) {
+			const userId = await Database.select('user_id').from('post_user').where('post_id', params.postId).first()
+			console.log(userId)
+			if (!userId) {
+				await Database.table('post_user').insert({
+					post_id: params.postId,
+					user_id: params.userId,
+					created_at: moment().format('YYYY-MM-DD HH:mm:ss'),
+					updated_at: moment().format('YYYY-MM-DD HH:mm:ss')
+        })
+        await Post.query().where('id', params.postId).increment('likes', 1)
+			} else if (userId && userId.user_id != auth.user.id) {
+				await Database.table('post_user').insert({
+					post_id: params.postId,
+					user_id: params.userId,
+					created_at: moment().format('YYYY-MM-DD HH:mm:ss'),
+					updated_at: moment().format('YYYY-MM-DD HH:mm:ss')
+        })
+        await Post.query().where('id', params.postId).increment('likes', 1)
+			}
+		}
 	}
 
-	async show ({ view, response, request, auth, params }) {
+	async likePosts ({ view, response, request, auth, params }) {
 		let page = request.input('page')
 		let perPage = 10
 		let userId = ''
@@ -28,21 +44,27 @@ class LikedController {
 			}
 		}
 
-		const total_reads = await Post.query().where('user_id', auth.user.id).getSum('reads')
+    const total_reads = await Post.query().where('user_id', params.id).getSum('reads')
 
-		const total_likes = await Post.query().where('user_id', auth.user.id).getSum('likes')
+    const total_likes = await Post.query().where('user_id', params.id).getSum('likes')
 
-    const total_post = await Post.query().where('user_id', auth.user.id).getCount()
+    const total_post = await Post.query().where('user_id', params.id).getCount()
 
-		const user = await User.find(auth.user.id)
+    const user = await User.find(params.id)
 		await user.load('profile')
 
-		const posts = await user.likes().orderBy('updated_at', 'desc').with('user').paginate(page, perPage)
+    const _posts = await user.likes().orderBy('updated_at', 'desc').with('user').paginate(page, perPage)
 
-		console.log({ user: user.toJSON() })
+    const posts = _posts.toJSON()
 
-		return view.render('post.liked.index', {
-			...posts.toJSON(),
+    if (auth.user && params.id == auth.user.id) {
+      posts.data.forEach(function (post, p) {
+        post.liked = 'liked'
+      })
+    }
+
+		return view.render('user.liked.index', {
+			...posts,
 			user: user.toJSON(),
 			total_reads,
 			total_likes,

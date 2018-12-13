@@ -26,7 +26,7 @@
             <i class="iconfont icon-read mr-2"></i>{{ post.reads ? post.reads : 0 }}
           </div>
           <div class="likes text-muted mr-2">
-            <i class="iconfont icon-love mr-2"></i>{{ post.likes ? post.likes : 0 }}
+            <i class="iconfont icon-love mr-2 {{ post.liked ? 'liked' : '' }}"></i>{{ post.likes ? post.likes : 0 }}
           </div>
         </div>
         @loggedIn
@@ -50,14 +50,25 @@
         </div>
       @endif
       <div class="post-suspended-panel">
+        @if(auth.user)
+        <div data-id="{{ post.id }}" data-user="{{ userId }}" badge="{{ post.likes ? post.likes : 0 }}" class="post-panel likes my-3 shadow-sm {{ post.liked ? 'active' : '' }}">
+          <a href="{{ route('LikedController.liked', { postId: post.id, userId: auth.user.id }) }}">
+            <i class="iconfont icon-love"></i>
+          </a>
+          <div class="is-liked {{ post.liked ? 'liked' : '' }}">
+            Liked
+          </div>
+        </div>
+        @else
         <div data-id="{{ post.id }}" data-user="{{ userId }}" badge="{{ post.likes ? post.likes : 0 }}" class="post-panel likes my-3 shadow-sm">
-          <a href="{{ route('LikedController.liked', { post: post.id, user: auth.user.id}) }}">
+          <a href="javascript:void(0);">
             <i class="iconfont icon-love"></i>
           </a>
           <div class="is-liked">
             Liked
           </div>
         </div>
+        @endif
         <div class="post-panel email my-3 shadow-sm">
           <a href="{{ route('share.email', { id: post.id, type: 'post' }) }}">
             <i class="iconfont icon-emailFilled"></i>

@@ -6,7 +6,7 @@ const User = use('App/models/User')
 const Tag = use('App/models/Tag')
 const Route = use('Route')
 const MarkdownIt = require('markdown-it'),
-  md = new MarkdownIt()
+	md = new MarkdownIt()
 const md5 = require('js-md5')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
@@ -26,27 +26,55 @@ class PostController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-	async index ({ request, auth, view, response}) {
+	async index ({ request, auth, view, response }) {
 		const page = request.input('page')
-    const perPage = 10
-    let userId = ''
-    let email = ''
-    if (auth.user){
-      userId = auth.user.toJSON().id
-      email = auth.user.email
-      if(!email){
-        email = auth.user.username
-      }
-    }
-		const posts = await Post.query()
-			.orderBy('created_at', 'desc')
-			.with('user', (builder) => {
-				builder.select('id', 'username')
-			})
-			.with('user.profile')
-      .paginate(page, perPage)
+		const perPage = 10
+		let userId = ''
+		let email = ''
+		if (auth.user) {
+			userId = auth.user.toJSON().id
+			email = auth.user.email
+			if (!email) {
+				email = auth.user.username
+			}
+		}
 
-    return view.render('post.index', { ...posts.toJSON(), userId, email})
+		let _posts = ''
+		let posts
+		if (auth.user) {
+			const user = await User.find(auth.user.id)
+			const likes = await user.likes().fetch()
+			const likeList = likes.toJSON()
+			_posts = await Post.query()
+				.orderBy('created_at', 'desc')
+				.with('user', (builder) => {
+					builder.select('id', 'username')
+				})
+				.with('user.profile')
+				.paginate(page, perPage)
+
+			posts = _posts.toJSON()
+
+			posts.data.forEach(function (post, p) {
+				likeList.forEach(function (liked, l) {
+					if (post.id == liked.id) {
+						posts.data[p].liked = 'liked'
+					}
+				})
+			})
+		} else {
+			_posts = await Post.query()
+				.orderBy('created_at', 'desc')
+				.with('user', (builder) => {
+					builder.select('id', 'username')
+				})
+				.with('user.profile')
+				.paginate(page, perPage)
+
+			posts = _posts.toJSON()
+		}
+
+		return view.render('post.index', { ...posts, userId, email })
 	}
 
 	/**
@@ -59,12 +87,12 @@ class PostController {
    * @param {View} ctx.view
    */
 	async create ({ request, response, view, auth }) {
-    const userPhoto = `https://cn.gravatar.com/avatar/${md5(auth.user.email)}?s=60&d=robohash&r=G`
-    const userId = auth.user.toJSON().id
+		const userPhoto = `https://cn.gravatar.com/avatar/${md5(auth.user.email)}?s=60&d=robohash&r=G`
+		const userId = auth.user.toJSON().id
 		const userItems = [
 			{
 				...auth.user.toJSON(),
-				check : true
+				check: true
 			}
 		]
 
@@ -72,10 +100,10 @@ class PostController {
 		const tags = await Tag.all()
 
 		return view.render('post.create', {
-      users : userItems,
-      userPhoto,
-      userId,
-			tags  : tags.toJSON()
+			users: userItems,
+			userPhoto,
+			userId,
+			tags: tags.toJSON()
 		})
 	}
 
@@ -88,16 +116,18 @@ class PostController {
    * @param {Response} ctx.response
    */
 	async store ({ request, response, session, auth }) {
-    const newPost = request.only([ 'title', 'content' ])
-    const { content } = newPost
-    const md_content = md.render(content)
-    newPost.md_content = md_content
+		const newPost = request.only([ 'title', 'content' ])
+		const { content } = newPost
+		const md_content = md.render(content)
+		newPost.md_content = md_content
+		newPost.reads = 0
+		newPost.likes = 0
 		const tags = request.input('tags')
 		// const postId = await Database.insert(newPost).into('posts')
 		// console.log(postId)
 		// const post = await Post.create(newPost)
 
-    // const user = await User.find(request.input('user_id'))
+		// const user = await User.find(request.input('user_id'))
 
 		const post = await auth.user.posts().create(newPost)
 		await post.tags().attach(tags)
@@ -117,25 +147,36 @@ class PostController {
 	async show ({ params, auth, response, view }) {
 		// const post = await Database.from('posts')
 		//   .where('id', params.id)
-    //   .first()
+		//   .first()
 
-    const post = await Post.findOrFail(params.id)
-    post.reads += 1
-    await post.save()
-    const user = await post.user().fetch()
-    const tags = await post.tags().select('id', 'title').fetch()
-    let userId = ''
+		await Post.query().where('id', params.id).increment('reads', 1)
 
-    if (auth.user) {
-      userId = auth.user.toJSON().id
+		let userId = ''
+    let post = ''
+    let _post = await Post.findOrFail(params.id)
+    const user = await _post.user().fetch()
+    const tags = await _post.tags().select('id', 'title').fetch()
+		if (auth.user) {
+			userId = auth.user.toJSON().id
+			const _user = await User.find(auth.user.id)
+			const likes = await _user.likes().fetch()
+      const likeList = likes.toJSON()
+      post = _post.toJSON()
+      likeList.forEach(function (liked, l) {
+        if (liked.id == post.id) {
+          post.liked = 'liked'
+        }
+      })
+		}else{
+      post = _post.toJSON()
     }
 
 		return view.render('post.show', {
-      post,
-      userId,
-      tags: tags.toJSON(),
-      user: user.toJSON()
-     })
+			post,
+			userId,
+			tags: tags.toJSON(),
+			user: user.toJSON()
+		})
 	}
 
 	/**
@@ -158,8 +199,8 @@ class PostController {
 		const tags = _tags.toJSON()
 		await _post.loadMany([ 'tags', 'user' ])
 		const post = _post.toJSON()
-    const postTagIds = post.tags.map((tag) => tag.id)
-    const userPhoto = `https://cn.gravatar.com/avatar/${ md5(auth.user.email) }?s=60&d=robohash&r=G`
+		const postTagIds = post.tags.map((tag) => tag.id)
+		const userPhoto = `https://cn.gravatar.com/avatar/${md5(auth.user.email)}?s=60&d=robohash&r=G`
 
 		const tagItems = tags.map((tag) => {
 			if (postTagIds.includes(tag.id)) {
@@ -174,7 +215,7 @@ class PostController {
 		userItems = [
 			{
 				...post.user,
-				check : true
+				check: true
 			}
 		]
 
@@ -186,16 +227,16 @@ class PostController {
 
 				return user
 			})
-    }
+		}
 
-    const userId = auth.user.id
+		const userId = auth.user.id
 
 		return view.render('post.edit', {
-			post  : post,
-      users : userItems,
-      tags  : tagItems,
-      userPhoto,
-      userId
+			post: post,
+			users: userItems,
+			tags: tagItems,
+			userPhoto,
+			userId
 		})
 	}
 
@@ -229,13 +270,13 @@ class PostController {
 		await post.tags().sync(tags)
 
 		session.flash({
-			type    : 'primary',
-      message: 'Post updated successfully.'
+			type: 'primary',
+			message: 'Post updated successfully.'
 		})
 
 		return response.redirect(
 			Route.url('PostController.show', {
-				id : post.id
+				id: post.id
 			})
 		)
 	}

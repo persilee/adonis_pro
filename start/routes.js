@@ -13,10 +13,6 @@ Route.post('users/verification/resend', 'VerificationController.resend').as('ver
 
 Route.get('chatRoom/activity/remove/:id', 'ActivityController.remove')
 
-Route.get('liked/:user/:post', 'LikedController.liked')
-
-Route.get('liked/show/', 'LikedController.show')
-
 Route.group(() => {
 	Route.get('profile', 'ProfileController.edit').as('profile.edit')
 	Route.post('profile', 'ProfileController.update').as('profile.update').validator('UpdateProfile')
@@ -62,6 +58,10 @@ Route.resource('users', 'UserController').validator(new Map([
 ]))
 
 Route.resource('tags', 'TagController')
+
+Route.get('liked/show/:id', 'LikedController.likePosts')
+
+Route.get('liked/:userId/:postId', 'LikedController.liked')
 
 Route.get('profiles/:id', async ({ params }) => {
 	const profile = await Profile.find(params.id)

@@ -60,7 +60,7 @@ class TagController {
 
     const tag = await Tag.find(params.id)
     const posts = await tag.posts()
-      .orderBy('updated_at', 'desc')
+      .orderBy('created_at', 'desc')
       .with('user')
       .paginate(pageNumber, pageSize)
 

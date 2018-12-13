@@ -62,16 +62,30 @@ class UserController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-	async show ({ params, request, response, view }) {
+	async show ({ params, request, response, view, auth }) {
 		const pageNumber = request.input('page', 1)
     const pageSize = 10
 
 		const user = await User.find(params.id)
     await user.load('profile')
 
-    const posts = await user.posts().orderBy('updated_at', 'desc').with('user').paginate(pageNumber, pageSize)
+    let _posts = await user.posts().orderBy('updated_at', 'desc').with('user').paginate(pageNumber, pageSize)
 
     const total_liked = await user.likes().orderBy('updated_at', 'desc').with('user').getCount()
+
+    const likes = await user.likes().fetch()
+    const likeList = likes.toJSON()
+    const posts = _posts.toJSON()
+
+    if(auth.user && uath.user.id == params.id){
+      posts.data.forEach(function (post, p) {
+        likeList.forEach(function (liked, l) {
+          if (post.id == liked.id) {
+            posts.data[p].liked = 'liked'
+          }
+        })
+      })
+    }
 
     const total_reads = await Post.query()
       .where('user_id', params.id)
@@ -81,28 +95,15 @@ class UserController {
       .where('user_id', params.id)
       .getSum('likes')
 
+    console.log(posts)
+
     return view.render('user.show', {
       user: user.toJSON(),
-      ...posts.toJSON(),
+      ...posts,
       total_reads,
       total_likes,
       total_liked
     })
-		// const { username, email } = user.toJSON()
-		// const profile = await user.profile()
-		//   .select('github')
-		//   .fetch()
-
-		// const posts = await user.posts()
-		//   .select('title', 'content')
-		//   .fetch()
-
-		// return {
-		//   username,
-		//   email,
-		//   profile,
-		//   posts
-		// }
 	}
 
 	/**
@@ -134,7 +135,7 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-	async destroy ({ params, request, response }) {}
+  async destroy ({ params, request, response }) {}
 }
 
 module.exports = UserController

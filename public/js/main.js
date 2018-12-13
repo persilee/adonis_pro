@@ -4,7 +4,8 @@
 	let post_btn = ''
 	let simplemde
 	let simplemdeId = ''
-	let herder_status = $('.header.editor-header .status-text')
+  let herder_status = $('.header.editor-header .status-text')
+  let userID = $('.user-photo.nav-link .toggle-btn').length ? $('.user-photo.nav-link .toggle-btn').data().userId : ''
 	$.each($('input:checkbox'), function () {
 		if ($(this).is(':checked')) {
 			tags += `<span id="${$(this).attr('id')}" value="${$(
@@ -146,20 +147,20 @@
 		})
 	})
 
-	const likeElement = $('.post-suspended-panel .post-panel.likes')
+  const likeElement = $('.post-suspended-panel .post-panel.likes')
 	const userId = likeElement.data('user')
 	const post_id = likeElement.data('id')
-	const cookieName = 'uniqueness' + userId + post_id
+  const cookieName = 'uniqueness' + userId + post_id
 	if (
 		Cookies.getJSON(cookieName) &&
 		Cookies.getJSON(cookieName).userId == userId &&
-		Cookies.getJSON(cookieName).cookieId == post_id
+    Cookies.getJSON(cookieName).cookieId == post_id && !userID
 	) {
 		likeElement.unbind('click')
 		likeElement.addClass('active')
 		likeElement.find('.is-liked').addClass('liked')
 		$('.status .likes .icon-love').addClass('liked')
-	} else if (post_id) {
+  } else if (post_id && !userID) {
 		likeElement.on('click', function () {
 			const time = new Date().getTime()
 			const ip = returnCitySN['cip'] + returnCitySN['cname']
@@ -183,25 +184,48 @@
 								`<i class="iconfont icon-love liked mr-2"></i>${parseInt(likes) + 1}`
 							)
 							_this.unbind('click')
-							_this.find('.is-liked').addClass('liked')
+              _this.find('.is-liked').addClass('liked')
+              $('.top-left')
+                .notify({
+                  type: 'warning',
+                  closable: false,
+                  message: {
+                    text: "您还没有登录,不会保存点赞的文章记录 :("
+                  }
+                })
+                .show()
 						}
 					}
 				}
 			})
 		})
-	}
+  } else if (userID) {
+    likeElement.on('click', function () {
+      let likes = $(this).attr('badge')
+      $(this).addClass('active')
+      $(this).attr('badge', parseInt(likes) + 1)
+      $('.status .likes').html(
+        `<i class="iconfont icon-love liked mr-2"></i>${parseInt(likes) + 1}`
+      )
+      $(this).unbind('click')
+      $(this).find('.is-liked').addClass('liked')
+    })
+    if (likeElement.hasClass('active')) likeElement.unbind('click')
+  }
 
-	const listLikes = $('.list-group-item .icon-love')
+	const listLikes = $('.likes .icon-love')
 	const likeIds = Object.keys(Cookies.get())
 
 	if (listLikes.length > 0) {
 		$.each(likeIds, function (i, n) {
 			if (n.indexOf('uniqueness') != -1) {
-				const id = n.slice(10, n.length)
+        const id = n.slice(10, n.length)
 				listLikes.each(function (a, b) {
 					if (id == $(this).attr('user') + $(this).attr('id')) {
 						$(this).addClass('liked')
-					}
+          } else if (!userID && (id == $(this).attr('id'))){
+            $(this).addClass('liked')
+          }
 				})
 			}
 		})
@@ -277,7 +301,7 @@
 			document.visibilityState == 'hidden' &&
 			location.href != location.protocol + '//' + location.host + '/chatRooms'
 		) {
-      const userID = $('.user-photo.nav-link .toggle-btn').data().userId
+      userID = encodeURIComponent(userID)
 			$.ajax({
         url: `/chatRoom/activity/remove/${userID}}`,
 				method  : 'get',
