@@ -19,14 +19,20 @@
       <ul class="navbar-nav">
         @loggedIn
           <li class="nav-item">
-            <a href="{{ route('PostController.create') }}" class="btn mt-1 text-muted">
+            <a href="{{ route('PostController.create') }}" class="btn plus text-muted {{ url == route('PostController.create') ? 'active' : '' }}">
               <i class="fa fa-plus"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('upload') }}" class="btn mt-1 text-muted">
+            <a href="{{ route('upload') }}" class="btn mt-1 text-muted {{ url == route('upload') ? 'active' : '' }}">
               <i class="fa fa-upload"></i>
             </a>
+          </li>
+          <li class="nav-item notification">
+            <a href="{{ route('notification') }}" class="btn mt-1 text-muted {{ url == route('notification') ? 'active' : '' }}" target="_blank">
+              <i class="iconfont icon-message"></i>
+            </a>
+            <div class="notification-badge" badge=""></div>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle user-photo" href="javascript:void(0);" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -46,7 +52,7 @@
                 <i class="iconfont icon-profile"></i>
                 <span class="ml-2">Profile<span>
               </a>
-              <a class="dropdown-item" href="{{ route('LikedController.show') }}">
+              <a class="dropdown-item" href="{{ route('LikedController.likePosts', { id: auth.user.id }) }}">
                 <i class="iconfont icon-love"></i>
                 <span class="ml-2">Liked<span>
               </a>

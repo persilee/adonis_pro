@@ -63,6 +63,12 @@ Route.get('liked/show/:id', 'LikedController.likePosts')
 
 Route.get('liked/:userId/:postId', 'LikedController.liked')
 
+Route.get('notification', 'NotificationController.show').as('notification')
+
+Route.get('notification/system', 'NotificationController.system').as('notification.system')
+
+Route.get('notification/num/:id', 'NotificationController.noticesNum').as('notification.num')
+
 Route.get('profiles/:id', async ({ params }) => {
 	const profile = await Profile.find(params.id)
 	const user = await profile.user().select('username').fetch()

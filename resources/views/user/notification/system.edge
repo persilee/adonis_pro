@@ -1,0 +1,36 @@
+@layout('layouts.main_sidebar_left_fill')
+
+@section('navbar')
+  @include('user.partials.nav_notice')
+@endsection
+
+@section('content')
+  @set('pageTitle', 'Notification')
+  <div class="notice-content">
+    <ul class="notificationList">
+      @if(notices.length)
+      @each(notice in notices)
+      <li class="list-item">
+        <div class="notification">
+          <div class="user-notification {{ !notice.is_read ? 'is-read' : '' }}">
+            <div class="notification-box">
+
+            </div>
+          </div>
+        </div>
+      </li>
+      @endeach
+      @else
+      <li class="list-item">
+        <div class="notification">
+          <div class="user-notification">
+            <div class="notification-box d-flex justify-content-center my-3">
+              <div class="text text-muted">NO Notification</div>
+            </div>
+          </div>
+        </div>
+      </li>
+      @endif
+    </ul>
+  </div>
+@endsection

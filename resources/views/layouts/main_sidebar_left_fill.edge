@@ -1,0 +1,12 @@
+@!include('layouts.partials.header')
+  @include('layouts.partials.navbar')
+  @!section('navbar')
+  <div class="container frofile">
+    <div class="row">
+      <div class="col-md-12">
+        @include('layouts.partials.alert')
+        @!section('content')
+      </div>
+    </div>
+  </div>
+@include('layouts.partials.footer')

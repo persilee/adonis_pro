@@ -320,7 +320,6 @@
     let cip = returnCitySN['cip']
     cip = encodeURIComponent(cip)
     if ($(this).data('isActivityLogged') == 'Anonymous') {
-      console.log('ajax')
       $.ajax({
         url: '/chatRooms/' + cip,
         method: 'get',
@@ -332,6 +331,21 @@
       })
     }
    })
+
+  if (location.href != location.protocol + '//' + location.host + '/notification' && userID) {
+    $.ajax({
+      url: '/notification/num/' + userID,
+      method: 'get',
+      success: (data) => {
+        console.log(data)
+        if (data.notices == 0) {
+          $('.navbar-collapse .navbar-nav .nav-item div.notification-badge').attr('badge', '0').css('display', 'none')
+        }else{
+          $('.navbar-collapse .navbar-nav .nav-item div.notification-badge').attr('badge', data.notices).css('display', 'block')
+        }
+      }
+    })
+  }
 
   $('.post-suspended-panel .post-panel.weibo div').hover(function () {
     $(this).css('background-image', "url('/image/weibo1.png')")
@@ -347,8 +361,8 @@
 
   ShareTip.prototype.sharetoqq = function (title, url, content) {
     var _shareUrl = 'https://connect.qq.com/widget/shareqq/index.html?';
-      _shareUrl += 'url=' + encodeURIComponent(url||location.href);  
-      _shareUrl += '&title=' + encodeURIComponent(title||document.title); 
+      _shareUrl += 'url=' + encodeURIComponent(url||location.href);
+      _shareUrl += '&title=' + encodeURIComponent(title||document.title);
     window.open(_shareUrl, '_blank');
   }
 

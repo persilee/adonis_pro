@@ -72,12 +72,12 @@ class UserController {
     let _posts = await user.posts().orderBy('updated_at', 'desc').with('user').paginate(pageNumber, pageSize)
 
     const total_liked = await user.likes().orderBy('updated_at', 'desc').with('user').getCount()
-
-    const likes = await user.likes().fetch()
-    const likeList = likes.toJSON()
     const posts = _posts.toJSON()
 
-    if (auth.user && auth.user.id == params.id){
+    if (auth.user){
+      const ownUser = await User.find(auth.user.id)
+      const likes = await ownUser.likes().fetch()
+      const likeList = likes.toJSON()
       posts.data.forEach(function (post, p) {
         likeList.forEach(function (liked, l) {
           if (post.id == liked.id) {
@@ -94,8 +94,6 @@ class UserController {
     const total_likes = await Post.query()
       .where('user_id', params.id)
       .getSum('likes')
-
-    console.log(posts)
 
     return view.render('user.show', {
       user: user.toJSON(),

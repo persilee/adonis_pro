@@ -1,0 +1,56 @@
+@layout('layouts.main_sidebar_left_fill')
+
+@section('navbar')
+  @include('user.partials.nav_notice')
+@endsection
+
+@section('content')
+  @set('pageTitle', 'Notification')
+  <div class="notice-content">
+    <ul class="notificationList">
+      @if(notices.length)
+      @each(notice in notices)
+      <li class="list-item">
+        <div class="notification">
+          <div class="user-notification {{ !notice.is_read ? 'is-read' : '' }}">
+            <div class="notification-box">
+              <div class="user-link">
+                <a href="{{ route('UserController.show', { id: notice.user_id }) }}" class="user">
+                  <div class="profile-box d-flex">
+                  <div class="avatar toggle-btn" style="background-image: url('https://cn.gravatar.com/avatar/{{ md5(notice.email) }}?s=60&d=robohash&r=G');"></div>
+                    <div class="profile d-flex align-items-center mx-2">
+                      <div class="name ml-1">{{notice.username }}</div>
+                      <div class="dot mx-1"> ・ </div>
+                      <div class="info">{{ getNow(notice.created_at) }}</div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="content d-flex pl-2 text-truncate {{ !notice.is_read ? 'is-read' : '' }}">
+                <div class="icon text-muted mr-2">
+                  <i class="iconfont icon-love"></i>
+                </div>
+                <div class="text">
+                  <span class="text-muted font-weight-normal">Liked - </span>
+                  <a href="{{ route('PostController.show', { id: notice.post_id }) }}" class="title font-weight-bold">{{notice.title }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      @endeach
+      @else
+      <li class="list-item">
+        <div class="notification">
+          <div class="user-notification">
+            <div class="notification-box d-flex justify-content-center my-3">
+              <div class="text text-muted">NO Notification</div>
+            </div>
+          </div>
+        </div>
+      </li>
+      @endif
+    </ul>
+  </div>
+@endsection

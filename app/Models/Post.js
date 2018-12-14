@@ -9,7 +9,7 @@ class Post extends Model {
   }
 
   userLikes () {
-    return this.hasMany('App/Models/User')
+    return this.belongsToMany('App/Models/User').pivotTable('post_user')
   }
 
   user () {

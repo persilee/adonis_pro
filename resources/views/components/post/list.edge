@@ -1,4 +1,5 @@
 <div class="list-group list-group-flush">
+  @if(items.length)
   @each(item in items)
     <div class="list-group-item flex-column align-items-start">
       <div class="post-title mb-1 mt-3 mx-2">
@@ -45,4 +46,11 @@
       </div>
     </div>
   @endeach
+  @else
+    <div class="list-group-item">
+      <div class="post-title my-5 d-flex justify-content-center">
+        <div class="text text-muted"> NO POST </div>
+      </div>
+    </div>
+  @endif
   </div>

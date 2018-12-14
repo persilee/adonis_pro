@@ -445,8 +445,8 @@ a[title="Toggle Fullscreen (F11)"] {
 	align-items: center;
 }
 .post-suspended-panel .post-panel.weibo div {
-	height: 17px;
-	width: 17px;
+	height: 19px;
+	width: 19px;
 	background-size: cover;
 	background-image: url('/image/weibo.png');
 }
@@ -456,8 +456,8 @@ a[title="Toggle Fullscreen (F11)"] {
 }
 
 .post-suspended-panel .post-panel.wechat .wechat-img {
-  position: absolute;
-  display: none;
+	position: absolute;
+	display: none;
 }
 .post-suspended-panel .post-panel.wechat a:hover {
 	color: #00b30b;
@@ -891,8 +891,134 @@ a[title="Toggle Fullscreen (F11)"] {
 	padding-top: 45px;
 }
 
-.dropdown-menu i {
+.nav-item.dropdown .dropdown-menu i {
 	font-size: 13px;
+}
+
+.nav-item.dropdown .dropdown-menu .dropdown-item {
+	font-size: .96rem;
+}
+
+.navbar-collapse .navbar-nav .nav-item.notification {
+	position: relative;
+}
+
+.navbar-collapse .navbar-nav .nav-item > a > i {
+	font-size: 1.2rem;
+}
+
+.navbar-collapse .navbar-nav .nav-item .plus {
+	margin-top: 5px;
+}
+
+.navbar-collapse .navbar-nav .nav-item > a > i {
+	position: relative;
+	top: 2px;
+}
+
+.navbar-collapse .navbar-nav .nav-item div.notification-badge {
+	width: 19px;
+	height: 19px;
+	background-color: #fff;
+	border-radius: 50%;
+	position: absolute;
+	top: 6px;
+	left: 21px;
+	display: none;
+}
+
+.navbar-collapse .navbar-nav .nav-item.notification i {
+	position: relative;
+	top: -1px;
+	font-size: 1.28rem;
+}
+.navbar-collapse .navbar-nav .nav-item div.notification-badge:after {
+	content: attr(badge);
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	padding: .2rem .42rem;
+	font-size: 1rem;
+	text-align: center;
+	line-height: 1.1;
+	white-space: nowrap;
+	color: #fff;
+	background-color: #ef5350e0;
+	border-radius: .7rem;
+	transform-origin: left top;
+	transform: scale(.65);
+}
+
+a:hover,
+.nav-link:focus,
+.nav-link:hover,
+.navbar-collapse .navbar-nav .nav-item a:hover i,
+.navbar-collapse .navbar-nav .nav-item a.active i,
+.navbar-light .navbar-nav .active > .nav-link,
+.navbar-light .navbar-nav .nav-link:focus,
+.navbar-light .navbar-nav .nav-link:hover {
+	color: #007bff;
+}
+
+.notice-content .notificationList {
+	padding: 0;
+	margin: 0;
+}
+
+.notice-content .notificationList .list-item {
+	margin-bottom: 1.333rem;
+	list-style: none;
+}
+
+.notice-content .notificationList .list-item .notification .user-notification {
+	padding: 2rem;
+	background: #fff;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+	position: relative;
+	border-radius: 2px;
+}
+
+.notice-content .notificationList .list-item .notification .user-notification.is-read {
+	background: #37c70117;
+	border: 2px solid #37c7010d;
+}
+
+.notice-content .notificationList .list-item .notification .user-notification .user-link .toggle-btn {
+	width: 45px;
+	height: 45px;
+}
+
+.notice-content .notificationList .list-item .notification .user-notification .user-link .name {
+	color: #2e3135;
+	font-size: 1.1rem;
+	font-weight: 600;
+}
+
+.notice-content .notificationList .list-item .notification .user-notification .user-link .info {
+	color: #757575;
+	font-size: .9rem;
+	font-weight: 400;
+}
+
+.notice-content .notificationList .list-item .notification .user-notification .content {
+	padding: .56rem 1.2rem;
+	background-color: #f8f8f8d9;
+	border-radius: 2px;
+	margin-left: 3.4rem;
+}
+
+.notice-content .notificationList .list-item .notification .user-notification .content.is-read {
+	background-color: #37c70114;
+}
+
+.notice-content .notificationList .list-item .notification .user-notification .content .title {
+	color: #616161e6;
+}
+
+.notice-content .notificationList .list-item .notification .user-notification .content .title:hover {
+	color: #007bff;
 }
 
 .slideOutUp {

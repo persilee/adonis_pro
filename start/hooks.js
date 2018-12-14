@@ -2,6 +2,7 @@ const { hooks } = require('@adonisjs/ignitor')
 const { range } = require('lodash')
 const decode = require('decode-html')
 const md5 = require('js-md5')
+const moment = require('moment')
 
 hooks.after.providersBooted(() => {
 	const View = use('View')
@@ -37,6 +38,10 @@ hooks.after.providersBooted(() => {
 
 	View.global('parseInt', (value) => {
 		return parseInt(value)
+  })
+
+	View.global('getNow', (time) => {
+    return moment(time).startOf('hour').fromNow();
   })
 
 	View.global('url', () => {
