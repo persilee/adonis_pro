@@ -10,7 +10,6 @@ class LikedController {
 
 		if (auth.user) {
 			const userId = await Database.select('user_id').from('post_user').where('post_id', params.postId).first()
-			console.log(userId)
 			if (!userId) {
 				await Database.table('post_user').insert({
 					post_id: params.postId,

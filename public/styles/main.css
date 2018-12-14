@@ -124,6 +124,7 @@ body > .container .tag-content {
 }
 
 .author-text .name,
+.author-text .follow,
 .author-text .update {
 	position: relative;
 	top: -6px;
@@ -224,10 +225,26 @@ body > .container .tag-content {
 	border: 0;
 }
 
-span.badge {
-	border-radius: 0;
-	padding: 5px 10px;
-	cursor: pointer;
+.user-content .follow {
+	position: absolute;
+	right: 22px;
+	top: 8px;
+}
+.user-content .follow .follow-me i {
+	font-size: 20px;
+  color: #6c757d;
+  display: block;
+}
+
+.user-content .follow .text {
+  font-size: 12px;
+  color:#6c757d;
+  position: relative;
+  top: -12px;
+}
+.user-content .follow:hover .follow-me i,
+.user-content .follow:hover .text{
+  color: #6cbd45;
 }
 
 .badge-light {
@@ -888,7 +905,7 @@ a[title="Toggle Fullscreen (F11)"] {
 }
 
 .user-content .list-group-flush .list-group-item:first-child {
-	padding-top: 45px;
+	padding-top: 25px;
 }
 
 .nav-item.dropdown .dropdown-menu i {

@@ -12,10 +12,12 @@
           </div>
         </a>
         <div class="author-text ml-2">
-          <div class="name">
+          <div class="user-info d-flex align-items-center">
+            <div class="name">
             <a href="{{ route('users.show', { id: user.id}) }}" class="text-muted">
               <small>{{ user.username }}</small>
             </a>
+            </div>
           </div>
           <div class="update">
             <small>{{ user.created_at }}</small>
