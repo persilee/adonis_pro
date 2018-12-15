@@ -334,7 +334,7 @@
 			const userId = $(this).data().userId
       const _this = $(this)
       let followId = userID ? userID : 0
-			if (userId) {
+      if (userId) {
 				$.ajax({
           url: '/follow/' + followId + '/' + userId,
 					method: 'get',
@@ -349,15 +349,35 @@
 					}
 				})
 			}
-		})
+    })
+
+    $('.frofile .follower .follow-btn').on('click', function(){
+      const userId = $(this).data().userId
+      const _this = $(this)
+      let followId = userID ? userID : 0
+      if (userId) {
+        $.ajax({
+          url: '/follow/' + followId + '/' + userId,
+          method: 'get',
+          success: (response) => {
+            if (response.message == 'success' && response.type == 'insert') {
+              _this.find('.icon-box').html('<div class="icon text-center"><i class="iconfont icon-follow d-block"></i></div><div class= "text"> Followed</div>')
+            } else if (response.message = 'success' && response.type == 'delete') {
+              _this.find('.icon-box').html('<div class="icon text-center"><i class="iconfont icon-guanzhu d-block"></i></div><div class= "text"> Follow</div>')
+            } else if (response == 'login') {
+              location.href = location.protocol + '//' + location.host + '/login'
+            }
+          }
+        })
+      }
+    })
 
 
-	if (location.href != location.protocol + '//' + location.host + '/notification' && userID) {
+  if (location.href.indexOf(location.protocol + '//' + location.host + '/notification') && userID) {
 		$.ajax({
 			url: '/notification/num/' + userID,
 			method: 'get',
 			success: (data) => {
-				console.log(data)
 				if (data.notices == 0) {
 					$('.navbar-collapse .navbar-nav .nav-item div.notification-badge')
 						.attr('badge', '0')

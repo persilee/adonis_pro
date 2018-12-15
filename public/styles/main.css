@@ -232,19 +232,21 @@ body > .container .tag-content {
 }
 .user-content .follow .follow-me i {
 	font-size: 20px;
-  color: #6c757d;
-  display: block;
+	color: #6c757d;
+	display: block;
 }
 
 .user-content .follow .text {
-  font-size: 12px;
-  color:#6c757d;
-  position: relative;
-  top: -12px;
+	font-size: 12px;
+	color: #6c757d;
+	position: relative;
+	top: -12px;
 }
+
+.notice-content .notificationList .list-item .notification .follow-btn .follow-link:hover,
 .user-content .follow:hover .follow-me i,
-.user-content .follow:hover .text{
-  color: #6cbd45;
+.user-content .follow:hover .text {
+	color: #6cbd45;
 }
 
 .badge-light {
@@ -954,7 +956,7 @@ a[title="Toggle Fullscreen (F11)"] {
 	position: absolute;
 	top: 2px;
 	left: 2px;
-	padding: .2rem .42rem;
+	padding: .22rem .48rem;
 	font-size: 1rem;
 	text-align: center;
 	line-height: 1.1;
@@ -1036,6 +1038,22 @@ a:hover,
 
 .notice-content .notificationList .list-item .notification .user-notification .content .title:hover {
 	color: #007bff;
+}
+
+.notice-content .notificationList .list-item .notification .follow-btn .icon i {
+	font-size: 20px;
+}
+
+.notice-content .notificationList .list-item .notification .follow-btn .text {
+	font-size: 12px;
+}
+
+.profile-nav .nav-link span.follower-num {
+	padding: .12rem .3rem;
+	font-size: 12px;
+	background-color: #ef5350e0;
+	position: relative;
+	top: -2px;
 }
 
 .slideOutUp {

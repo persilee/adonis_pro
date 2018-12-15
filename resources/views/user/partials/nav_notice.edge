@@ -1,7 +1,12 @@
 <div class="profile-nav">
   <nav class="nav profile px-3">
-    <a class="nav-link {{ url == route('notification') ? 'active' : '' }}" href="{{ route('notification') }}">User Notification</a>
-    <a class="nav-link {{ url == route('notification.system') ? 'active' : '' }}" href="{{ route('notification.system') }}">System Notification</a>
+    <a class="nav-link {{ url == route('notification') ? 'active' : '' }}" href="{{ route('notification') }}">Likes</a>
+    <a class="nav-link {{ url == route('notification.follower') ? 'active' : '' }}" href="{{ route('notification.follower') }}">Folloers
+      @if(followersNum)
+        <span class="badge badge-danger rounded-circle follower-num">{{ followersNum }}</span>
+      @endif
+    </a>
+    <a class="nav-link {{ url == route('notification.system') ? 'active' : '' }}" href="{{ route('notification.system') }}">System</a>
   </nav>
 </div>
 

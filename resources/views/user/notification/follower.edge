@@ -1,0 +1,58 @@
+@layout('layouts.main_sidebar_left_fill')
+
+@section('navbar')
+  @include('user.partials.nav_notice')
+@endsection
+
+@section('content')
+  @set('pageTitle', 'Notification')
+  <div class="notice-content">
+    <ul class="notificationList">
+      @if(followers.length)
+      @each(follower in followers)
+        <li class="list-item">
+          <div class="notification">
+            <div class="user-notification {{ !follower.is_read ? 'is-read' : '' }}">
+              <div class="notification-box">
+                <div class="follower d-flex align-items-center">
+                  <div class="user-link">
+                    <a href="{{ route('UserController.show', { id: follower.id }) }}" class="user">
+                      <div class="profile-box d-flex">
+                        <div class="avatar toggle-btn" style="background-image: url('https://cn.gravatar.com/avatar/{{ md5(follower.email) }}?s=60&d=robohash&r=G');"></div>
+                        <div class="profile d-flex align-items-center mx-2">
+                          <div class="name ml-1">{{ follower.username }}</div>
+                          <div class="dot mx-1"> ・ </div>
+                          <div class="info">{{ getNow(follower.created_at) }}</div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="text ml-2 text-muted">Follow you</div>
+                  <div class="follow-btn ml-auto align-items-center d-flex" data-user-id="{{ follower.id }}">
+                    <a href="javacript:void();" class="follow-link">
+                      <div class="icon-box d-flex flex-column justify-content-center">
+                        <div class="icon text-center"><i class="iconfont icon-guanzhu d-block"></i></div>
+                        <div class="text">Follow</div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      @endeach
+      @else
+        <li class="list-item">
+          <div class="notification">
+            <div class="user-notification">
+              <div class="notification-box d-flex justify-content-center my-3">
+                <div class="text text-muted">NO Notification</div>
+              </div>
+            </div>
+          </div>
+        </li>
+      @endif
+    </ul>
+  </div>
+@endsection

@@ -65,6 +65,8 @@ Route.get('liked/:userId/:postId', 'LikedController.liked')
 
 Route.get('notification', 'NotificationController.show').as('notification')
 
+Route.get('notification/follower', 'NotificationController.followNotice').as('notification.follower')
+
 Route.get('notification/system', 'NotificationController.system').as('notification.system')
 
 Route.get('notification/num/:id', 'NotificationController.noticesNum').as('notification.num')

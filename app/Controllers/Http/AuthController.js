@@ -5,7 +5,7 @@ const Activity = use('App/models/Activity')
 class AuthController {
   async logout ({ auth, response }) {
 
-    const activityUser = await Activity.findByOrFail('username', auth.user.username)
+    const activityUser = await Activity.findBy('username', auth.user.username)
 
     if (activityUser) {
       Event.emit('activity.leaveRoom', auth.user)

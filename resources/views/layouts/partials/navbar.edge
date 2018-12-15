@@ -29,7 +29,7 @@
             </a>
           </li>
           <li class="nav-item notification">
-            <a href="{{ route('notification') }}" class="btn mt-1 text-muted {{ url == route('notification') ? 'active' : '' }}" target="_blank">
+            <a href="{{ route('notification') }}" class="btn mt-1 text-muted {{ url.includes(route('notification')) ? 'active' : '' }}" target="_blank">
               <i class="iconfont icon-message"></i>
             </a>
             <div class="notification-badge" badge=""></div>
