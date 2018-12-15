@@ -2,13 +2,21 @@
 
 @section('content')
   @set('pageTitle', user.username + 'Likeds')
-  <div class="user-content">
+  <div class="user-content" style="position: relative;">
     <div class="d-flex justify-content-center">
       <div class="toggle-btn profile"
       style="background-image: url('https://cn.gravatar.com/avatar/{{ user.email ? md5(user.email) : md5(user.username) }}?s=60&d=robohash&r=G');">
       </div>
     </div>
     <h1 class="my-4 text-center">{{ user.username }}</h1>
+    @if(user.id != auth.user.id)
+      <div class="follow text-center">
+        <a href="javascript:void(0);" class="follow-me" data-user-id="{{ user.id }}">
+          <i class="iconfont icon-guanzhu"></i>
+          <span class="text">Follow</span>
+        </a>
+      </div>
+    @endif
     @if(user.profile.bio)
       <div class="bio">
         <p class="bio-text text-center text-muted"><small>{{ user.profile.bio }}</small></p>

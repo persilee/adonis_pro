@@ -1040,6 +1040,10 @@ a:hover,
 	color: #007bff;
 }
 
+.notice-content .notificationList .list-item .notification .follow-btn.followed a {
+  color: #6cbd45;
+}
+
 .notice-content .notificationList .list-item .notification .follow-btn .icon i {
 	font-size: 20px;
 }

@@ -6,83 +6,109 @@ const Database = use('Database')
 const moment = require('moment')
 
 class NotificationController {
-
-  async followNotice ({ auth, view }) {
-    const followers = await Database.raw(
-      'select users.email,users.username,users.id,a.created_at,a.is_read,a.follow_id from adonis.users , (SELECT follows.follow_id, follows.created_at,follows.is_read FROM adonis.follows where follows.user_id = ?) as a where a.follow_id = users.id order by a.created_at desc limit 50',
-      [auth.user.id]
+	async followNotice ({ auth, view }) {
+		const followers = await Database.raw(
+			'select users.email,users.username,users.id,a.created_at,a.is_read,a.follow_id from adonis.users , (SELECT follows.follow_id, follows.created_at,follows.is_read FROM adonis.follows where follows.user_id = ?) as a where a.follow_id = users.id order by a.created_at desc limit 50',
+			[ auth.user.id ]
     )
 
-    await Database.raw(
-      `update adonis.follows set follows.is_read = 1 where follows.follow_id in (select a.follow_id from adonis.users , (SELECT follows.follow_id, follows.created_at,follows.is_read FROM adonis.follows where follows.user_id = ${auth.user.id} and follows.is_read = 0) as a where a.follow_id = users.id order by a.created_at and a.is_read <> 1)`
+    const follows = await Database.raw(
+      'select users.email,users.username,users.id,a.created_at,a.is_read,a.user_id from adonis.users , (SELECT follows.user_id, follows.created_at,follows.is_read FROM adonis.follows where follows.follow_id = ?) as a where a.user_id = users.id',
+      [ auth.user.id ]
     )
 
-    return view.render('user.notification.follower', { followers: followers[0] })
-  }
+    follows[0].forEach(function (follow, f) {
+      followers[0].forEach(function(follower, fr){
+        if (follow.id == follower.id) {
+          followers[0][fr].is_followed = 'followed'
+        }
+      })
+    })
+
+		await Database.raw(
+			`update adonis.follows set follows.is_read = 1 where follows.follow_id in (select a.follow_id from adonis.users , (SELECT follows.follow_id, follows.created_at,follows.is_read FROM adonis.follows where follows.user_id = ${auth
+				.user
+				.id} and follows.is_read = 0) as a where a.follow_id = users.id order by a.created_at and a.is_read <> 1)`
+		)
+
+		return view.render('user.notification.follower', { followers: followers[0] })
+	}
 
 	async show ({ auth, view }) {
 		const notices = await Database.raw(
 			' select users.id as user_id,users.username,users.email,b.title,b.created_at,b.is_read,b.id as post_id from adonis.users , (select posts.id,posts.title, a.user_id,a.created_at,a.is_read from adonis.posts,(SELECT post_user.post_id, post_user.user_id, post_user.created_at, post_user.is_read FROM adonis.post_user where post_user.post_id in (SELECT posts.id FROM adonis.posts where user_id = ?)) as a where posts.id = a.post_id) as b where b.user_id = users.id and b.user_id <> ? order by b.created_at desc limit 50',
 			[ auth.user.id, auth.user.id ]
-    )
+		)
 
 		await Database.raw(
 			` update adonis.post_user set post_user.is_read = 1 where post_user.user_id in (select b.user_id from adonis.users , (select posts.title, a.user_id,a.created_at,a.is_read from adonis.posts,(SELECT post_user.post_id, post_user.user_id, post_user.created_at, post_user.is_read FROM adonis.post_user where post_user.post_id in (SELECT posts.id FROM adonis.posts where user_id = ${auth
 				.user.id})) as a where posts.id = a.post_id) as b where b.user_id = users.id and b.user_id <> ${auth
 				.user.id})`
-    )
+		)
 
-    const followers = await Database.raw(
-      'select count(*) as followers from adonis.users , (SELECT follows.follow_id, follows.created_at,follows.is_read FROM adonis.follows where follows.user_id = ? and follows.is_read = 0) as a where a.follow_id = users.id order by a.created_at and a.is_read <> 1',
-      [auth.user.id]
-    )
+		const followers = await Database.raw(
+			'select count(*) as followers from adonis.users , (SELECT follows.follow_id, follows.created_at,follows.is_read FROM adonis.follows where follows.user_id = ? and follows.is_read = 0) as a where a.follow_id = users.id order by a.created_at and a.is_read <> 1',
+			[ auth.user.id ]
+		)
 
-    return view.render('user.notification.show', { notices: notices[0], followersNum: followers[0][0].followers })
+		return view.render('user.notification.show', { notices: notices[0], followersNum: followers[0][0].followers })
 	}
 
 	async noticesNum ({ params }) {
 		const notices = await Database.raw(
 			' select count(*) as notices from adonis.users , (select posts.title, a.user_id,a.created_at,a.is_read from adonis.posts,(SELECT post_user.post_id, post_user.user_id, post_user.created_at, post_user.is_read FROM adonis.post_user where post_user.post_id in (SELECT posts.id FROM adonis.posts where user_id = ?)) as a where posts.id = a.post_id) as b where b.user_id = users.id and b.is_read <> 1 and b.user_id <> ?',
 			[ params.id, params.id ]
-    )
+		)
 
-    const followers = await Database.raw(
-      'select count(*) as followers from adonis.users , (SELECT follows.follow_id, follows.created_at,follows.is_read FROM adonis.follows where follows.user_id = ? and follows.is_read = 0) as a where a.follow_id = users.id order by a.created_at and a.is_read <> 1',
-      [params.id]
-    )
+		const followers = await Database.raw(
+			'select count(*) as followers from adonis.users , (SELECT follows.follow_id, follows.created_at,follows.is_read FROM adonis.follows where follows.user_id = ? and follows.is_read = 0) as a where a.follow_id = users.id order by a.created_at and a.is_read <> 1',
+			[ params.id ]
+		)
 
-    return { notices: notices[0][0].notices + followers[0][0].followers}
+		return { notices: notices[0][0].notices + followers[0][0].followers }
 	}
 
 	async system ({ view, auth }) {
-    const notices = []
+		const notices = []
 
-    const followers = await Database.raw(
-      'select count(*) as followers from adonis.users , (SELECT follows.follow_id, follows.created_at,follows.is_read FROM adonis.follows where follows.user_id = ? and follows.is_read = 0) as a where a.follow_id = users.id order by a.created_at and a.is_read <> 1',
-      [auth.user.id]
-    )
+		const followers = await Database.raw(
+			'select count(*) as followers from adonis.users , (SELECT follows.follow_id, follows.created_at,follows.is_read FROM adonis.follows where follows.user_id = ? and follows.is_read = 0) as a where a.follow_id = users.id order by a.created_at and a.is_read <> 1',
+			[ auth.user.id ]
+		)
 
-    return view.render('user.notification.system', { notices: notices, followersNum: followers[0][0].followers })
+		return view.render('user.notification.system', { notices: notices, followersNum: followers[0][0].followers })
 	}
 
 	async follow ({ auth, params, response }) {
 		if (auth.user && params.followId != 0) {
-			const userId = await Database.select('user_id').from('follows').where('follow_id', params.followId).first()
-			if (userId) {
-				await Database.table('follows').where('user_id', userId.user_id).delete()
+			const follows = await Database.raw(
+				'select users.email,users.username,users.id,a.created_at,a.is_read,a.user_id from adonis.users , (SELECT follows.user_id, follows.created_at,follows.is_read FROM adonis.follows where follows.follow_id = ?) as a where a.user_id = users.id',
+				[ params.followId ]
+			)
+      let active = ''
+      if (follows[0].length) {
+        follows[0].forEach(function (follow, f) {
+          if (follow.id == params.userId) {
+            active = 'delete'
+          } else {
+            active = 'insert'
+          }
+        })
+      }
+
+      if (active == 'delete') {
+				await Database.table('follows').whereRaw('user_id = ? and follow_id = ?', [params.userId, params.followId]).delete()
 				return { message: 'success', type: 'delete' }
-			} else {
+      } else if (active == 'insert' || active == '') {
 				await Database.table('follows').insert({
 					follow_id: params.followId,
 					user_id: params.userId,
 					created_at: moment().format('YYYY-MM-DD HH:mm:ss'),
 					updated_at: moment().format('YYYY-MM-DD HH:mm:ss')
 				})
-
 				return { message: 'success', type: 'insert' }
 			}
 		}
-
 		return 'login'
 	}
 }

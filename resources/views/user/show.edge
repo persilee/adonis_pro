@@ -8,7 +8,7 @@
       style="background-image: url('https://cn.gravatar.com/avatar/{{ user.email ? md5(user.email) : md5(user.username) }}?s=60&d=robohash&r=G');">
       </div>
     </div>
-    <h1 class="mt-4 text-center">{{ user.username }}</h1>
+    <h1 class="my-4 text-center">{{ user.username }}</h1>
     @if(user.id != auth.user.id)
       <div class="follow text-center">
         <a href="javascript:void(0);" class="follow-me" data-user-id="{{ user.id }}">

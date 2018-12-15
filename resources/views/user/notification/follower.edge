@@ -28,11 +28,11 @@
                     </a>
                   </div>
                   <div class="text ml-2 text-muted">Follow you</div>
-                  <div class="follow-btn ml-auto align-items-center d-flex" data-user-id="{{ follower.id }}">
+                  <div class="follow-btn ml-auto align-items-center d-flex {{ follower.is_followed ? 'followed' : '' }}" data-user-id="{{ follower.id }}">
                     <a href="javacript:void();" class="follow-link">
                       <div class="icon-box d-flex flex-column justify-content-center">
-                        <div class="icon text-center"><i class="iconfont icon-guanzhu d-block"></i></div>
-                        <div class="text">Follow</div>
+                        <div class="icon text-center"><i class="iconfont {{ follower.is_followed ? 'icon-follow' : 'icon-guanzhu' }} d-block"></i></div>
+                        <div class="text">{{ follower.is_followed ? 'Followed' : 'Follow' }}</div>
                       </div>
                     </a>
                   </div>

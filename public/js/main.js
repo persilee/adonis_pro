@@ -352,6 +352,7 @@
     })
 
     $('.frofile .follower .follow-btn').on('click', function(){
+      console.log('aaa')
       const userId = $(this).data().userId
       const _this = $(this)
       let followId = userID ? userID : 0
@@ -362,8 +363,10 @@
           success: (response) => {
             if (response.message == 'success' && response.type == 'insert') {
               _this.find('.icon-box').html('<div class="icon text-center"><i class="iconfont icon-follow d-block"></i></div><div class= "text"> Followed</div>')
+              _this.addClass('followed')
             } else if (response.message = 'success' && response.type == 'delete') {
               _this.find('.icon-box').html('<div class="icon text-center"><i class="iconfont icon-guanzhu d-block"></i></div><div class= "text"> Follow</div>')
+              _this.removeClass('followed')
             } else if (response == 'login') {
               location.href = location.protocol + '//' + location.host + '/login'
             }
