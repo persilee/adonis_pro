@@ -126,10 +126,6 @@ class FollowController {
         [auth.user.id]
       )
 
-      console.log('followedList',followedList[0])
-
-      console.log('follows', follows[0])
-
       follows[0].forEach(function (follow, f) {
         followedList[0].forEach(function (followed, fr) {
           if (auth.user.id == followed.follow_id){

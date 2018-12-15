@@ -115,6 +115,15 @@
                       </div>
                     </a>
                   </div>
+                  @elseif(!auth.user)
+                  <div class="follow-btn ml-auto align-items-center d-flex {{ followed.is_followed ? 'followed' : '' }}" data-user-id="{{ followed.id }}">
+                    <a href="javacript:void();" class="follow-link">
+                      <div class="icon-box d-flex flex-column justify-content-center">
+                        <div class="icon text-center"><i class="iconfont {{ followed.is_followed ? 'icon-follow' : 'icon-guanzhu' }} d-block"></i></div>
+                        <div class="text">{{ followed.is_followed ? 'Followed' : 'Follow' }}</div>
+                      </div>
+                    </a>
+                  </div>
                   @endif
                 </div>
               </div>
