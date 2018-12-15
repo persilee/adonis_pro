@@ -44,6 +44,12 @@ body > .container .tag-content {
 	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
 }
 
+.navbar .title-icon {
+    font-size: 18px;
+    position: relative;
+    top: -2px;
+}
+
 .shadow-sm {
 	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
 }
@@ -980,8 +986,7 @@ a:hover,
 	color: #007bff;
 }
 
-.user-content .notificationList
-.notice-content .notificationList {
+.user-content .notificationList .notice-content .notificationList {
 	padding: 0;
 	margin: 0;
 }
@@ -992,7 +997,7 @@ a:hover,
 }
 
 .user-content .notificationList .list-item {
-  list-style: none;
+	list-style: none;
 }
 
 .notice-content .notificationList .list-item .notification .user-notification {
@@ -1006,17 +1011,17 @@ a:hover,
 }
 
 .user-content .notificationList .list-item .notification .user-notification {
-    padding: 2rem;
-    background: #ffffff;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    border-radius: 2px;
-    border-bottom: 1px solid rgba(0,0,0,.125);
+	padding: 2rem;
+	background: #ffffff;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	border-radius: 2px;
+	border-bottom: 1px solid rgba(0, 0, 0, .125);
 }
 
 .user-content .notificationList .list-item:first-child .notification .user-notification {
-  border-top: 1px solid rgba(0,0,0,.125);
+	border-top: 1px solid rgba(0, 0, 0, .125);
 }
 
 .notice-content .notificationList .list-item .notification .user-notification.is-read {
@@ -1044,7 +1049,7 @@ a:hover,
 }
 
 .user-content .notificationList .list-item .notification .user-notification .user-link a:hover {
-      color: #9e9e9e;
+	color: #9e9e9e;
 }
 
 .notice-content .notificationList .list-item .notification .user-notification .content {
@@ -1066,9 +1071,15 @@ a:hover,
 	color: #007bff;
 }
 
+.user-content .notificationList .list-item .notification .follow-btn.followed,
+.notice-content .notificationList .list-item .notification .follow-btn.followed {
+	position: relative;
+	left: 8px;
+}
+
 .user-content .notificationList .list-item .notification .follow-btn.followed a,
 .notice-content .notificationList .list-item .notification .follow-btn.followed a {
-  color: #6cbd45;
+	color: #6cbd45;
 }
 
 .user-content .notificationList .list-item .notification .follow-btn .icon i,
@@ -1091,7 +1102,7 @@ a:hover,
 
 .user-content .follow .follow-me.followed i,
 .user-content .follow .follow-me.followed span {
-  color: #28a745;
+	color: #28a745;
 }
 
 .slideOutUp {

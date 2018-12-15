@@ -86,3 +86,5 @@ Route.get('profiles/:id', async ({ params }) => {
 		user
 	}
 })
+
+Route.any('*', ({ response }) => response.route('posts.index'))
