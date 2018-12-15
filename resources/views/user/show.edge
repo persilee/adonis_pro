@@ -1,7 +1,7 @@
 @layout('layouts.main')
 
 @section('content')
-  @set('pageTitle', user.username)
+  @set('pageTitle', user.username + ' ・ Posts')
   <div class="user-content" style="position: relative;">
     <div class="d-flex justify-content-center">
       <div class="toggle-btn profile"
@@ -11,9 +11,9 @@
     <h1 class="my-4 text-center">{{ user.username }}</h1>
     @if(user.id != auth.user.id)
       <div class="follow text-center">
-        <a href="javascript:void(0);" class="follow-me" data-user-id="{{ user.id }}">
-          <i class="iconfont icon-guanzhu"></i>
-          <span class="text">Follow</span>
+        <a href="javascript:void(0);" class="follow-me {{ followed ? 'followed' : ''}}" data-user-id="{{ user.id }}">
+          <i class="iconfont {{ followed ? 'icon-follow' : 'icon-guanzhu'}}"></i>
+          <span class="text">{{ followed ? 'Followed' : 'Follow'}}</span>
         </a>
       </div>
     @endif
@@ -75,6 +75,12 @@
         <a class="flex-fill nav-link {{ url == route('users.show', { id: user.id }) ? 'active' : '' }}" href="{{ route('users.show', { id: user.id }) }}">Post <span class="text-num">{{ total ? total : '0' }}</span></a>
         <a class="flex-fill nav-link {{ url == route('LikedController.likePosts', { id: user.id }) ? 'active' : '' }}"
         href="{{ route('LikedController.likePosts', { id: user.id }) }}">Liked <span class="text-num">{{ total_liked ? total_liked : 0 }}</span>
+        </a>
+        <a class="flex-fill nav-link {{ url == route('follow.follower', { id: user.id }) ? 'active' : '' }}"
+        href="{{ route('follow.follower', { id: user.id }) }}">Followers <span class="text-num">{{ total_follower ? total_follower : 0 }}</span>
+        </a>
+        <a class="flex-fill nav-link {{ url == route('follow.followed', { id: user.id }) ? 'active' : '' }}"
+        href="{{ route('follow.followed', { id: user.id }) }}">Followed <span class="text-num">{{ total_followed ? total_followed : 0 }}</span>
         </a>
       </nav>
     </div>

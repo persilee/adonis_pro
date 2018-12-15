@@ -340,9 +340,11 @@
 					method: 'get',
 					success: (response) => {
 						if (response.message == 'success' && response.type == 'insert') {
-              _this.html('<i class="iconfont icon-follow" style="color: #28a745;"></i><span class= "text" style="color: #28a745;">Followed</span>')
+              _this.html('<i class="iconfont icon-follow"></i><span class= "text">Followed</span>')
+              _this.addClass('followed')
 						}else if(response.message = 'success' && response.type == 'delete'){
               _this.html('<i class="iconfont icon-guanzhu"></i><span class= "text">Follow</span>')
+              _this.removeClass('followed')
             } else if (response == 'login'){
               location.href = location.protocol + '//' + location.host + '/login'
             }
@@ -351,8 +353,7 @@
 			}
     })
 
-    $('.frofile .follower .follow-btn').on('click', function(){
-      console.log('aaa')
+    $('.follower .follow-btn').on('click', function(){
       const userId = $(this).data().userId
       const _this = $(this)
       let followId = userID ? userID : 0

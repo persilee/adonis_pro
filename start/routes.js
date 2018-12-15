@@ -73,6 +73,10 @@ Route.get('notification/num/:id', 'NotificationController.noticesNum').as('notif
 
 Route.get('follow/:followId?/:userId', 'NotificationController.follow').as('notification.follow')
 
+Route.get('user/follower/:id', 'FollowController.follower').as('follow.follower')
+
+Route.get('user/followed/:id', 'FollowController.followed').as('follow.followed')
+
 Route.get('profiles/:id', async ({ params }) => {
 	const profile = await Profile.find(params.id)
 	const user = await profile.user().select('username').fetch()

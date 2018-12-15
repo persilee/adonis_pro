@@ -1,7 +1,7 @@
 @layout('layouts.main')
 
 @section('content')
-  @set('pageTitle', user.username + ' ・ Likeds')
+  @set('pageTitle', user.username + ' ・ Follower')
   <div class="user-content" style="position: relative;">
     <div class="d-flex justify-content-center">
       <div class="toggle-btn profile"
@@ -84,17 +84,57 @@
         </a>
       </nav>
     </div>
-    @!component('components.post.list', {
-      items: data
-    })
+    <div class="follower-list">
+      <ul class="notificationList">
+      @if(followers.length)
+      @each(follower in followers)
+        <li class="list-item">
+          <div class="notification">
+            <div class="user-notification {{ !follower.is_read ? 'is-read' : '' }}">
+              <div class="notification-box">
+                <div class="follower d-flex align-items-center">
+                  <div class="user-link">
+                    <a href="{{ route('UserController.show', { id: follower.id }) }}" class="user">
+                      <div class="profile-box d-flex">
+                        <div class="avatar toggle-btn" style="background-image: url('https://cn.gravatar.com/avatar/{{ follower.email ? md5(follower.email) : md5(follower.username) }}?s=60&d=robohash&r=G');"></div>
+                        <div class="profile d-flex align-items-center mx-2">
+                          <div class="name ml-1">{{ follower.username }}</div>
+                          <div class="dot mx-1"> ・ </div>
+                          <div class="info">{{ getNow(follower.created_at) }}</div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="text ml-2 text-muted">Follow you</div>
+                  @if(auth.user && auth.user.id != follower.follow_id)
+                  <div class="follow-btn ml-auto align-items-center d-flex {{ follower.is_followed ? 'followed' : '' }}" data-user-id="{{ follower.id }}">
+                    <a href="javacript:void();" class="follow-link">
+                      <div class="icon-box d-flex flex-column justify-content-center">
+                        <div class="icon text-center"><i class="iconfont {{ follower.is_followed ? 'icon-follow' : 'icon-guanzhu' }} d-block"></i></div>
+                        <div class="text">{{ follower.is_followed ? 'Followed' : 'Follow' }}</div>
+                      </div>
+                    </a>
+                  </div>
+                  @endif
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      @endeach
+      @else
+        <li class="list-item">
+          <div class="notification">
+            <div class="user-notification">
+              <div class="notification-box d-flex justify-content-center my-3">
+                <div class="text text-muted">NO Notification</div>
+              </div>
+            </div>
+          </div>
+        </li>
+      @endif
+    </ul>
     </div>
-    @if(total > perPage)
-      @!component('components.pagination', {
-        total,
-        perPage,
-        page,
-        lastPage
-      })
-    @endif
+    </div>
   </div>
 @endsection

@@ -244,6 +244,7 @@ body > .container .tag-content {
 }
 
 .notice-content .notificationList .list-item .notification .follow-btn .follow-link:hover,
+.user-content .notificationList .list-item .notification .follow-btn .follow-link:hover,
 .user-content .follow:hover .follow-me i,
 .user-content .follow:hover .text {
 	color: #6cbd45;
@@ -979,6 +980,7 @@ a:hover,
 	color: #007bff;
 }
 
+.user-content .notificationList
 .notice-content .notificationList {
 	padding: 0;
 	margin: 0;
@@ -987,6 +989,10 @@ a:hover,
 .notice-content .notificationList .list-item {
 	margin-bottom: 1.333rem;
 	list-style: none;
+}
+
+.user-content .notificationList .list-item {
+  list-style: none;
 }
 
 .notice-content .notificationList .list-item .notification .user-notification {
@@ -999,16 +1005,32 @@ a:hover,
 	border-radius: 2px;
 }
 
+.user-content .notificationList .list-item .notification .user-notification {
+    padding: 2rem;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border-radius: 2px;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.user-content .notificationList .list-item:first-child .notification .user-notification {
+  border-top: 1px solid rgba(0,0,0,.125);
+}
+
 .notice-content .notificationList .list-item .notification .user-notification.is-read {
 	background: #37c70117;
 	border: 2px solid #37c7010d;
 }
 
+.user-content .notificationList .list-item .notification .user-notification .user-link .toggle-btn,
 .notice-content .notificationList .list-item .notification .user-notification .user-link .toggle-btn {
 	width: 45px;
 	height: 45px;
 }
 
+.user-content .notificationList .list-item .notification .user-notification .user-link .name,
 .notice-content .notificationList .list-item .notification .user-notification .user-link .name {
 	color: #2e3135;
 	font-size: 1.1rem;
@@ -1019,6 +1041,10 @@ a:hover,
 	color: #757575;
 	font-size: .9rem;
 	font-weight: 400;
+}
+
+.user-content .notificationList .list-item .notification .user-notification .user-link a:hover {
+      color: #9e9e9e;
 }
 
 .notice-content .notificationList .list-item .notification .user-notification .content {
@@ -1040,14 +1066,17 @@ a:hover,
 	color: #007bff;
 }
 
+.user-content .notificationList .list-item .notification .follow-btn.followed a,
 .notice-content .notificationList .list-item .notification .follow-btn.followed a {
   color: #6cbd45;
 }
 
+.user-content .notificationList .list-item .notification .follow-btn .icon i,
 .notice-content .notificationList .list-item .notification .follow-btn .icon i {
 	font-size: 20px;
 }
 
+.user-content .notificationList .list-item .notification .follow-btn .text,
 .notice-content .notificationList .list-item .notification .follow-btn .text {
 	font-size: 12px;
 }
@@ -1058,6 +1087,11 @@ a:hover,
 	background-color: #ef5350e0;
 	position: relative;
 	top: -2px;
+}
+
+.user-content .follow .follow-me.followed i,
+.user-content .follow .follow-me.followed span {
+  color: #28a745;
 }
 
 .slideOutUp {
