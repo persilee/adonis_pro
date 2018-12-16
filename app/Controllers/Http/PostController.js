@@ -2,8 +2,8 @@
 
 const Database = use('Database')
 const Post = use('App/Models/Post')
-const User = use('App/models/User')
-const Tag = use('App/models/Tag')
+const User = use('App/Models/User')
+const Tag = use('App/Models/Tag')
 const Route = use('Route')
 const MarkdownIt = require('markdown-it'),
 	md = new MarkdownIt()

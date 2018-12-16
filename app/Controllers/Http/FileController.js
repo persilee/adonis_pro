@@ -81,8 +81,6 @@ class FileController {
 			return response.redirect('back')
 		}
 
-		console.log(file)
-
 		const fileName = `${new Date().getTime()}.${file.subtype}`
 
 		await file.move(Helpers.publicPath('uploads'), {

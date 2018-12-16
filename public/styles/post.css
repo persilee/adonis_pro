@@ -12,7 +12,7 @@ code {
 	top: -1px;
 }
 
-.post-content>.post-details img {
+.post-content > .post-details img {
 	cursor: zoom-in;
 }
 
@@ -49,12 +49,12 @@ blockquote > p {
 	margin: 10px 0;
 }
 
-.post-content>.post-details h1,
-.post-content>.post-details h2,
-.post-content>.post-details h3,
-.post-content>.post-details h4,
-.post-content>.post-details h5,
-.post-content>.post-details h6 {
+.post-content > .post-details h1,
+.post-content > .post-details h2,
+.post-content > .post-details h3,
+.post-content > .post-details h4,
+.post-content > .post-details h5,
+.post-content > .post-details h6 {
 	color: #333;
 	line-height: 1.5;
 	margin-top: 35px;
@@ -62,34 +62,50 @@ blockquote > p {
 	padding-bottom: 5px;
 }
 
-.post-content>.post-details h1 {
+.post-content > .post-details h1 {
 	font-size: 30px;
 	margin-bottom: 5px;
 }
 
-.post-content>.post-details h2 {
+.post-content > .post-details h2 {
 	padding-bottom: 12px;
 	font-size: 26px;
 	border-bottom: 1px solid #ececec;
 }
 
-.post-content>.post-details h3 {
+.post-content > .post-details h3 {
 	font-size: 20px;
 	padding-bottom: 0;
 }
 
-.post-content>.post-details h4 {
+.post-content > .post-details h4 {
 	font-size: 18px;
 }
 
-.post-content>.post-details h5 {
+.post-content > .post-details h5 {
 	font-size: 16px;
 }
 
-.post-content>.post-details h6 {
+.post-content > .post-details h6 {
 	margin-top: 5px;
 }
 
-.post-content>.post-details h1.heading + h2.heading {
+.post-content > .post-details h1.heading + h2.heading {
 	margin-top: 20px;
+}
+
+.editor-preview-side pre code {
+	background: none;
+}
+
+.post-content.loading {
+	display: none;
+}
+
+.post-details p > img ~ div.img-title {
+	margin: 2px 0 6px;
+	line-height: 1.6;
+	text-align: center;
+	font-size: .86rem;
+	color: #9e9e9e;
 }

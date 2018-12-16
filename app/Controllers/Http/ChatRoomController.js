@@ -4,9 +4,9 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const Activity = use('App/models/Activity')
+const Activity = use('App/Models/Activity')
 const Event = use('Event')
-const Message = use('App/models/Message')
+const Message = use('App/Models/Message')
 class ChatRoomController {
 	/**
    * Show a list of all chatrooms.
@@ -28,17 +28,19 @@ class ChatRoomController {
 		}
 		const userList = await Activity.all()
 
-		if (user.username != 'Anonymous') {
-			setTimeout(() => {
-				Activity.create(user)
-				Event.emit('activity.joinRoom', user)
-			}, 500)
+    if (user.username != 'Anonymous') {
+      setTimeout(() => {
+        Activity.create(user)
+        Event.emit('activity.joinRoom', user)
+      }, 100)
+    } else {
+      Activity.create(user)
     }
 
 
-    const messages = await Message.query().paginate(1,10)
+    const messages = await Message.query().orderBy('created_at', 'desc').limit(10).fetch()
 
-		return view.render('ws.ws', { user, userList: userList.toJSON(), messages: messages.rows })
+    return view.render('ws.ws', { user, userList: userList.toJSON(), messages: messages.rows.reverse() })
 	}
 
 	/**
@@ -75,10 +77,10 @@ class ChatRoomController {
 
     let user = { username: 'Anonymous', email: Math.random().toString(16).substr(2), activity_id: params.id }
 
-		setTimeout(() => {
-			Activity.create(user)
-			Event.emit('activity.joinRoom', user)
-    }, 500)
+    setTimeout(() => {
+      Activity.create(user)
+      Event.emit('activity.joinRoom', user)
+    }, 100)
 
     return 'success'
 	}

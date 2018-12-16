@@ -3,7 +3,8 @@
 	let tags = ''
 	let post_btn = ''
 	let simplemde
-	let simplemdeId = ''
+  let simplemdeId = ''
+  let returnCitySN = ''
 	let herder_status = $('.header.editor-header .status-text')
 	let userID = $('.user-photo.nav-link .toggle-btn').length ? $('.user-photo.nav-link .toggle-btn').data().userId : ''
 	$.each($('input:checkbox'), function () {
@@ -16,7 +17,7 @@
 				.siblings('label')
 				.text()}</span>`
 		}
-	})
+  })
 
 	if (url.indexOf('edit') != -1) {
 		simplemdeId = $('textarea').attr('id')
@@ -78,7 +79,8 @@
 			]
 		})
 		simplemde.toggleSideBySide()
-		simplemde.toggleFullScreen()
+    simplemde.toggleFullScreen()
+    $('.post-content.loading').removeClass('loading')
 		herder_status.text('Post ' + $('.editor-statusbar .autosave').text())
 		setInterval(() => {
 			herder_status.text('Post ' + $('.editor-statusbar .autosave').text())
@@ -453,5 +455,9 @@
 			$(this).find('.wechat-img').css('display', 'none')
 			$(this).find('a').css('color', '#9e9e9e')
 		}
-	)
+  )
+
+  $('.post-details p > img').each(function () {
+    $(this).after('<div class="img-title">' + $(this).attr('title') + '</div>');
+  })
 })()

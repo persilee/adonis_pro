@@ -2,7 +2,7 @@
 
 @section('content')
   @set('pageTitle', 'Edit Post')
-  <div class="post-content">
+  <div class="post-content loading">
     <h3 class="mt-5 mb-4">Edit Post</h3>
     <form action="/posts/{{ post.id }}?_method=PUT" method="POST">
       @!component('components.form.header-input',{

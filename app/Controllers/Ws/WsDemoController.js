@@ -1,8 +1,8 @@
 'use strict'
 
 const Event = use('Event')
-const Activity = use('App/models/Activity')
-const Message = use('App/models/Message')
+const Activity = use('App/Models/Activity')
+const Message = use('App/Models/Message')
 class WsDemoController {
 	constructor ({ socket, request, auth }) {
 		this.socket = socket

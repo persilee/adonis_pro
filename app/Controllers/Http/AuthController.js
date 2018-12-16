@@ -1,7 +1,7 @@
 'use strict'
 
 const Event = use('Event')
-const Activity = use('App/models/Activity')
+const Activity = use('App/Models/Activity')
 class AuthController {
   async logout ({ auth, response }) {
 

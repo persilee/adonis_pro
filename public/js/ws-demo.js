@@ -96,7 +96,6 @@ $(function () {
           if (message.id && message.username != 'Anonymous') {
             $('#' + message.id).remove()
           } else if (message.activityId) {
-            console.log(message.activityId)
             $('#' + activityId).remove()
           }
 					messages.append(`
@@ -212,6 +211,7 @@ $(function () {
 				const messageContent = $.trim($(this).html())
 				$(this).html('')
 				if (messageContent) {
+          console.log(ws.getSubscription('demo'))
 					ws.getSubscription('demo').emit('message', {
 						content : messageContent,
 						email   : email

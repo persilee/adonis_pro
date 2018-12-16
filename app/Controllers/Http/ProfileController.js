@@ -77,8 +77,6 @@ class ProfileController {
 	async update ({ params, request, response, auth, session }) {
     const { username, email, github, bio, website } = request.all()
 
-    console.log(request.all())
-
     const user = auth.user
     if (!user.id_verified) {
       user.merge({ username, email })
