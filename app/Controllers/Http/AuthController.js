@@ -3,7 +3,7 @@
 const Event = use('Event')
 const Activity = use('App/Models/Activity')
 class AuthController {
-  async logout ({ auth, response }) {
+  async logout ({ auth, response, view }) {
 
     const activityUser = await Activity.findBy('username', auth.user.username)
 
@@ -14,7 +14,7 @@ class AuthController {
 
     await auth.logout()
 
-    return response.redirect('back')
+    return response.route('login')
   }
 
   async login ({ view, auth, response, request, session }) {

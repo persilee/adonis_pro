@@ -33,10 +33,7 @@ class ChatRoomController {
         Activity.create(user)
         Event.emit('activity.joinRoom', user)
       }, 100)
-    } else {
-      Activity.create(user)
     }
-
 
     const messages = await Message.query().orderBy('created_at', 'desc').limit(10).fetch()
 

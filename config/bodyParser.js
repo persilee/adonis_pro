@@ -20,7 +20,7 @@ module.exports = {
     | is over 1mb it will not be processed.
     |
     */
-    limit: '1mb',
+    limit: '50mb',
 
     /*
     |--------------------------------------------------------------------------
@@ -48,7 +48,8 @@ module.exports = {
       'application/json-patch+json',
       'application/vnd.api+json',
       'application/csp-report'
-    ]
+    ],
+    extended: true
   },
 
   /*
@@ -65,6 +66,11 @@ module.exports = {
     ]
   },
 
+  urlencoded: {
+    limit: '50mb',
+    extended: true
+  },
+
   /*
   |--------------------------------------------------------------------------
   | Form Parser
@@ -74,6 +80,7 @@ module.exports = {
   |
   */
   form: {
+    limit: '50mb',
     types: [
       'application/x-www-form-urlencoded'
     ]

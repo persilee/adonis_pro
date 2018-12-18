@@ -45,9 +45,9 @@ body > .container .tag-content {
 }
 
 .navbar .title-icon {
-    font-size: 18px;
-    position: relative;
-    top: -2px;
+	font-size: 18px;
+	position: relative;
+	top: -2px;
 }
 
 .shadow-sm {
@@ -662,9 +662,10 @@ a[title="Toggle Fullscreen (F11)"] {
 }
 
 .post-content-right.post-img {
-	width: 150px;
-	height: 100px;
-	background-size: cover;
+	width: 146px;
+	height: 116px;
+	background-size: contain;
+	background-repeat: no-repeat;
 	flex: 0 0 auto;
 }
 
@@ -1042,10 +1043,12 @@ a:hover,
 	font-weight: 600;
 }
 
+.user-content .notificationList .list-item .notification .user-notification .user-link .info,
 .notice-content .notificationList .list-item .notification .user-notification .user-link .info {
 	color: #757575;
 	font-size: .9rem;
 	font-weight: 400;
+	line-height: .9rem;
 }
 
 .user-content .notificationList .list-item .notification .user-notification .user-link a:hover {

@@ -46,11 +46,11 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-	async store ({ request, response }) {
+	async store ({ request, response, auth }) {
 		const newUser = request.only([ 'username', 'password', 'email' ])
     const user = await User.create(newUser)
     Event.emit('user.store', user)
-
+    await auth.login(user)
 		return response.redirect(`/users/${user.id}`)
 	}
 

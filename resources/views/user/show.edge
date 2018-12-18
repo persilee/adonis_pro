@@ -80,7 +80,7 @@
         href="{{ route('follow.follower', { id: user.id }) }}">Followers <span class="text-num">{{ total_follower ? total_follower : 0 }}</span>
         </a>
         <a class="flex-fill nav-link {{ url == route('follow.followed', { id: user.id }) ? 'active' : '' }}"
-        href="{{ route('follow.followed', { id: user.id }) }}">Followed <span class="text-num">{{ total_followed ? total_followed : 0 }}</span>
+        href="{{ route('follow.followed', { id: user.id }) }}">Following <span class="text-num">{{ total_followed ? total_followed : 0 }}</span>
         </a>
       </nav>
     </div>

@@ -80,7 +80,7 @@
         href="{{ route('follow.follower', { id: user.id }) }}">Followers <span class="text-num">{{ total_follower ? total_follower : 0 }}</span>
         </a>
         <a class="flex-fill nav-link {{ url == route('follow.followed', { id: user.id }) ? 'active' : '' }}"
-        href="{{ route('follow.followed', { id: user.id }) }}">Followed <span class="text-num">{{ total_followed ? total_followed : 0 }}</span>
+        href="{{ route('follow.followed', { id: user.id }) }}">Following <span class="text-num">{{ total_followed ? total_followed : 0 }}</span>
         </a>
       </nav>
     </div>
@@ -105,7 +105,7 @@
                       </div>
                     </a>
                   </div>
-                  <div class="text ml-2 text-muted">Follow you</div>
+                  <div class="text ml-2 text-muted"></div>
                   @if(auth.user && auth.user.id != follower.follow_id)
                   <div class="follow-btn ml-auto align-items-center d-flex {{ follower.is_followed ? 'followed' : '' }}" data-user-id="{{ follower.id }}">
                     <a href="javacript:void();" class="follow-link">
@@ -129,14 +129,14 @@
               </div>
             </div>
           </div>
-        </li> 
+        </li>
       @endeach
       @else
         <li class="list-item">
           <div class="notification">
             <div class="user-notification">
               <div class="notification-box d-flex justify-content-center my-3">
-                <div class="text text-muted">NO Notification</div>
+                <div class="text text-muted">NO Followers</div>
               </div>
             </div>
           </div>

@@ -211,14 +211,24 @@ $(function () {
 				const messageContent = $.trim($(this).html())
 				$(this).html('')
 				if (messageContent) {
-          console.log(ws.getSubscription('demo'))
 					ws.getSubscription('demo').emit('message', {
 						content : messageContent,
 						email   : email
 					})
 				}
 			}
-		})
+    })
+
+    $('#send-message').on('click', function(){
+      if ($.trim($(message).html())) {
+        const messageContent = $.trim($(message).html())
+        $(message).html('')
+        ws.getSubscription('demo').emit('message', {
+          content: messageContent,
+          email: email
+        })
+      }
+    })
 
 		function browserType () {
 			var userAgent = navigator.userAgent //取得浏览器的userAgent字符串

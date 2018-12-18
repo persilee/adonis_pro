@@ -2,7 +2,7 @@
 
 @section('content')
   @set('pageTitle', 'Add New Post')
-  <div class="post-content">
+  <div class="post-content loading">
     <h3 class="mt-5 mb-4">Add New Post</h3>
     <form action="{{ route('PostController.store') }}" method="POST">
       @!component('components.form.header-input',{
