@@ -84,9 +84,30 @@
         </a>
       </nav>
     </div>
-    @!component('components.post.list', {
-      items: data
+    @component('components.post.list', {
+      items: data,
+      userId: user.id,
+      authUserId: auth.user.id,
+      type: 'post'
     })
+      @slot('modal')
+        <div class="post-alert">
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+              <div class="modal-content">
+                <div class="modal-body mt-3">
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-link text-muted" data-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-outline-success" id="delete-confirm">Confirm</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      @endslot
+    @endcomponent
     </div>
     @if(total > perPage)
       @!component('components.pagination', {

@@ -3,8 +3,8 @@
 	let tags = ''
 	let post_btn = ''
 	let simplemde
-  let simplemdeId = ''
-  let returnCitySN = ''
+	let simplemdeId = ''
+	let returnCitySN = ''
 	let herder_status = $('.header.editor-header .status-text')
 	let userID = $('.user-photo.nav-link .toggle-btn').length ? $('.user-photo.nav-link .toggle-btn').data().userId : ''
 	$.each($('input:checkbox'), function () {
@@ -17,7 +17,7 @@
 				.siblings('label')
 				.text()}</span>`
 		}
-  })
+	})
 
 	if (url.indexOf('edit') != -1) {
 		simplemdeId = $('textarea').attr('id')
@@ -79,8 +79,8 @@
 			]
 		})
 		simplemde.toggleSideBySide()
-    simplemde.toggleFullScreen()
-    $('.post-content.loading').removeClass('loading')
+		simplemde.toggleFullScreen()
+		$('.post-content.loading').removeClass('loading')
 		herder_status.text('Post ' + $('.editor-statusbar .autosave').text())
 		setInterval(() => {
 			herder_status.text('Post ' + $('.editor-statusbar .autosave').text())
@@ -130,22 +130,30 @@
 		}
 	})
 
-	const deleteButton = $('#delete')
-	deleteButton.click(() => {
-		const id = deleteButton.data('id')
-		const _csrf = deleteButton.data('csrf')
+	const deleteButton = $('.author .post-action .post-delete-btn')
+	$(deleteButton).on('click', function () {
+    const _this = $(this)
+		$('.post-alert .modal .modal-body').html(
+			'确定删除 <h6 style="display: inline;color: #333;">' + $(this).data('post-title') + '</h6>，删除文章后，不可恢复'
+		)
+		$('#delete-confirm').click(function () {
+      const id = _this.data('id')
+      const _csrf = _this.data('csrf')
+      const userId = _this.data('user-id')
 
-		$.ajax({
-			url: `/posts/${id}}`,
-			method: 'DELETE',
-			data: {
-				_csrf
-			},
-			success: (response) => {
-				if (response == 'success') {
-					window.location.href = '/posts'
+			$.ajax({
+        url: '/posts/' + encodeURIComponent(id),
+				method: 'DELETE',
+				data: {
+					_csrf
+				},
+				success: (response) => {
+					if (response == 'success') {
+						window.location.href = '/users/' + userId
+					}
 				}
-			}
+			})
+			$('.post-alert .modal').modal('hide')
 		})
 	})
 
@@ -331,55 +339,61 @@
 		}
 	})
 
-
-		$('.user-content .follow .follow-me').on('click', function () {
-			const userId = $(this).data().userId
-      const _this = $(this)
-      let followId = userID ? userID : 0
-      if (userId) {
-				$.ajax({
-          url: '/follow/' + followId + '/' + userId,
-					method: 'get',
-					success: (response) => {
-						if (response.message == 'success' && response.type == 'insert') {
-              _this.html('<i class="iconfont icon-follow"></i><span class= "text">Followed</span>')
-              _this.addClass('followed')
-						}else if(response.message = 'success' && response.type == 'delete'){
-              _this.html('<i class="iconfont icon-guanzhu"></i><span class= "text">Follow</span>')
-              _this.removeClass('followed')
-            } else if (response == 'login'){
-              location.href = location.protocol + '//' + location.host + '/login'
-            }
+	$('.user-content .follow .follow-me').on('click', function () {
+		const userId = $(this).data().userId
+		const _this = $(this)
+		let followId = userID ? userID : 0
+		if (userId) {
+			$.ajax({
+				url: '/follow/' + followId + '/' + userId,
+				method: 'get',
+				success: (response) => {
+					if (response.message == 'success' && response.type == 'insert') {
+						_this.html('<i class="iconfont icon-follow"></i><span class= "text">Followed</span>')
+						_this.addClass('followed')
+					} else if ((response.message = 'success' && response.type == 'delete')) {
+						_this.html('<i class="iconfont icon-guanzhu"></i><span class= "text">Follow</span>')
+						_this.removeClass('followed')
+					} else if (response == 'login') {
+						location.href = location.protocol + '//' + location.host + '/login'
 					}
-				})
-			}
-    })
+				}
+			})
+		}
+	})
 
-    $('.follower .follow-btn').on('click', function(){
-      const userId = $(this).data().userId
-      const _this = $(this)
-      let followId = userID ? userID : 0
-      if (userId) {
-        $.ajax({
-          url: '/follow/' + followId + '/' + userId,
-          method: 'get',
-          success: (response) => {
-            if (response.message == 'success' && response.type == 'insert') {
-              _this.find('.icon-box').html('<div class="icon text-center"><i class="iconfont icon-follow d-block"></i></div><div class= "text"> Followed</div>')
-              _this.addClass('followed')
-            } else if (response.message = 'success' && response.type == 'delete') {
-              _this.find('.icon-box').html('<div class="icon text-center"><i class="iconfont icon-guanzhu d-block"></i></div><div class= "text"> Follow</div>')
-              _this.removeClass('followed')
-            } else if (response == 'login') {
-              location.href = location.protocol + '//' + location.host + '/login'
-            }
-          }
-        })
-      }
-    })
+	$('.follower .follow-btn').on('click', function () {
+		const userId = $(this).data().userId
+		const _this = $(this)
+		let followId = userID ? userID : 0
+		if (userId) {
+			$.ajax({
+				url: '/follow/' + followId + '/' + userId,
+				method: 'get',
+				success: (response) => {
+					if (response.message == 'success' && response.type == 'insert') {
+						_this
+							.find('.icon-box')
+							.html(
+								'<div class="icon text-center"><i class="iconfont icon-follow d-block"></i></div><div class= "text"> Followed</div>'
+							)
+						_this.addClass('followed')
+					} else if ((response.message = 'success' && response.type == 'delete')) {
+						_this
+							.find('.icon-box')
+							.html(
+								'<div class="icon text-center"><i class="iconfont icon-guanzhu d-block"></i></div><div class= "text"> Follow</div>'
+							)
+						_this.removeClass('followed')
+					} else if (response == 'login') {
+						location.href = location.protocol + '//' + location.host + '/login'
+					}
+				}
+			})
+		}
+	})
 
-
-  if (location.href.indexOf(location.protocol + '//' + location.host + '/notification') && userID) {
+	if (location.href.indexOf(location.protocol + '//' + location.host + '/notification') && userID) {
 		$.ajax({
 			url: '/notification/num/' + userID,
 			method: 'get',
@@ -455,9 +469,9 @@
 			$(this).find('.wechat-img').css('display', 'none')
 			$(this).find('a').css('color', '#9e9e9e')
 		}
-  )
+	)
 
-  $('.post-details p > img').each(function () {
-    $(this).after('<div class="img-title">' + $(this).attr('title') + '</div>');
-  })
+	$('.post-details p > img').each(function () {
+		$(this).after('<div class="img-title">' + $(this).attr('title') + '</div>')
+	})
 })()

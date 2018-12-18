@@ -118,10 +118,65 @@ body > .container .tag-content {
 .status .likes,
 .author .author-photo,
 .author .author-text,
+.author .post-action,
 .author-text .name,
 .author-text .update,
 .post-title {
 	display: inline-block;
+}
+
+.post-alert .modal {
+	background-color: hsla(0, 0%, 100%, .7);
+}
+
+.post-alert .modal .modal-content {
+  border: none;
+  color: #616161;
+	-webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+}
+
+.post-alert .modal .modal-content .modal-body {
+  font-size: 15px;
+}
+
+.post-alert .modal-footer {
+	border-top: none;
+}
+
+.post-alert .modal-footer .btn-link:focus,
+.post-alert .modal-footer .btn-link:hover {
+	text-decoration: none;
+}
+
+.post-alert .modal-footer .btn {
+	padding: .145rem .65rem;
+	font-size: .9rem;
+}
+
+.post-alert .modal-footer .btn-outline-success {
+	border-radius: 25px;
+}
+
+.post-alert .modal-footer .btn-outline-success:hover {
+    color: #333;
+    background-color: #F5F5F5;
+    border-color: #28a745;
+}
+
+.author .post-action {
+	position: relative;
+	top: -4px;
+}
+
+.author .post-action .nav-item .link {
+	padding: 0 4px;
+	font-size: 13px;
+	color: #9e9e9e;
+}
+
+.author .post-action .nav-item .link:hover {
+	color: #007bff;
 }
 
 .status {

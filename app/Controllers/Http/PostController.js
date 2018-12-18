@@ -292,17 +292,21 @@ class PostController {
 	async destroy ({ params, request, response }) {
 		// await Database.table('posts')
 		//   .where('id', params.id)
-		//   .delete()
+    //   .delete()
 
-		const post = await Post.find(params.id)
+    console.log('aaa')
+
+    const post = await Post.find(params.id)
+    console.log(post)
 		try {
-			await post.tags().detach()
+      await post.tags().detach()
+      await post.userLikes().detach()
 			post.delete()
 		} catch (error) {
 			console.log(error)
 		}
 		return 'success'
-	}
+  }
 }
 
 module.exports = PostController

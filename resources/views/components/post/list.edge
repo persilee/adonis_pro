@@ -35,6 +35,31 @@
                 <i id="{{item.id}}" user="{{ item.user.id }}" class="iconfont icon-love mr-2 {{ item.liked ? 'liked' : '' }}"></i>{{ item.likes ? item.likes : 0 }}
               </div>
             </div>
+            @if(userId == authUserId && type == 'post')
+              <div class="post-action">
+                <ul class="nav">
+                  <li class="nav-item">
+                  <a
+                    href="{{ route('PostController.edit', { id: item.id }) }}"
+                    class="link">
+                    Edit
+                  </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="javascript:void(0);"
+                    data-csrf="{{ csrfToken }}"
+                    data-id="{{ item.id }}"
+                    class="link post-delete-btn"
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                    data-user-id="{{ userId }}"
+                    data-post-title={{ item.title }}>
+                      Delete
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            @endif
           </div>
           <div class="text ml-2 mr-4 mb-4">{{{ item.md_content ? htmlToText(item.md_content, 86) : htmlToText(item.content, 86) }}}</div>
         </div>
@@ -54,3 +79,6 @@
     </div>
   @endif
   </div>
+  @if(userId == authUserId && type == 'post')
+    @!yield($slot.modal)
+  @endif
