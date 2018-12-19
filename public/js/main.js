@@ -472,6 +472,10 @@
 	)
 
 	$('.post-details p > img').each(function () {
-		$(this).after('<div class="img-title">' + $(this).attr('title') + '</div>')
+    if ($(this).attr('title')){
+      $(this).after('<div class="img-title">' + $(this).attr('title') + '</div>')
+    } else if ($(this).attr('alt')) {
+      $(this).after('<div class="img-title">' + $(this).attr('alt') + '</div>')
+    }
 	})
 })()

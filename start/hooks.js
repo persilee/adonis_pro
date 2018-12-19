@@ -58,7 +58,26 @@ hooks.after.providersBooted(() => {
   })
 
 	View.global('decodeHtml', (str) => {
-		return decode(str)
+    let codeIndexStart = str.indexOf('<pre><code')
+    let content = ''
+    let codeIndexEnd = str.indexOf('</code></pre>') + '</code></pre>'.length
+    if (codeIndexStart > 0) {
+      for (let index = 0; index < str.length; index++) {
+        codeIndexStart = str.indexOf('<pre><code')
+        codeIndexEnd = str.indexOf('</code></pre>') + '</code></pre>'.length
+        if (codeIndexStart > 0) {
+          content += decode(str.slice(0, codeIndexStart))
+          content += str.slice(codeIndexStart, codeIndexEnd)
+          str = str.slice(codeIndexEnd, str.length)
+        }else{
+          content += str
+          break
+        }
+      }
+    }else (
+      content = decode(str)
+    )
+    return content
 	})
 
 	View.global('md5', (str) => {
