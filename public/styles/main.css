@@ -130,14 +130,14 @@ body > .container .tag-content {
 }
 
 .post-alert .modal .modal-content {
-  border: none;
-  color: #616161;
+	border: none;
+	color: #616161;
 	-webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
 	box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
 }
 
 .post-alert .modal .modal-content .modal-body {
-  font-size: 15px;
+	font-size: 15px;
 }
 
 .post-alert .modal-footer {
@@ -159,9 +159,9 @@ body > .container .tag-content {
 }
 
 .post-alert .modal-footer .btn-outline-success:hover {
-    color: #333;
-    background-color: #F5F5F5;
-    border-color: #28a745;
+	color: #333;
+	background-color: #f5f5f5;
+	border-color: #28a745;
 }
 
 .author .post-action {
@@ -973,6 +973,10 @@ a[title="Toggle Fullscreen (F11)"] {
 	padding-top: 25px;
 }
 
+.user-content .list-group-flush .list-group-item:last-child {
+	border-bottom: 0;
+}
+
 .nav-item.dropdown .dropdown-menu i {
 	font-size: 13px;
 }
@@ -1080,6 +1084,10 @@ a:hover,
 	border-top: 1px solid rgba(0, 0, 0, .125);
 }
 
+.user-content .notificationList .list-item:last-child .notification .user-notification {
+	border-bottom: 0;
+}
+
 .notice-content .notificationList .list-item .notification .user-notification.is-read {
 	background: #37c70117;
 	border: 2px solid #37c7010d;
@@ -1178,6 +1186,19 @@ a:hover,
 	animation-duration: 0.5s;
 	-webkit-animation-fill-mode: both;
 	animation-fill-mode: both;
+}
+
+#message img {
+	max-width: 66px;
+	margin: 6px 2px;
+}
+
+#message p {
+  margin-bottom: 0;
+}
+
+#messages img {
+  max-width: 160px;
 }
 
 @keyframes slideOutUp {

@@ -1,5 +1,4 @@
 $(function () {
-
 	if (location.href == 'http://localhost:3333/chatRooms') {
 		chatRoom()
 	}
@@ -28,13 +27,12 @@ $(function () {
 			connectionStatus.addClass('text-muted')
 			connectionStatusIcon.removeClass('text-success')
 			connectionStatusText.text('Disconnected')
+		})
 
-    })
-
-    // ws.close()
+		// ws.close()
 
 		const subscribeToChannel = () => {
-      const activityId = returnCitySN['cip'].replace(/\./g, '-')
+			const activityId = returnCitySN['cip'].replace(/\./g, '-')
 			const demo = ws.subscribe('demo')
 			demo.on('message', (message) => {
 				if (message.type == 'login') {
@@ -55,16 +53,18 @@ $(function () {
             </div>
           </div>
         `)
-          // messages.children('div:last-child')[0].scrollIntoView()
-          messages.scrollTop(messages[0].scrollHeight)
-        } else if (message.type == 'join'){
-          if (message.id && message.username != 'Anonymous'){
-              $('#' + message.id).remove()
-            } else if (message.activityId){
-              $('#' + activityId).remove()
-            }
-            userList.append(`
-              <li id="${message.id ? message.id : message.activityId}" class="list-group-item d-flex align-items-center py-3">
+					// messages.children('div:last-child')[0].scrollIntoView()
+					messages.scrollTop(messages[0].scrollHeight)
+				} else if (message.type == 'join') {
+					if (message.id && message.username != 'Anonymous') {
+						$('#' + message.id).remove()
+					} else if (message.activityId) {
+						$('#' + activityId).remove()
+					}
+					userList.append(`
+              <li id="${message.id
+					? message.id
+					: message.activityId}" class="list-group-item d-flex align-items-center py-3">
                 <div class="avatar mr-2">
                   <div class="toggle-btn"
                   style="background-image: url('https://cn.gravatar.com/avatar/${message.email}?s=60&d=robohash&r=G');">
@@ -75,7 +75,7 @@ $(function () {
                 </div>
               </li>
             `)
-              messages.append(`
+					messages.append(`
             <div class="message my-4 d-flex justify-content-center">
               <div class="mr-2">
                   <div class="toggle-btn char-room login-tip"
@@ -92,12 +92,12 @@ $(function () {
               </div>
             </div>
           `)
-        } else if (message.type == 'leave') {
-          if (message.id && message.username != 'Anonymous') {
-            $('#' + message.id).remove()
-          } else if (message.activityId) {
-            $('#' + activityId).remove()
-          }
+				} else if (message.type == 'leave') {
+					if (message.id && message.username != 'Anonymous') {
+						$('#' + message.id).remove()
+					} else if (message.activityId) {
+						$('#' + activityId).remove()
+					}
 					messages.append(`
           <div class="message my-4 d-flex justify-content-center">
             <div class="mr-2">
@@ -115,7 +115,6 @@ $(function () {
             </div>
           </div>
         `)
-
 				} else {
 					messages.append(`
           <div class="message my-4 d-flex">
@@ -134,48 +133,72 @@ $(function () {
             </div>
           </div>
         `)
-
 				}
 
-        $('.message-box-inner').animate({ scrollTop: $('.message-box-inner').height() + $('.message-box-inner').scrollTop() }, 'slow')
-        $('.user-list').animate({ scrollTop: $('.user-list').height() + $('.user-list').scrollTop() }, 'slow')
+				$('.message-box-inner').animate(
+					{ scrollTop: $('.message-box-inner').height() + $('.message-box-inner').scrollTop() },
+					'slow'
+				)
+				$('.user-list').animate({ scrollTop: $('.user-list').height() + $('.user-list').scrollTop() }, 'slow')
 			})
+		}
+
+		function imgReader (item) {
+			var blob = item.getAsFile(),
+				reader = new FileReader()
+			reader.onload = function (e) {
+				var img = new Image(),
+					p = document.createElement('p')
+				img.src = e.target.result
+				p.appendChild(img)
+				$(message).append(p)
+			}
+			reader.readAsDataURL(blob)
 		}
 
 		$(message).on('paste', function (e) {
 			e.preventDefault()
 			let text = ''
+			let clipboardData = e.originalEvent.clipboardData,
+				files,
+				items,
+				item
 
-			if (window.clipboardData && clipboardData.setData) {
-				// IE
-				text = window.clipboardData.getData('text')
-			} else {
-				text = (e.originalEvent || e).clipboardData.getData('text/plain') || prompt('在这里输入文本')
-			}
-
-			if (document.body.createTextRange) {
-				if (document.selection) {
-					textRange = document.selection.createRange()
-				} else if (window.getSelection) {
-					sel = window.getSelection()
-					var range = sel.getRangeAt(0)
-
-					// 创建临时元素，使得TextRange可以移动到正确的位置
-					var tempEl = document.createElement('span')
-					tempEl.innerHTML = '&#FEFF;'
-					range.deleteContents()
-					range.insertNode(tempEl)
-					textRange = document.body.createTextRange()
-					textRange.moveToElementText(tempEl)
-					tempEl.parentNode.removeChild(tempEl)
-				}
-				textRange.text = text
-				textRange.collapse(false)
-				textRange.select()
-			} else {
-				// Chrome之类浏览器
-				document.execCommand('insertText', false, text)
-			}
+			if (clipboardData) {
+				items = clipboardData.items
+        console.log(clipboardData.types.indexOf('Files'))
+        if (items && items.length && clipboardData.types.indexOf('Files') > 0) {
+					for (var i = 0; i < clipboardData.types.length; i++) {
+						if (clipboardData.types[i] === 'Files') {
+              item = items[i]
+							break
+						}
+					}
+					if (item && item.kind === 'file' && item.type.match(/^image\//i)) {
+            if (item.getAsFile().size / 1024 / 1024 > 3.6) {
+              $('.top-right')
+                .notify({
+                  type: 'danger',
+                  closable: false,
+                  message: {
+                    text: 'The image size cannot exceed 3.6M'
+                  }
+                })
+                .show()
+            }else{
+              imgReader(item)
+            }
+					}
+        } else {
+          if (window.clipboardData && clipboardData.setData) {
+            // IE
+            text = window.clipboardData.getData('text')
+          } else {
+            text = (e.originalEvent || e).clipboardData.getData('text/plain') || prompt('在这里输入文本')
+          }
+          document.execCommand('insertText', false, text)
+        }
+      }
 		})
 
 		$(message).keydown(function (e) {
@@ -212,23 +235,23 @@ $(function () {
 				$(this).html('')
 				if (messageContent) {
 					ws.getSubscription('demo').emit('message', {
-						content : messageContent,
-						email   : email
+						content: messageContent,
+						email: email
 					})
 				}
 			}
-    })
+		})
 
-    $('#send-message').on('click', function(){
-      if ($.trim($(message).html())) {
-        const messageContent = $.trim($(message).html())
-        $(message).html('')
-        ws.getSubscription('demo').emit('message', {
-          content: messageContent,
-          email: email
-        })
-      }
-    })
+		$('#send-message').on('click', function () {
+			if ($.trim($(message).html())) {
+				const messageContent = $.trim($(message).html())
+				$(message).html('')
+				ws.getSubscription('demo').emit('message', {
+					content: messageContent,
+					email: email
+				})
+			}
+		})
 
 		function browserType () {
 			var userAgent = navigator.userAgent //取得浏览器的userAgent字符串
@@ -260,18 +283,18 @@ $(function () {
 		const os = (function () {
 			const UserAgent = navigator.userAgent.toLowerCase()
 			return {
-				isIpad          : /ipad/.test(UserAgent),
-				isIphone        : /iphone os/.test(UserAgent),
-				isAndroid       : /android/.test(UserAgent),
-				isWindowsCe     : /windows ce/.test(UserAgent),
-				isWindowsMobile : /windows mobile/.test(UserAgent),
-				isWin2K         : /windows nt 5.0/.test(UserAgent),
-				isXP            : /windows nt 5.1/.test(UserAgent),
-				isVista         : /windows nt 6.0/.test(UserAgent),
-				isWin7          : /windows nt 6.1/.test(UserAgent),
-				isWin8          : /windows nt 6.2/.test(UserAgent),
-				isWin81         : /windows nt 6.3/.test(UserAgent),
-				isMac           : /mac os/.test(UserAgent)
+				isIpad: /ipad/.test(UserAgent),
+				isIphone: /iphone os/.test(UserAgent),
+				isAndroid: /android/.test(UserAgent),
+				isWindowsCe: /windows ce/.test(UserAgent),
+				isWindowsMobile: /windows mobile/.test(UserAgent),
+				isWin2K: /windows nt 5.0/.test(UserAgent),
+				isXP: /windows nt 5.1/.test(UserAgent),
+				isVista: /windows nt 6.0/.test(UserAgent),
+				isWin7: /windows nt 6.1/.test(UserAgent),
+				isWin8: /windows nt 6.2/.test(UserAgent),
+				isWin81: /windows nt 6.3/.test(UserAgent),
+				isMac: /mac os/.test(UserAgent)
 			}
 		})()
 
@@ -279,8 +302,8 @@ $(function () {
 			$('.action .instruction').text('Press Cmd+Enter to start a new line')
 		} else {
 			$('.action .instruction').text('Press Ctrl+Enter to start a new line')
-    }
+		}
 
-    $('.message-box-inner').scrollTop($('.message-box-inner').height() + 10)
+		$('.message-box-inner').scrollTop($('.message-box-inner').height() + 10)
 	}
 })
