@@ -70,7 +70,7 @@
 				'ordered-list',
 				'|',
 				'link',
-				'image',
+				// 'image',
 				'table',
 				'|',
 				'side-by-side',
@@ -132,17 +132,17 @@
 
 	const deleteButton = $('.author .post-action .post-delete-btn')
 	$(deleteButton).on('click', function () {
-    const _this = $(this)
+		const _this = $(this)
 		$('.post-alert .modal .modal-body').html(
 			'确定删除 <h6 style="display: inline;color: #333;">' + $(this).data('post-title') + '</h6>，删除文章后，不可恢复'
 		)
 		$('#delete-confirm').click(function () {
-      const id = _this.data('id')
-      const _csrf = _this.data('csrf')
-      const userId = _this.data('user-id')
+			const id = _this.data('id')
+			const _csrf = _this.data('csrf')
+			const userId = _this.data('user-id')
 
 			$.ajax({
-        url: '/posts/' + encodeURIComponent(id),
+				url: '/posts/' + encodeURIComponent(id),
 				method: 'DELETE',
 				data: {
 					_csrf
@@ -472,10 +472,145 @@
 	)
 
 	$('.post-details p > img').each(function () {
-    if ($(this).attr('title')){
-      $(this).after('<div class="img-title">' + $(this).attr('title') + '</div>')
-    } else if ($(this).attr('alt')) {
-      $(this).after('<div class="img-title">' + $(this).attr('alt') + '</div>')
-    }
+		if ($(this).attr('title')) {
+			$(this).after('<div class="img-title">' + $(this).attr('title') + '</div>')
+		} else if ($(this).attr('alt')) {
+			$(this).after('<div class="img-title">' + $(this).attr('alt') + '</div>')
+		}
+	})
+
+	$('.post-content .editor-toolbar a[title="Create Link (Cmd-K)').after(
+		'<a title="Insert Image (Cmd-⌥-I)" tabindex="-1" class="fa fa-picture-o insert-image"></a>'
+	)
+
+	$('.post-content .editor-toolbar').on('click', 'a.insert-image', function () {
+		$('#post-image').click()
+	})
+
+	let putUrl = 'https://upload-z2.qiniup.com/putb64/-1'
+
+	function putb64 (pic, token, callback) {
+		var xhr = new XMLHttpRequest()
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4) {
+				var response = JSON.parse(xhr.responseText)
+				callback(response.key)
+			}
+		}
+		xhr.open('POST', putUrl, true)
+		xhr.setRequestHeader('Content-Type', 'application/octet-stream')
+		xhr.setRequestHeader('Authorization', `UpToken ${token}`)
+		xhr.send(pic)
+	}
+
+	$('#post-image').on('change', function () {
+		const image = $(this).get(0).files[0]
+		if (image.size && image.size / 1024 / 1024 < 6) {
+			$.ajax({
+				url: '/image/upload/',
+				method: 'get',
+				success: (data) => {
+					const reader = new FileReader()
+					reader.readAsDataURL(image)
+					reader.onload = function (e) {
+						const token = data
+						const content = reader.result
+						const pic = content.substr(content.indexOf('base64') + 'base64'.length + 1)
+						$('.image-load').addClass('loading')
+
+						putb64(pic, token, (url) => {
+							const imgUrl = 'https://cdn.lishaoy.net/' + url
+							const img = `![](${imgUrl})`
+							const value = simplemde.value()
+              simplemde.value(value + img)
+              anim.setSpeed(2)
+              anim.play()
+              $('.image-load .box .text').text('Picture uploaded successfully').removeClass('text-muted').addClass('text-success')
+						})
+					}
+				}
+			})
+		}
+	})
+
+	$('.CodeMirror').on('paste', function (e) {
+		e.preventDefault()
+		let text = (e.originalEvent || e).clipboardData.getData('text/plain')
+
+		let clipboardData = e.originalEvent.clipboardData || e.clipboardData,
+			files,
+			items,
+			item,
+			key
+
+		$.ajax({
+			url: '/image/upload/',
+			method: 'get',
+			async: false,
+			success: function (data) {
+				key = data
+			}
+		})
+
+		if (clipboardData) {
+			items = clipboardData.items
+			if (items && items.length && clipboardData.types.indexOf('Files') > 0) {
+				for (var i = 0; i < clipboardData.types.length; i++) {
+					if (clipboardData.types[i] === 'Files') {
+						item = items[i]
+						break
+					}
+				}
+				if (item && item.kind === 'file' && item.type.match(/^image\//i)) {
+					if (item.getAsFile().size / 1024 / 1024 > 3.6) {
+						$('.top-right')
+							.notify({
+								type: 'danger',
+								closable: false,
+								message: {
+									text: 'The image size cannot exceed 3.6M'
+								}
+							})
+							.show()
+					} else {
+						const reader = new FileReader()
+						reader.onload = function (e) {
+							const token = key
+							const content = e.target.result
+							const pic = content.substr(content.indexOf('base64') + 'base64'.length + 1)
+							$('.image-load').addClass('loading')
+
+							putb64(pic, token, (url) => {
+								const imgUrl = 'https://cdn.lishaoy.net/' + url
+								const img = `![](${imgUrl})`
+								let value = simplemde.value()
+								value = value.replace(text, '')
+								simplemde.value(value + img)
+								$('.CodeMirror .CodeMirror-scroll').scrollTop(
+									$('.CodeMirror .CodeMirror-scroll')[0].scrollHeight
+								)
+                anim.setSpeed(2)
+                anim.play()
+                $('.image-load .box .text').text('Picture uploaded successfully').removeClass('text-muted').addClass('text-success')
+							})
+						}
+						reader.readAsDataURL(item.getAsFile())
+					}
+				}
+			}
+		}
+	})
+
+	const anim = lottie.loadAnimation({
+		container: $('.image-load .lottie')[0],
+		renderer: 'svg',
+		loop: true,
+		autoplay: false,
+		path: '/EmojiReaction.json'
+	})
+  anim.addEventListener('loopComplete', () => {
+    anim.pause()
+    $('.image-load').removeClass('loading')
+    $('.image-load .box .text').text('The picture is being uploaded...').removeClass('text-success').addClass('text-muted')
 	})
 })()

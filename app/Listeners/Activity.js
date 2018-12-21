@@ -26,7 +26,6 @@ Activity.join = async (user) => {
 	const email = user.email ? user.email : user.username
 	const activityId = user.activity_id ? user.activity_id.replace(/\./g, '-') : ''
 
-	console.log(Ws.getChannel('demo'))
 	if (Ws.getChannel('demo').topic('demo')) {
 		Ws.getChannel('demo').topic('demo').broadcast('message', {
 			type: 'join',

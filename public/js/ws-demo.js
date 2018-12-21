@@ -166,7 +166,6 @@ $(function () {
 
 			if (clipboardData) {
 				items = clipboardData.items
-        console.log(clipboardData.types.indexOf('Files'))
         if (items && items.length && clipboardData.types.indexOf('Files') > 0) {
 					for (var i = 0; i < clipboardData.types.length; i++) {
 						if (clipboardData.types[i] === 'Files') {

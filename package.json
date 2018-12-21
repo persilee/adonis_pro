@@ -38,6 +38,7 @@
     "lodash": "^4.17.11",
     "markdown-it": "^8.4.2",
     "mysql": "^2.16.0",
+    "qiniu": "^7.2.1",
     "randomstring": "^1.1.5",
     "sqlite3": "^4.0.4"
   },

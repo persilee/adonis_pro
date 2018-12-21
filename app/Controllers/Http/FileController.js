@@ -134,8 +134,6 @@ class FileController {
       email = auth.user.toJSON().email
     }
 
-    console.log(user.toJSON())
-
 		return view.render('file.show', { file: file.toJSON(), user: user.toJSON(), userId, email })
 	}
 

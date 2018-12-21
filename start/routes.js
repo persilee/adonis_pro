@@ -34,6 +34,8 @@ Route.resource('files', 'FileController')
 
 Route.post('logout', 'AuthController.logout').as('logout')
 
+Route.get('image/upload', 'QiniuController.imageUpload').as('imageUpload')
+
 Route.get('logout', 'AuthController.logout').as('logout')
 
 Route.get('login', 'AuthController.login').as('login')

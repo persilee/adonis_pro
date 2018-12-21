@@ -294,10 +294,7 @@ class PostController {
 		//   .where('id', params.id)
     //   .delete()
 
-    console.log('aaa')
-
     const post = await Post.find(params.id)
-    console.log(post)
 		try {
       await post.tags().detach()
       await post.userLikes().detach()
