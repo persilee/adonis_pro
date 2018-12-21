@@ -86,7 +86,8 @@ hooks.after.providersBooted(() => {
 
 	View.global('htmlToText', (text, length) => {
     const htmlToText = require('html-to-text')
-		let content = text.substr(0, length)
+    const contentText = decode(text)
+    let content = contentText.substr(0, length)
     content = htmlToText.fromString(content)
     if (text.length < length) {
       return content

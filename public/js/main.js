@@ -477,7 +477,22 @@
 		} else if ($(this).attr('alt')) {
 			$(this).after('<div class="img-title">' + $(this).attr('alt') + '</div>')
 		}
-	})
+  })
+  let anim
+  if ($('.image-load .lottie').length) {
+    anim = lottie.loadAnimation({
+      container: $('.image-load .lottie')[0],
+      renderer: 'svg',
+      loop: true,
+      autoplay: false,
+      path: '/EmojiReaction.json'
+    })
+    anim.addEventListener('loopComplete', () => {
+      anim.pause()
+      $('.image-load').removeClass('loading')
+      $('.image-load .box .text').text('The picture is being uploaded...').removeClass('text-success').addClass('text-muted')
+    })
+  }
 
 	$('.post-content .editor-toolbar a[title="Create Link (Cmd-K)').after(
 		'<a title="Insert Image (Cmd-⌥-I)" tabindex="-1" class="fa fa-picture-o insert-image"></a>'
@@ -599,18 +614,5 @@
 				}
 			}
 		}
-	})
-
-	const anim = lottie.loadAnimation({
-		container: $('.image-load .lottie')[0],
-		renderer: 'svg',
-		loop: true,
-		autoplay: false,
-		path: '/EmojiReaction.json'
-	})
-  anim.addEventListener('loopComplete', () => {
-    anim.pause()
-    $('.image-load').removeClass('loading')
-    $('.image-load .box .text').text('The picture is being uploaded...').removeClass('text-success').addClass('text-muted')
 	})
 })()

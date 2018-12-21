@@ -61,7 +61,7 @@
               </div>
             @endif
           </div>
-          <div class="text ml-2 mr-4 mb-4">{{{ item.md_content ? htmlToText(item.md_content, 86) : htmlToText(item.content, 86) }}}</div>
+          <div class="text ml-2 mr-4 mb-4">{{ item.md_content ? htmlToText(item.md_content, 86) : htmlToText(item.content, 86) }}}</div>
         </div>
         @if(item.md_content && imgUrl(item.md_content))
           <div class="post-content-right align-self-center post-img"
