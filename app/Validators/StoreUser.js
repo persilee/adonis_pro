@@ -3,7 +3,7 @@
 class StoreUser {
 	get rules () {
 		return {
-			username : 'required|unique:users',
+      username : 'required|unique:users|max:66',
 			email    : 'required|email|unique:users',
 			password : 'required|min:6|max:30'
 		}
@@ -16,7 +16,8 @@ class StoreUser {
 	get messages () {
 		return {
 			'username.required' : "Username can't be blank",
-			'username.unique'   : 'Username is already taken',
+      'username.unique'   : 'Username is already taken',
+      'username.max'      : 'Username is too long (maximum is 66 characters)',
 			'email.required'    : "Email can't be blank",
 			'email.email'       : 'Email is invalid',
 			'email.unique'      : 'Email is already taken',
