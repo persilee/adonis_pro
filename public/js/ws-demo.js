@@ -145,16 +145,57 @@ $(function () {
 
 		function imgReader (item) {
 			var blob = item.getAsFile(),
-				reader = new FileReader()
+        reader = new FileReader()
+
 			reader.onload = function (e) {
 				var img = new Image(),
 					p = document.createElement('p')
-				img.src = e.target.result
+        img.src = e.target.result
 				p.appendChild(img)
 				$(message).append(p)
-			}
+      }
 			reader.readAsDataURL(blob)
-		}
+    }
+
+    /**
+     * 改变blob图片的质量，为考虑兼容性
+     * @param blob 图片对象
+     * @param callback 转换成功回调，接收一个新的blob对象作为参数
+     * @param format 目标格式，mime格式
+     * @param quality 介于0-1之间的数字，用于控制输出图片质量，仅当格式为jpg和webp时才支持质量，png时quality参数无效
+     */
+    function changeBlobImageQuality (blob, callback, format, quality) {
+      format = format || 'image/jpeg';
+      quality = quality || 0.5;
+      var fr = new FileReader();
+      fr.onload = function (e) {
+        var dataURL = e.target.result;
+        var img = new Image();
+        img.onload = function () {
+          var canvas = document.createElement('canvas');
+          var ctx = canvas.getContext('2d');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          var newDataURL = canvas.toDataURL(format, quality);
+          if (callback){
+            callback(dataURLtoBlob(newDataURL), newDataURL);
+          }
+          canvas = null;
+        };
+        img.src = dataURL;
+      };
+      fr.readAsDataURL(blob);
+      function dataURLtoBlob (dataurl) {
+        var arr = dataurl.split(','),
+          mime = arr[0].match(/:(.*?);/)[1],
+          bstr = atob(arr[1]),
+          len = bstr.length,
+          u8arr = new Uint8Array(len);
+        while (len--) u8arr[len] = bstr.charCodeAt(len);
+        return new Blob([u8arr], { type: mime });
+      }
+    }
 
 		$(message).on('paste', function (e) {
 			e.preventDefault()
@@ -174,19 +215,26 @@ $(function () {
 						}
 					}
 					if (item && item.kind === 'file' && item.type.match(/^image\//i)) {
-            if (item.getAsFile().size / 1024 / 1024 > 3.6) {
-              $('.top-right')
-                .notify({
-                  type: 'danger',
-                  closable: false,
-                  message: {
-                    text: 'The image size cannot exceed 3.6M'
-                  }
-                })
-                .show()
-            }else{
-              imgReader(item)
-            }
+            changeBlobImageQuality(item.getAsFile(), function (newBlob, newDataURL) {
+              console.log(newBlob.size / 1024 / 1024)
+              if (newBlob.size / 1024 / 1024 > 3.6) {
+                $('.top-right')
+                  .notify({
+                    type: 'danger',
+                    closable: false,
+                    message: {
+                      text: 'The image size cannot exceed 3.6M'
+                    }
+                  })
+                  .show()
+              } else {
+                var img = new Image(),
+                  p = document.createElement('p')
+                img.src = newDataURL
+                p.appendChild(img)
+                $(message).append(p)
+              }
+            })
 					}
         } else {
           if (window.clipboardData && clipboardData.setData) {
